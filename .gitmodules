@@ -1,0 +1,3 @@
+[submodule "PDCore"]
+	path = PDCore
+	url = https://github.com/paweld139/PDCore

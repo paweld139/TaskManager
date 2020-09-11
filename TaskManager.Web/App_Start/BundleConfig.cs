@@ -11,7 +11,14 @@ namespace TaskManager.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js"));
+                "~/Scripts/jquery-{version}.js"
+                 /*"~/Scripts/PDWebCore/jquery.enhsplitter.js",
+                 "~/Scripts/PDWebCore/jquery.panel.js"*/));
+
+            bundles.Add(new ScriptBundle("~/bundles/tooltip").Include(
+               "~/Scripts/PDWebCore/tether.min.js",
+               "~/Scripts/PDWebCore/drop.min.js",
+               "~/Scripts/PDWebCore/tooltip.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                 "~/Scripts/jquery.unobtrusive*",
@@ -19,7 +26,19 @@ namespace TaskManager.Web
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout-{version}.js",
+                //"~/Scripts/PDWebCore/knockout-sortable.js",
                 "~/Scripts/knockout.validation.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
+                "~/ckeditor/ckeditor.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Index").Include(
+                "~/Scripts/PDWebCore/Objects.js",
+                "~/Scripts/PDWebCore/Tools.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+                "~/Scripts/jquery-ui-{version}.js",
+                "~/Scripts/PDWebCore/datepicker-pl.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/sammy-{version}.js",
@@ -35,11 +54,21 @@ namespace TaskManager.Web
                 "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.js"));
+                "~/Scripts/bootstrap.js"
+                /*"~/Scripts/PDWebCore/bootstrap-select.js"*/));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                 "~/Content/bootstrap.css",
-                 "~/Content/Site.css"));
+                "~/Content/bootstrap.css",
+                "~/Content/PDWebCore/fontawesome/css/all.css",
+                "~/Content/themes/base/all.css",
+                "~/Content/Site.css"
+                /*"~/Content/PDWebCore/bootstrap-select.css",
+                "~/Content/PDWebCore/Main.css",
+                "~/Content/PDWebCore/webmail.css",
+                "~/Content/PDWebCore/jquery.enhsplitter.css",
+                "~/Content/jquery-ui.css",
+                "~/Content/PDWebCore/tooltip-theme-arrows.min.css",
+                "~/Content/PDWebCore/tooltip.css"*/));
         }
     }
 }

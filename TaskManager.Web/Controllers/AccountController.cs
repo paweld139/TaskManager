@@ -8,7 +8,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using TaskManager.Web.Models;
+using TaskManager.DAL.Entities;
+using TaskManager.Web.ViewModels;
 
 namespace TaskManager.Web.Controllers
 {

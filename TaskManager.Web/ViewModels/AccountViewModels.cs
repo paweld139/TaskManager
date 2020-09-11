@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace TaskManager.Web.Models
+namespace TaskManager.Web.ViewModels
 {
     // Models returned by AccountController actions.
     public class ExternalLoginConfirmationViewModel

@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
-using TaskManager.Web.ViewModels;
+using TaskManager.Web.Models;
 
 namespace TaskManager.Web.Controllers
 {

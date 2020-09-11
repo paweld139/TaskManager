@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TaskManager.DAL.Entities;
-using TaskManager.Web.ViewModels;
+using TaskManager.Web.Models;
 
 namespace TaskManager.Web.Controllers
 {

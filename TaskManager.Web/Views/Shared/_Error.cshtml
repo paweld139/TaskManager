@@ -7,27 +7,27 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Błąd</title>
+    <title>@Resources.Common.Error</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     @Styles.Render("~/Content/css")
-    <link href="~/Content/PDWebCore/fontawesome/css/all.min.css" rel="stylesheet">
+    @*<link href="~/Content/PDWebCore/fontawesome/css/all.min.css" rel="stylesheet">*@
 </head>
 <body>
     <div class="container-fluid">
         <div class="row form-group mt-3">
             <div class="col-sm">
                 <a href="@Url.Action("Index", "Home")" class="btn btn-outline-primary btn-sm float-right">
-                    <i class="fa fa-chevron-left button-icon"></i>Powrót
+                    <i class="fa fa-chevron-left button-icon"></i>@Resources.Common.Back
                 </a>
             </div>
             <div class="w-100">
             </div>
             <div class="col-sm">
                 <h2>
-                    Błąd
+                    @Resources.Common.Error
                 </h2>
                 <h5>
-                    Wystąpił błąd podczas wykonywania żądania. Szczegóły błędu:
+                    @Resources.Common.ErrorOccuredDetailsWeb
                 </h5>
                 @if (Model != null)
                 {

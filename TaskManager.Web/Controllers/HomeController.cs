@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using PDWebCore.Helpers.MultiLanguage;
 using System.Web.Mvc;
 
 namespace TaskManager.Web.Controllers
@@ -11,6 +9,14 @@ namespace TaskManager.Web.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ChangeLanguage(string lang)
+        {
+            LanguageHelper.SetLanguage(lang);
+
+            return Redirect(Request.UrlReferrer.ToString());
         }
     }
 }

@@ -10,12 +10,7 @@ namespace TaskManager.Web.Providers
 
         public ApplicationOAuthProvider(string publicClientId)
         {
-            if (publicClientId == null)
-            {
-                throw new ArgumentNullException("publicClientId");
-            }
-
-            _publicClientId = publicClientId;
+            _publicClientId = publicClientId ?? throw new ArgumentNullException("publicClientId");
         }
 
         public override Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)

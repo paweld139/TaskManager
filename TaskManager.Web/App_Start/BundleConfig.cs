@@ -55,20 +55,21 @@ namespace TaskManager.Web
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js"
-                /*"~/Scripts/PDWebCore/bootstrap-select.js"*/));
+                /*"~/Scripts/PDWebCore/bootstrap-select.js",*/
+                /*"~/Content/PDWebCore/fontawesome/js/all.js"*/));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
-                "~/Content/PDWebCore/fontawesome/css/all.css",
-                "~/Content/themes/base/all.css",
-                "~/Content/Site.css"
+                "~/Content/themes/base/jquery-ui.css").Include(
+                "~/Content/PDWebCore/fontawesome/css/all.css", new CssRewriteUrlTransform()).Include(
+                "~/Content/Site.css"));
                 /*"~/Content/PDWebCore/bootstrap-select.css",
                 "~/Content/PDWebCore/Main.css",
                 "~/Content/PDWebCore/webmail.css",
                 "~/Content/PDWebCore/jquery.enhsplitter.css",
                 "~/Content/jquery-ui.css",
                 "~/Content/PDWebCore/tooltip-theme-arrows.min.css",
-                "~/Content/PDWebCore/tooltip.css"*/));
+                "~/Content/PDWebCore/tooltip.css"*/
         }
     }
 }

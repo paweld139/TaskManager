@@ -5,11 +5,15 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using Autofac.Core;
+using CommonServiceLocator;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using PDCore.Models;
+using PDCore.Services.IServ;
 using TaskManager.DAL;
 using TaskManager.DAL.Entities;
 
@@ -20,7 +24,13 @@ namespace TaskManager.Web
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            //return Task.FromResult(0);
+
+            var mailService = ServiceLocator.Current.GetInstance<IMailServiceAsyncTask>();
+
+            var mailMessage = new MailMessageModel(message.Destination, message.Subject, message.Body);
+
+            return mailService.SendEmailAsyncTask(mailMessage);
         }
     }
 

@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,12 +59,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ApplicationUser.cs" />
+    <Compile Include="Entities\Contrahent.cs" />
+    <Compile Include="Entities\Dictionary.cs" />
+    <Compile Include="Entities\Ticket.cs" />
     <Compile Include="Migrations\202009111908191_AddDefaultWebEntities.cs" />
     <Compile Include="Migrations\202009111908191_AddDefaultWebEntities.designer.cs">
       <DependentUpon>202009111908191_AddDefaultWebEntities.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Entities\Contrahent.pl.Designer.cs">
+      <DependentUpon>Contrahent.pl.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Entities\Contrahent.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contrahent.resx</DependentUpon>
+    </Compile>
     <Compile Include="TaskManagerContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +85,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PDCore\PDCore\PDCore.csproj">
+      <Project>{5AC8CB92-D1B0-4F43-A444-E8D5E747DB4D}</Project>
+      <Name>PDCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PDCore\PDWebCore\PDWebCore.csproj">
       <Project>{62A21E22-54E7-40F9-9EFC-472EFA7BF66D}</Project>
       <Name>PDWebCore</Name>
@@ -80,7 +98,18 @@
     <EmbeddedResource Include="Migrations\202009111908191_AddDefaultWebEntities.resx">
       <DependentUpon>202009111908191_AddDefaultWebEntities.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Entities\Contrahent.pl.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contrahent.pl.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources.Entities</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Entities\Contrahent.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contrahent.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources.Entities</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

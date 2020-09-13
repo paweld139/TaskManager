@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using TaskManager.BLL.Models;
 
 namespace TaskManager.DAL.Entities
 {
@@ -14,26 +15,12 @@ namespace TaskManager.DAL.Entities
     {
         public string Hometown { get; set; }
 
-        [Display(Name = "Contractor", ResourceType = typeof(Resources.Common))]
+        [Display(Name = "Employee", ResourceType = typeof(Resources.Common))]
         [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        public int ContrahentId { get; set; }
+        public int EmployeeId { get; set; }
 
-        [ForeignKey("ContrahentId")]
-        public virtual Contrahent Contrahent { get; set; }
-
-        public DateTime CreateDate { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [Display(Name = "FirstName", ResourceType = typeof(Resources.Common))]
-        [DataType(DataType.Text)]
-        [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        public string FirstName { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [Display(Name = "LastName", ResourceType = typeof(Resources.Common))]
-        [DataType(DataType.Text)]
-        [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        public string LastName { get; set; }
+        [ForeignKey("EmployeeId")]
+        public Employee Employee { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

@@ -1,13 +1,8 @@
 ﻿using PDCore.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.DAL.Entities;
 
 namespace TaskManager.BLL.Models
 {
@@ -75,22 +70,23 @@ namespace TaskManager.BLL.Models
 
         #region ApplicationUser
 
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [Display(Name = "Representative", ResourceType = typeof(Resources.Common))]
         [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "representativeId")]
         public int RepresentativeId { get; set; }
 
         [ForeignKey("RepresentativeId")]
-        public virtual ApplicationUser Representative { get; set; }
+        public virtual Employee Representative { get; set; }
 
 
+        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [Display(Name = "Operator", ResourceType = typeof(Resources.Common))]
-        [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "operatorId")]
-        public int OperatorId { get; set; }
+        public int? OperatorId { get; set; }
 
         [ForeignKey("OperatorId")]
-        public virtual ApplicationUser Operator { get; set; }
+        public virtual Employee Operator { get; set; }
 
         #endregion
 

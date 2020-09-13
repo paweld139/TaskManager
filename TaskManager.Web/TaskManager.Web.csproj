@@ -59,6 +59,9 @@
     <Reference Include="Autofac.Integration.WebApi, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.WebApi2.5.0.0\lib\net461\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.5\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -79,6 +82,9 @@
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.WebApi.Versioning, Version=4.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Versioning.4.0.0\lib\net45\Microsoft.AspNet.WebApi.Versioning.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -205,6 +211,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\DictionaryController.cs" />
+    <Compile Include="Api\LookupsController.cs" />
+    <Compile Include="Api\OperationsController.cs" />
+    <Compile Include="Api\TicketController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\ContainerConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -2472,7 +2482,6 @@
     <Content Include="Views\Shared\_Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
@@ -2516,6 +2525,14 @@
     <ProjectReference Include="..\PDCore\PDWebCore\PDWebCore.csproj">
       <Project>{62A21E22-54E7-40F9-9EFC-472EFA7BF66D}</Project>
       <Name>PDWebCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskManager.BLL\TaskManager.BLL.csproj">
+      <Project>{70E89075-BC71-4642-975E-3C10266C07EB}</Project>
+      <Name>TaskManager.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskManager.DAL.Contracts\TaskManager.DAL.Contracts.csproj">
+      <Project>{527C2B7B-C254-42E7-8073-533046EAC0FE}</Project>
+      <Name>TaskManager.DAL.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\TaskManager.DAL\TaskManager.DAL.csproj">
       <Project>{66A81A04-7813-4BCD-B65F-016D9B4E10A7}</Project>

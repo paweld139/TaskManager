@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -58,33 +61,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\TicketConfiguration.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
-    <Compile Include="Entities\Contrahent.cs" />
-    <Compile Include="Entities\Dictionary.cs" />
-    <Compile Include="Entities\Ticket.cs" />
-    <Compile Include="Migrations\202009111908191_AddDefaultWebEntities.cs" />
-    <Compile Include="Migrations\202009111908191_AddDefaultWebEntities.designer.cs">
-      <DependentUpon>202009111908191_AddDefaultWebEntities.cs</DependentUpon>
+    <Compile Include="Migrations\202009131908476_Init.cs" />
+    <Compile Include="Migrations\202009131908476_Init.designer.cs">
+      <DependentUpon>202009131908476_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009131911516_Fix.cs" />
+    <Compile Include="Migrations\202009131911516_Fix.designer.cs">
+      <DependentUpon>202009131911516_Fix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Entities\Contrahent.pl.Designer.cs">
-      <DependentUpon>Contrahent.pl.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Entities\Contrahent.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Contrahent.resx</DependentUpon>
-    </Compile>
+    <Compile Include="SampleData\TaskManagerDbInitializer.cs" />
+    <Compile Include="SampleData\TaskManagerSeeder.cs" />
     <Compile Include="TaskManagerContext.cs" />
+    <Compile Include="TaskManagerMappingProfile.cs" />
+    <Compile Include="TaskManagerUow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PDCore\PDCoreNew\PDCoreNew.csproj">
+      <Project>{81f5c1d9-664b-4300-98e6-99aeda748c2a}</Project>
+      <Name>PDCoreNew</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PDCore\PDCore\PDCore.csproj">
       <Project>{5AC8CB92-D1B0-4F43-A444-E8D5E747DB4D}</Project>
       <Name>PDCore</Name>
@@ -93,23 +96,26 @@
       <Project>{62A21E22-54E7-40F9-9EFC-472EFA7BF66D}</Project>
       <Name>PDWebCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TaskManager.BLL\TaskManager.BLL.csproj">
+      <Project>{70E89075-BC71-4642-975E-3C10266C07EB}</Project>
+      <Name>TaskManager.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskManager.DAL.Contracts\TaskManager.DAL.Contracts.csproj">
+      <Project>{527C2B7B-C254-42E7-8073-533046EAC0FE}</Project>
+      <Name>TaskManager.DAL.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009111908191_AddDefaultWebEntities.resx">
-      <DependentUpon>202009111908191_AddDefaultWebEntities.cs</DependentUpon>
+    <Folder Include="Resources\Entities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202009131908476_Init.resx">
+      <DependentUpon>202009131908476_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Entities\Contrahent.pl.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Contrahent.pl.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Resources.Entities</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Entities\Contrahent.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Contrahent.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Resources.Entities</CustomToolNamespace>
+    <EmbeddedResource Include="Migrations\202009131911516_Fix.resx">
+      <DependentUpon>202009131911516_Fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

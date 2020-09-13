@@ -3,10 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaskManager.BLL.Models
 {
@@ -23,15 +20,22 @@ namespace TaskManager.BLL.Models
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [Display(Name = "Name", ResourceType = typeof(Resources.Common))]
         [DataType(DataType.Text)]
-        [StringLength(150, MinimumLength = 4, ErrorMessageResourceName = "StringLength_GreaterAndLess", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        [StringLength(150, MinimumLength = 3, ErrorMessageResourceName = "StringLength_GreaterAndLess", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         public string Name { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [Display(Name = "Value", ResourceType = typeof(Resources.Common))]
         [DataType(DataType.Text)]
-        [StringLength(150, MinimumLength = 4, ErrorMessageResourceName = "StringLength_GreaterAndLess", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        [StringLength(150, MinimumLength = 3, ErrorMessageResourceName = "StringLength_GreaterAndLess", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "value")]
         public string Value { get; set; }
+
+
+        public virtual ICollection<Ticket> StatusTickets { get; set; }
+
+        public virtual ICollection<Ticket> PriorityTickets { get; set; }
+
+        public virtual ICollection<Ticket> TypeTickets { get; set; }
 
 
         public DateTime DateModified { get; set; }

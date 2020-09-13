@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{70E89075-BC71-4642-975E-3C10266C07EB}</ProjectGuid>
+    <ProjectGuid>{527C2B7B-C254-42E7-8073-533046EAC0FE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TaskManager.BLL</RootNamespace>
-    <AssemblyName>TaskManager.BLL</AssemblyName>
+    <RootNamespace>TaskManager.DAL.Contracts</RootNamespace>
+    <AssemblyName>TaskManager.DAL.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,13 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,44 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Contrahent.cs" />
-    <Compile Include="Models\Dictionary.cs" />
-    <Compile Include="Models\Lookups.cs" />
-    <Compile Include="Models\Ticket.cs" />
-    <Compile Include="Models\Employee.cs" />
+    <Compile Include="ITaskManagerUow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Models\Contrahent.Designer.cs">
-      <DependentUpon>Contrahent.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Models\Contrahent.pl.Designer.cs">
-      <DependentUpon>Contrahent.pl.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PDCore\PDCore\PDCore.csproj">
       <Project>{5AC8CB92-D1B0-4F43-A444-E8D5E747DB4D}</Project>
       <Name>PDCore</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Models\Contrahent.pl.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Contrahent.pl.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Resources.Models</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Models\Contrahent.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Contrahent.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Resources.Models</CustomToolNamespace>
-    </EmbeddedResource>
+    <ProjectReference Include="..\TaskManager.BLL\TaskManager.BLL.csproj">
+      <Project>{70E89075-BC71-4642-975E-3C10266C07EB}</Project>
+      <Name>TaskManager.BLL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

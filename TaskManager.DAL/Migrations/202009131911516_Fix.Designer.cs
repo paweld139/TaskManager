@@ -7,13 +7,13 @@ namespace TaskManager.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddDefaultWebEntities : IMigrationMetadata
+    public sealed partial class Fix : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddDefaultWebEntities));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Fix));
         
         string IMigrationMetadata.Id
         {
-            get { return "202009111908191_AddDefaultWebEntities"; }
+            get { return "202009131911516_Fix"; }
         }
         
         string IMigrationMetadata.Source

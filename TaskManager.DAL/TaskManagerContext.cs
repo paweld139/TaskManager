@@ -1,5 +1,10 @@
 ﻿using PDWebCore.Context;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using TaskManager.BLL.Models;
+using TaskManager.DAL.Configuration;
 using TaskManager.DAL.Entities;
+using TaskManager.DAL.SampleData;
 
 namespace TaskManager.DAL
 {
@@ -7,12 +12,29 @@ namespace TaskManager.DAL
     {
         public TaskManagerContext() : base("TaskManagerContext")
         {
-
+            //Database.SetInitializer(new TaskManagerDbInitializer());
         }
 
-        public static TaskManagerContext Create()
+
+        public DbSet<Dictionary> Dictionaries { get; set; }
+
+        public DbSet<Contrahent> Contrahents { get; set; }
+
+        public DbSet<Ticket> Tickets { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            return new TaskManagerContext();
+            // Use singular table names
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+
+            modelBuilder.Configurations.Add(new TicketConfiguration());
+
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

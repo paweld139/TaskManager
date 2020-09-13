@@ -17,33 +17,18 @@ namespace TaskManager.Web.Controllers
     [Authorize]
     public class MeController : ApiController
     {
-        private ApplicationUserManager _userManager;
-
-        public MeController()
-        {
-        }
+        private readonly ApplicationUserManager userManager;
 
         public MeController(ApplicationUserManager userManager)
         {
-            UserManager = userManager;
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            this.userManager = userManager;
         }
 
         // GET api/Me
         public GetViewModel Get()
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
+            var user = userManager.FindById(User.Identity.GetUserId());
+
             return new GetViewModel() { Hometown = user.Hometown };
         }
     }

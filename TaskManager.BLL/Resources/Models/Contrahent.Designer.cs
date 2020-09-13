@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Resources.Entities {
+namespace Resources.Models {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Resources.Entities {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TaskManager.DAL.Resources.Entities.Contrahent", typeof(Contrahent).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TaskManager.BLL.Resources.Models.Contrahent", typeof(Contrahent).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using TaskManager.DAL;
+using TaskManager.Web.App_Start;
 
 namespace TaskManager.Web
 {
@@ -23,6 +24,7 @@ namespace TaskManager.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ContainerConfig.RegisterContainer(GlobalConfiguration.Configuration);
 
             log4net.Config.XmlConfigurator.Configure();
 

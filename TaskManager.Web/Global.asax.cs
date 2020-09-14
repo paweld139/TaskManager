@@ -42,5 +42,10 @@ namespace TaskManager.Web
         {
             LanguageHelper.SetLanguage(Request);
         }
+
+        //protected void Application_BeginRequest(object sender, EventArgs e)
+        //{
+
+        //}
     }
 }

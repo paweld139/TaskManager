@@ -32,6 +32,7 @@ using System.Web.Mvc;
 using TaskManager.DAL;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
+using TaskManager.DAL.Repositories;
 using CacheService = PDWebCore.Services.Serv.CacheService;
 
 namespace TaskManager.Web.App_Start
@@ -71,6 +72,7 @@ namespace TaskManager.Web.App_Start
                    .As<DbContext>(); //UserStore
 
             builder.RegisterType<RepositoryFactories>()
+                   .AsSelf()
                    .SingleInstance();
 
             builder.RegisterType<RepositoryProvider>()
@@ -88,6 +90,10 @@ namespace TaskManager.Web.App_Start
 
             builder.RegisterType<LogRepo>()
                    .As<ILogRepo>()
+                   .InstancePerRequest();
+
+            builder.RegisterType<DictionaryRepository>()
+                   .As<IDictionaryRepository>()
                    .InstancePerRequest();
 
 

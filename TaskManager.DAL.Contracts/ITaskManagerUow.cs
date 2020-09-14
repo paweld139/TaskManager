@@ -12,7 +12,7 @@ namespace TaskManager.DAL.Contracts
         void Commit();
 
         // Repositories
-        ISqlRepositoryEntityFrameworkDisconnected<Dictionary> Dicionaries { get; }
+        IDictionaryRepository Dictionaries { get; }
         ISqlRepositoryEntityFrameworkDisconnected<Ticket> Tickets { get; }
     }
 }

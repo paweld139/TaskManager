@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.BLL.Models;
 
 namespace TaskManager.DAL
 {
@@ -11,6 +12,9 @@ namespace TaskManager.DAL
     {
         public TaskManagerMappingProfile()
         {
+            CreateMap<Dictionary, DictionaryBrief>()
+                .ReverseMap();
+
             //CreateMap<Camp, CampModel>()
             //    .ForMember(c => c.Venue, opt => opt.MapFrom(m => m.Location.VenueName))
             //    .ReverseMap();

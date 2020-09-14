@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Models\Contrahent.cs" />
     <Compile Include="Models\Dictionary.cs" />
+    <Compile Include="Models\DictionaryBrief.cs" />
     <Compile Include="Models\Lookups.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\Employee.cs" />

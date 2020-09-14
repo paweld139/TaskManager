@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\DictionaryRepository.cs" />
     <Compile Include="SampleData\TaskManagerDbInitializer.cs" />
     <Compile Include="SampleData\TaskManagerSeeder.cs" />
     <Compile Include="TaskManagerContext.cs" />

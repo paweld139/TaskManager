@@ -211,10 +211,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\DictionaryController.cs" />
+    <Compile Include="Api\DictionariesController.cs" />
     <Compile Include="Api\LookupsController.cs" />
     <Compile Include="Api\OperationsController.cs" />
-    <Compile Include="Api\TicketController.cs" />
+    <Compile Include="Api\TicketsController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\ContainerConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

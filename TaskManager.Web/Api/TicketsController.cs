@@ -91,7 +91,6 @@ namespace TaskManager.Web.Api
             return taskManagerUow.Tickets.FindByFilter(t => t.Subject, subject);
         }
 
-
         [Route("getKVP")]
         public IEnumerable<KeyValuePair<int, string>> GetVP()
         {

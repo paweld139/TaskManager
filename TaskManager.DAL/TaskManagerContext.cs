@@ -1,7 +1,7 @@
 ﻿using PDWebCore.Context;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using TaskManager.BLL.Models;
+using TaskManager.BLL.Entities;
 using TaskManager.DAL.Configuration;
 using TaskManager.DAL.Entities;
 using TaskManager.DAL.SampleData;
@@ -12,7 +12,7 @@ namespace TaskManager.DAL
     {
         public TaskManagerContext() : base("TaskManagerContext")
         {
-            //Database.SetInitializer(new TaskManagerDbInitializer());
+            Database.SetInitializer(new TaskManagerDbInitializer());
         }
 
 

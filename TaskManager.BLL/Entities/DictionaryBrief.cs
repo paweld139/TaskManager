@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManager.BLL.Models
+namespace TaskManager.BLL.Entities
 {
     [DataContract(Name = "dictionary")]
     public class DictionaryBrief

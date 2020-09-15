@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
-namespace TaskManager.BLL.Models
+namespace TaskManager.BLL.Entities
 {
     [Table("Dictionary", Schema = "dbo")]
     [DataContract(Name = "dictionary")]
@@ -19,22 +19,27 @@ namespace TaskManager.BLL.Models
         public string Name { get; set; }
 
 
+        [IgnoreDataMember]
         public virtual ICollection<Ticket> StatusTickets { get; set; }
 
+        [IgnoreDataMember]
         public virtual ICollection<Ticket> PriorityTickets { get; set; }
 
+        [IgnoreDataMember]
         public virtual ICollection<Ticket> TypeTickets { get; set; }
 
 
+        [IgnoreDataMember]
         public DateTime DateModified { get; set; }
 
-        [DataMember(Name = "dateCreated")]
+        [IgnoreDataMember]
         public DateTime DateCreated { get; set; }
 
         [Timestamp]
         [DataMember(Name = "rowVersion")]
         public byte[] RowVersion { get; set; }
-  
+
+        [IgnoreDataMember]
         public bool IsDirty { get; set; }
     }
 }

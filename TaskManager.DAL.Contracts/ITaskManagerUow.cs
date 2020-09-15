@@ -1,5 +1,5 @@
 ﻿using PDCore.Repositories.IRepo;
-using TaskManager.BLL.Models;
+using TaskManager.BLL.Entities;
 
 namespace TaskManager.DAL.Contracts
 {
@@ -13,6 +13,6 @@ namespace TaskManager.DAL.Contracts
 
         // Repositories
         IDictionaryRepository Dictionaries { get; }
-        ISqlRepositoryEntityFrameworkDisconnected<Ticket> Tickets { get; }
+        ITicketRepository Tickets { get; }
     }
 }

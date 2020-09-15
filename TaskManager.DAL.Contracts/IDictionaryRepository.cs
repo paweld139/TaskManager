@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using TaskManager.BLL.Models;
+using TaskManager.BLL.Entities;
 
 namespace TaskManager.DAL.Contracts
 {
     public interface IDictionaryRepository : ISqlRepositoryEntityFrameworkDisconnected<Dictionary>
     {
+        Task<List<Dictionary>> GetAsync(string name, string value = null);
+
         Task<List<DictionaryBrief>> GetDictionaryBriefsAsync(string name, string value = null);
     }
 }

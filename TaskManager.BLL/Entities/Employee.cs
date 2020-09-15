@@ -1,10 +1,11 @@
 ﻿using PDCore.Interfaces;
+using PDCore.Utils;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
-namespace TaskManager.BLL.Models
+namespace TaskManager.BLL.Entities
 {
     [Table("Employee", Schema = "dbo")]
     [DataContract(Name = "employee")]
@@ -35,6 +36,7 @@ namespace TaskManager.BLL.Models
         [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         public string LastName { get; set; }
 
+
         public DateTime DateModified { get; set; }
 
         public DateTime DateCreated { get; set; }
@@ -43,5 +45,9 @@ namespace TaskManager.BLL.Models
         public byte[] RowVersion { get; set; }
 
         public bool IsDirty { get; set; }
+
+        [NotMapped]
+        [DataMember(Name = "fullName")]
+        public string FullName => StringUtils.GetFullName(FirstName, LastName);
     }
 }

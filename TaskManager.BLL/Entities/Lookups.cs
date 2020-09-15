@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManager.BLL.Models
+namespace TaskManager.BLL.Entities
 {
     /// <summary>A collection of "lookup" lists</summary>
     /// <remarks>

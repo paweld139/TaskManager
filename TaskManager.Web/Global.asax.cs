@@ -1,12 +1,16 @@
-﻿using PDCore.Repositories.Repo;
+﻿using PDCore.Converters;
+using PDCore.Repositories.Repo;
 using PDCoreNew.Services.Serv;
+using PDWebCore.Attributes;
 using PDWebCore.Helpers.ExceptionHandling;
 using PDWebCore.Helpers.MultiLanguage;
 using PDWebCore.Loggers;
 using System;
+using System.ComponentModel;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -31,6 +35,12 @@ namespace TaskManager.Web
             LogService.EnableLogInDb<TaskManagerContext, SqlServerWebLogger>();
 
             SqlRepository.IsLoggingEnabledByDefault = bool.Parse(WebConfigurationManager.AppSettings["IsLoggingEnabledByDefault"]);
+
+            TypeDescriptor.AddAttributes(typeof(DateTime), new TypeConverterAttribute(typeof(UtcDateTimeConverter)));
+
+            //GlobalConfiguration.Configuration.Services.Insert(typeof(ModelBinderProvider), 0, new DateTimeModelBinderProvider());
+
+            //GlobalConfiguration.Configure(configuration => configuration.BindParameter(typeof(DateTime), new UtcDateTimeModelBinder()));
         }
 
         protected void Application_Error(object sender, EventArgs e)
@@ -40,7 +50,7 @@ namespace TaskManager.Web
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {
-            LanguageHelper.SetLanguage(Request);
+            //LanguageHelper.SetLanguage(Request);
         }
 
         //protected void Application_BeginRequest(object sender, EventArgs e)

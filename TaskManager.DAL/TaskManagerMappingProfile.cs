@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.BLL.Entities;
 using TaskManager.BLL.Models;
 
 namespace TaskManager.DAL
@@ -13,6 +14,12 @@ namespace TaskManager.DAL
         public TaskManagerMappingProfile()
         {
             CreateMap<Dictionary, DictionaryBrief>()
+                .ReverseMap();
+
+            CreateMap<Ticket, TicketBrief>()
+                .ReverseMap();
+
+            CreateMap<Ticket, TicketModel>()
                 .ReverseMap();
 
             //CreateMap<Camp, CampModel>()

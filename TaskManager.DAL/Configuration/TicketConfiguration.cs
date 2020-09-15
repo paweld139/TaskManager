@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity.ModelConfiguration;
-using TaskManager.BLL.Models;
+using TaskManager.BLL.Entities;
 
 namespace TaskManager.DAL.Configuration
 {

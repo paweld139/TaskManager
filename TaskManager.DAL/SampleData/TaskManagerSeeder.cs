@@ -2,10 +2,11 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using PDCore.Extensions;
 using PDCoreNew.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using TaskManager.BLL.Models;
+using TaskManager.BLL.Entities;
 using TaskManager.DAL.Entities;
 
 namespace TaskManager.DAL.SampleData
@@ -25,6 +26,42 @@ namespace TaskManager.DAL.SampleData
             SeedContrahents(context);
             SeedUsers(context);
             SeedDictionary(context);
+            SeedTickets(context);
+        }
+
+        private void SeedTickets(TaskManagerContext context)
+        {
+            var tickets = new[]
+            {
+                new Ticket
+                {
+                    Subject = "Coś nie działa",
+                    Description = "Jest bardzo źle",
+                    Number = "TIC/2020/09/1",
+                    TypeId = 15,
+                    PriorityId = 3,
+                    StatusId = 6,
+                    ContrahentId = 1,
+                    RepresentativeId = 1
+                },
+
+                new Ticket
+                {
+                    Subject = "Znowu nie działa",
+                    Description = "Jest jeszcze gorzej",
+                    Number = "TIC/2020/09/2",
+                    TypeId = 16,
+                    PriorityId = 5,
+                    StatusId = 10,
+                    ContrahentId = 1,
+                    RepresentativeId = 1
+                }
+
+            };
+
+            tickets.ForEach(x => context.Set<Ticket>().AddOrUpdate(c => c.Number, x));
+
+            context.SaveChangesWithModificationHistory();
         }
 
         private void SeedDictionary(TaskManagerContext context)

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using TaskManager.BLL.Models;
+using TaskManager.BLL.Entities;
 
 namespace TaskManager.DAL.Entities
 {

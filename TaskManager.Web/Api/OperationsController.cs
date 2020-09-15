@@ -10,6 +10,7 @@ namespace TaskManager.Web.Api
 {
     public class OperationsController : ApiController
     {
+        // OPTIONS: api/refreshconfig
         [HttpOptions]
         [Route("api/refreshconfig")]
         public IHttpActionResult RefreshAppSettings()

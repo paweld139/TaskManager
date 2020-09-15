@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IDictionaryRepository.cs" />
     <Compile Include="ITaskManagerUow.cs" />
+    <Compile Include="ITicketRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

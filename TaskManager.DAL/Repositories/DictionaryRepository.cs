@@ -5,7 +5,7 @@ using PDCoreNew.Repositories.Repo;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TaskManager.BLL.Models;
+using TaskManager.BLL.Entities;
 using TaskManager.DAL.Contracts;
 using System.Data.Entity;
 using PDCore.Extensions;
@@ -20,9 +20,19 @@ namespace TaskManager.DAL.Repositories
         {
         }
 
+        private IQueryable<Dictionary> Find(string name, string value = null)
+        {
+            return Find(d => d.Name == name && (value == null || d.Value == value));
+        }
+
+        public Task<List<Dictionary>> GetAsync(string name, string value = null)
+        {
+            return Find(name, value).ToListAsync();
+        }
+
         public Task<List<DictionaryBrief>> GetDictionaryBriefsAsync(string name, string value = null)
         {
-            return GetAsync<DictionaryBrief>(d => d.Name == name && (value == null || d.Value == value));
+            return mapper.ProjectTo<DictionaryBrief>(Find(name, value)).ToListAsync();
         }
     }
 }

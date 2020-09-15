@@ -2,7 +2,7 @@
 using PDCoreNew.Context.IContext;
 using PDCoreNew.Factories.Fac.Repository;
 using PDCoreNew.UnitOfWork;
-using TaskManager.BLL.Models;
+using TaskManager.BLL.Entities;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Repositories;
 
@@ -15,6 +15,6 @@ namespace TaskManager.DAL
         }
 
         public IDictionaryRepository Dictionaries { get { return GetRepo<DictionaryRepository>(); } }
-        public ISqlRepositoryEntityFrameworkDisconnected<Ticket> Tickets { get { return GetStandardRepoDisconnected<Ticket>(); } }
+        public ITicketRepository Tickets { get { return GetRepo<TicketRepository>(); } }
     }
 }

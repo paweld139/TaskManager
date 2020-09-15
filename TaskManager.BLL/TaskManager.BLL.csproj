@@ -67,6 +67,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PDCore\PDCoreNew\PDCoreNew.csproj">
+      <Project>{81F5C1D9-664B-4300-98E6-99AEDA748C2A}</Project>
+      <Name>PDCoreNew</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PDCore\PDCore\PDCore.csproj">
       <Project>{5AC8CB92-D1B0-4F43-A444-E8D5E747DB4D}</Project>
       <Name>PDCore</Name>

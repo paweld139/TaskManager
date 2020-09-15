@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.Web.Http;
+﻿using Microsoft.Web.Http;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -34,12 +31,12 @@ namespace TaskManager.Web.Api
         }
 
         [Route("briefs")]
-        public IQueryable<TicketModel> GetBriefs()
+        public IEnumerable<TicketModel> GetBriefs()
         {
-            return taskManagerUow.Tickets.FindAll<TicketModel>();
+            return taskManagerUow.Tickets.GetAll<TicketModel>();
         }
 
-        [Route("{id:int}")]
+        [Route("{id:int}", Name = "GetTicket")]
         [ResponseType(typeof(Ticket))]
         public async Task<IHttpActionResult> Get(int id, bool includeSub = false)
         {
@@ -67,34 +64,48 @@ namespace TaskManager.Web.Api
             return Ok(ticket);
         }
 
-        [Route("getByDate")]
-        public IQueryable<Ticket> Get(DateTime createDate)
+        [Route("briefs/getByDate")]
+        public IQueryable<TicketModel> GetByDate(DateTime? createDate)
         {
-            return taskManagerUow.Tickets.FindByDateCreated(createDate.Date, createDate.Date);
+            return taskManagerUow.Tickets.FindByDateCreated<TicketModel>(createDate.Value.Date, createDate.Value.Date);
         }
 
-        [Route("getByDate")]
-        public IQueryable<Ticket> Get(DateTime dateFrom, DateTime dateTo)
+        [Route("briefs/getByDate")]
+        public IQueryable<TicketModel> Get(DateTime dateFrom, DateTime dateTo)
         {
-            return taskManagerUow.Tickets.FindByDateCreated(dateFrom.Date, dateTo.Date);
+            return taskManagerUow.Tickets.FindByDateCreated<TicketModel>(dateFrom.Date, dateTo.Date);
         }
 
-        [Route("getByPage")]
-        public IQueryable<Ticket> Get(int page, int size)
+        [Route("briefs/getByPage")]
+        public IQueryable<TicketModel> Get(int page, int size)
         {
-            return taskManagerUow.Tickets.FindPage(page, size);
+            return taskManagerUow.Tickets.FindPage<TicketModel>(page, size);
         }
 
-        [Route("getBySubject")]
-        public IQueryable<Ticket> Get(string subject)
+        [Route("briefs/getBySubject")]
+        public IQueryable<TicketModel> Get(string subject)
         {
-            return taskManagerUow.Tickets.FindByFilter(t => t.Subject, subject);
+            return taskManagerUow.Tickets.FindByFilter<TicketModel>(t => t.Subject, subject);
         }
 
         [Route("getKVP")]
-        public IEnumerable<KeyValuePair<int, string>> GetVP()
+        public IEnumerable<KeyValuePair<int, string>> GetVP(bool sortByValue = true)
         {
-            return taskManagerUow.Tickets.GetKeyValuePairs(t => t.Id, t => t.Subject);
+            return taskManagerUow.Tickets.GetKeyValuePairs(t => t.Id, t => t.Subject, sortByValue);
+        }
+
+        [Route]
+        [ResponseType(typeof(Ticket))]
+        public async Task<IHttpActionResult> Post(Ticket ticket)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await taskManagerUow.Tickets.SaveNewAsync(ticket);
+
+            return CreatedAtRoute("GetTicket", new { id = ticket.Id }, ticket);
         }
     }
 }

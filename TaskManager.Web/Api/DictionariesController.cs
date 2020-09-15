@@ -140,14 +140,14 @@ namespace TaskManager.Web.Api
         {
             var dictionary = await taskManagerUow.Dictionaries.FindByIdAsync(id);
 
-            if(dictionary == null)
+            if (dictionary == null)
             {
                 return NotFound();
             }
 
             bool success = await taskManagerUow.Dictionaries.DeleteAndCommitWithOptimisticConcurrencyAsync(dictionary, ModelState.AddModelError);
 
-            if(success)
+            if (success)
             {
                 return this.NoContent();
             }

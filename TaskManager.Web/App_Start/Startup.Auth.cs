@@ -28,7 +28,7 @@ namespace TaskManager.Web
                 AuthorizeEndpointPath = new PathString("/Account/Authorize"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-                AllowInsecureHttp = true
+                AllowInsecureHttp = true //Tylko testowo
             };
         }
 

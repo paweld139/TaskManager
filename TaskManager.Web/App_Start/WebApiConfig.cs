@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.ExceptionHandling;
-using System.Web.Http.Routing;
-using Microsoft.Owin.Security.OAuth;
+﻿using Microsoft.Owin.Security.OAuth;
 using Microsoft.Web.Http;
 using Microsoft.Web.Http.Routing;
 using Microsoft.Web.Http.Versioning;
 using Newtonsoft.Json.Serialization;
 using PDWebCore.Handlers;
+using PDWebCore.Helpers.ModelBinding.WebApi;
+using System;
+using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
+using System.Web.Http.Routing;
 
 namespace TaskManager.Web
 {
@@ -24,6 +22,14 @@ namespace TaskManager.Web
         public static void Register(HttpConfiguration config)
         {
             config.Services.Replace(typeof(IExceptionHandler), new LogExceptionHandler());
+
+            //config.Services.Insert(typeof(ModelBinderProvider), 0, new DateTimeModelBinderProvider());
+
+            config.BindParameter(typeof(DateTime), new UtcDateTimeModelBinder());
+            config.BindParameter(typeof(DateTime?), new UtcDateTimeModelBinder());
+
+            //// Add model validation, globally
+            //config.Filters.Add(new ValidationActionFilterAttribute());
 
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.

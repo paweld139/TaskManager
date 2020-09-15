@@ -36,11 +36,15 @@ namespace TaskManager.Web
 
             SqlRepository.IsLoggingEnabledByDefault = bool.Parse(WebConfigurationManager.AppSettings["IsLoggingEnabledByDefault"]);
 
-            TypeDescriptor.AddAttributes(typeof(DateTime), new TypeConverterAttribute(typeof(UtcDateTimeConverter)));
+            //TypeDescriptor.AddAttributes(typeof(DateTime), new TypeConverterAttribute(typeof(UtcDateTimeConverter)));
 
             //GlobalConfiguration.Configuration.Services.Insert(typeof(ModelBinderProvider), 0, new DateTimeModelBinderProvider());
 
             //GlobalConfiguration.Configure(configuration => configuration.BindParameter(typeof(DateTime), new UtcDateTimeModelBinder()));
+
+            //var binder = new DateTimeModelBinder(GetCustomDateFormat());
+            //ModelBinders.Binders.Add(typeof(DateTime), binder);
+            //ModelBinders.Binders.Add(typeof(DateTime?), binder)
         }
 
         protected void Application_Error(object sender, EventArgs e)
@@ -50,7 +54,7 @@ namespace TaskManager.Web
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {
-            //LanguageHelper.SetLanguage(Request);
+            LanguageHelper.SetLanguage(Request);
         }
 
         //protected void Application_BeginRequest(object sender, EventArgs e)

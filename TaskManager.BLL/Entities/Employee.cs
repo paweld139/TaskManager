@@ -1,5 +1,6 @@
 ﻿using PDCore.Interfaces;
 using PDCore.Utils;
+using PDCoreNew.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -35,7 +36,6 @@ namespace TaskManager.BLL.Entities
         [DataType(DataType.Text)]
         [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         public string LastName { get; set; }
-
 
         public DateTime DateModified { get; set; }
 

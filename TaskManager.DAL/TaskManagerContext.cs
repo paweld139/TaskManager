@@ -4,15 +4,21 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using TaskManager.BLL.Entities;
 using TaskManager.DAL.Configuration;
 using TaskManager.DAL.Entities;
-using TaskManager.DAL.SampleData;
 
 namespace TaskManager.DAL
 {
+    [DbConfigurationType(typeof(TaskManagerDbConfiguration))]
     public class TaskManagerContext : MainWebDbContext<ApplicationUser>
     {
         public TaskManagerContext() : base("TaskManagerContext")
         {
+#if DEBUG
+            Database.SetInitializer(new NullDatabaseInitializer<TaskManagerContext>()); //Na produkcji też
+#else     
             Database.SetInitializer(new TaskManagerDbInitializer());
+#endif
+
+            //this.ConfigureForDateTimeKind(DateTimeKind.Utc);
         }
 
 

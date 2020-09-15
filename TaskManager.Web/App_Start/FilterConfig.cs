@@ -1,5 +1,4 @@
-﻿using PDWebCore.Filters;
-using System.Web;
+﻿using PDWebCore.Filters.MVC;
 using System.Web.Mvc;
 
 namespace TaskManager.Web

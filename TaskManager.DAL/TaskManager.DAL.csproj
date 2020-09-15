@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\TaskManagerDbConfiguration.cs" />
     <Compile Include="Configuration\TicketConfiguration.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Migrations\202009131908476_Init.cs" />

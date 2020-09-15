@@ -65,6 +65,8 @@ namespace TaskManager.Web.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+        public DateTime UserLogInDate { get; set; }
     }
 
     public class RegisterViewModel

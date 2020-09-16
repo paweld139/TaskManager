@@ -4,6 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using TaskManager.BLL.Entities;
 using TaskManager.DAL.Configuration;
 using TaskManager.DAL.Entities;
+using TaskManager.DAL.SampleData;
 
 namespace TaskManager.DAL
 {

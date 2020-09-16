@@ -88,13 +88,13 @@ namespace TaskManager.Web.App_Start
                    .As(typeof(ISqlRepositoryEntityFrameworkDisconnected<>))
                    .InstancePerRequest();
 
-            //builder.RegisterType<LogRepo>()
-            //       .As<ILogRepo>()
-            //       .InstancePerRequest();
+            builder.RegisterType<LogRepo>()
+                   .As<ILogRepo>()
+                   .InstancePerRequest();
 
-            //builder.RegisterType<DictionaryRepository>()
-            //       .As<IDictionaryRepository>()
-            //       .InstancePerRequest();
+            builder.RegisterType<DictionaryRepository>()
+                   .As<IDictionaryRepository>()
+                   .InstancePerRequest();
 
 
             builder.RegisterType<LogMessageFactory>()

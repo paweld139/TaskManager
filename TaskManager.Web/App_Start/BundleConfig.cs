@@ -34,7 +34,8 @@ namespace TaskManager.Web
 
             bundles.Add(new ScriptBundle("~/bundles/Index").Include(
                 "~/Scripts/PDWebCore/Objects.js",
-                "~/Scripts/PDWebCore/Tools.js"));
+                "~/Scripts/PDWebCore/Tools.js",
+                "~/Scripts/PDWebCore/cookies.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                 "~/Scripts/jquery-ui-{version}.js",

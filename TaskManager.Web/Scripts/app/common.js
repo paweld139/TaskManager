@@ -46,7 +46,7 @@ window.common = (function () {
     }
 
     common.setTimezoneOffset = function () {
-        setCookie('timezoneOffset', getTimezoneOffset(), 1);
+        setTimezoneCookie();
     }
 
     return common;

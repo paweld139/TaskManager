@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Web.Http;
+using PDWebCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ using System.Web.Http.Description;
 using TaskManager.BLL.Entities;
 using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Entities.DTO;
-using TaskManager.BLL.Models;
 using TaskManager.DAL.Contracts;
 
 namespace TaskManager.Web.Api
@@ -148,14 +148,14 @@ namespace TaskManager.Web.Api
 
         [Route("{id:int}")]
         [ResponseType(typeof(TicketDetails))]
-        public async Task<IHttpActionResult> Put(int id, TicketModel model)
+        public async Task<IHttpActionResult> Put(int id, TicketDetails details)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != model.Id)
+            if (id != details.Id)
             {
                 return BadRequest();
             }
@@ -167,12 +167,10 @@ namespace TaskManager.Web.Api
                 return NotFound();
             }
 
-            bool success = await taskManagerUow.Tickets.SaveUpdatedWithOptimisticConcurrencyAsync(model, ticket, User, ModelState.AddModelError);
+            bool success = await taskManagerUow.Tickets.SaveUpdatedWithOptimisticConcurrencyAsync(details, ticket, User, ModelState.AddModelError);
 
             if (success)
             {
-                var details = mapper.Map<TicketDetails>(ticket);
-
                 return Ok(details);
             }
 
@@ -210,6 +208,26 @@ namespace TaskManager.Web.Api
             if (!taskManagerUow.Tickets.Exists(id))
             {
                 return NotFound();
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        [Route("{id:int}")]
+        public async Task<IHttpActionResult> Delete(int id)
+        {
+            var ticket = await taskManagerUow.Tickets.FindByIdAsync(id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            bool success = await taskManagerUow.Tickets.DeleteAndCommitWithOptimisticConcurrencyAsync(ticket, ModelState.AddModelError);
+
+            if (success)
+            {
+                return this.NoContent();
             }
 
             return BadRequest(ModelState);

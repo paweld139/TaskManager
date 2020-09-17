@@ -9,7 +9,6 @@ using TaskManager.BLL.Entities;
 using TaskManager.BLL.Entities.Briefs;
 using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Entities.DTO;
-using TaskManager.BLL.Models;
 
 namespace TaskManager.DAL
 {
@@ -23,8 +22,8 @@ namespace TaskManager.DAL
             CreateMap<Ticket, TicketBrief>()
                 .ReverseMap();
 
-            CreateMap<Ticket, TicketModel>()
-                .ReverseMap();
+            //CreateMap<Ticket, TicketModel>()
+            //    .ReverseMap();
 
             CreateMap<Ticket, TicketDetails>()
                 .ReverseMap()

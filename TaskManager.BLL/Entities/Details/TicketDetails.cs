@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PDCore.Interfaces;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using TaskManager.BLL.Entities.DTO;
@@ -6,7 +7,7 @@ using TaskManager.BLL.Entities.DTO;
 namespace TaskManager.BLL.Entities.Details
 {
     [DataContract(Name = "ticket", Namespace = "")]
-    public class TicketDetails : TicketDTO
+    public class TicketDetails : TicketDTO, IHasRowVersion
     {
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [Display(Name = "Description", ResourceType = typeof(Resources.Common))]

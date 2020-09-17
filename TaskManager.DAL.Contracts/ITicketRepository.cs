@@ -1,13 +1,10 @@
 ﻿using PDCore.Repositories.IRepo;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using System.Text;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities;
 using TaskManager.BLL.Entities.Details;
-using TaskManager.BLL.Models;
 
 namespace TaskManager.DAL.Contracts
 {
@@ -21,11 +18,11 @@ namespace TaskManager.DAL.Contracts
 
         void Update(Ticket ticket, IPrincipal principal);
 
-        void Update(TicketModel source, Ticket destination, IPrincipal principal);
+        void Update(TicketDetails source, Ticket destination, IPrincipal principal);
 
         Task<bool> SaveUpdatedWithOptimisticConcurrencyAsync(Ticket ticket, IPrincipal principal, Action<string, string> writeError);
 
-        Task<bool> SaveUpdatedWithOptimisticConcurrencyAsync(TicketModel source, Ticket destination, IPrincipal principal, Action<string, string> writeError);
+        Task<bool> SaveUpdatedWithOptimisticConcurrencyAsync(TicketDetails source, Ticket destination, IPrincipal principal, Action<string, string> writeError);
         
         Task<TicketDetails> FindDetailsByIdAsync(int id);
 

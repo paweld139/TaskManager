@@ -1,20 +1,15 @@
 ﻿using AutoMapper;
-using PDCore.Extensions;
 using PDCore.Interfaces;
-using PDCore.Models.Shop;
 using PDCoreNew.Context.IContext;
 using PDCoreNew.Repositories.Repo;
-using PDWebCore;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities;
 using TaskManager.BLL.Entities.Details;
-using TaskManager.BLL.Models;
 using TaskManager.DAL.Contracts;
 
 namespace TaskManager.DAL.Repositories
@@ -105,7 +100,7 @@ namespace TaskManager.DAL.Repositories
             UpdateWithIncludeOrExcludeProperties(ticket, true, properties);
         }
 
-        public void Update(TicketModel source, Ticket destination, IPrincipal principal)
+        public void Update(TicketDetails source, Ticket destination, IPrincipal principal)
         {
             if (principal.IsInRole("Admin"))
             {
@@ -126,11 +121,15 @@ namespace TaskManager.DAL.Repositories
             return SaveUpdatedWithOptimisticConcurrencyAsync(ticket, writeError, false);
         }
 
-        public Task<bool> SaveUpdatedWithOptimisticConcurrencyAsync(TicketModel source, Ticket destination, IPrincipal principal, Action<string, string> writeError)
+        public async Task<bool> SaveUpdatedWithOptimisticConcurrencyAsync(TicketDetails source, Ticket destination, IPrincipal principal, Action<string, string> writeError)
         {
             Update(source, destination, principal);
 
-            return SaveUpdatedWithOptimisticConcurrencyAsync(destination, writeError, false);
+            var result = await SaveUpdatedWithOptimisticConcurrencyAsync(destination, writeError, false);
+
+            mapper.Map(destination, source);
+
+            return result;
         }
     }
 }

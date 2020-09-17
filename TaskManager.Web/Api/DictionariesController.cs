@@ -2,6 +2,7 @@
 using AutoMapper;
 using Microsoft.Web.Http;
 using PDCore.Extensions;
+using PDCore.Models;
 using PDCore.Repositories.IRepo;
 using PDWebCore;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TaskManager.BLL.Entities;
+using TaskManager.BLL.Entities.Briefs;
 using TaskManager.DAL.Contracts;
 
 namespace TaskManager.Web.Api
@@ -78,7 +80,7 @@ namespace TaskManager.Web.Api
         [ResponseType(typeof(DictionaryBrief))]
         public async Task<IHttpActionResult> GetBriefs(string name, string value = null)
         {
-            var dictionaries = await taskManagerUow.Dictionaries.GetDictionaryBriefsAsync(name, value);
+            var dictionaries = await taskManagerUow.Dictionaries.GetBriefsAsync(name, value);
 
             if (dictionaries.IsEmpty())
             {
@@ -119,7 +121,7 @@ namespace TaskManager.Web.Api
                 return BadRequest();
             }
 
-            bool success = await taskManagerUow.Dictionaries.SaveUpdatedWithOptimisticConcurrencyAsync(dictionary, ModelState.AddModelError);
+            bool success = await taskManagerUow.Dictionaries.SaveUpdatedWithOptimisticConcurrencyAsync(dictionary, ModelState.AddModelError, true);
 
             if (success)
             {

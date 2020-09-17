@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using TaskManager.BLL.Entities.Briefs;
 
 namespace TaskManager.BLL.Entities
 {
     [Table("Dictionary", Schema = "dbo")]
-    [DataContract(Name = "dictionary")]
+    [DataContract(Name = "dictionary", Namespace = "")]
     public class Dictionary : DictionaryBrief, IModificationHistory
     {
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]

@@ -11,6 +11,7 @@ using System.Data.Entity;
 using PDCore.Extensions;
 using System.Linq.Expressions;
 using System;
+using TaskManager.BLL.Entities.Briefs;
 
 namespace TaskManager.DAL.Repositories
 {
@@ -30,7 +31,7 @@ namespace TaskManager.DAL.Repositories
             return Find(name, value).ToListAsync();
         }
 
-        public Task<List<DictionaryBrief>> GetDictionaryBriefsAsync(string name, string value = null)
+        public Task<List<DictionaryBrief>> GetBriefsAsync(string name, string value = null)
         {
             return mapper.ProjectTo<DictionaryBrief>(Find(name, value)).ToListAsync();
         }

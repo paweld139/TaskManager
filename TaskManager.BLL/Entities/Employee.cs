@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 namespace TaskManager.BLL.Entities
 {
     [Table("Employee", Schema = "dbo")]
-    [DataContract(Name = "employee")]
+    [DataContract(Name = "employee", Namespace = "")]
     public class Employee : IModificationHistory
     {
         [Key]
@@ -29,12 +29,14 @@ namespace TaskManager.BLL.Entities
         [Display(Name = "FirstName", ResourceType = typeof(Resources.Common))]
         [DataType(DataType.Text)]
         [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        [DataMember(Name = "firstName")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [Display(Name = "LastName", ResourceType = typeof(Resources.Common))]
         [DataType(DataType.Text)]
         [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        [DataMember(Name = "lastName")]
         public string LastName { get; set; }
 
         public DateTime DateModified { get; set; }
@@ -47,7 +49,6 @@ namespace TaskManager.BLL.Entities
         public bool IsDirty { get; set; }
 
         [NotMapped]
-        [DataMember(Name = "fullName")]
         public string FullName => StringUtils.GetFullName(FirstName, LastName);
     }
 }

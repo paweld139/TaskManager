@@ -47,12 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Contrahent.cs" />
+    <Compile Include="Entities\Details\TicketDetails.cs" />
     <Compile Include="Entities\Dictionary.cs" />
-    <Compile Include="Entities\DictionaryBrief.cs" />
+    <Compile Include="Entities\Briefs\DictionaryBrief.cs" />
+    <Compile Include="Entities\DTO\TicketDTO.cs" />
     <Compile Include="Entities\Lookups.cs" />
     <Compile Include="Entities\Ticket.cs" />
     <Compile Include="Entities\Employee.cs" />
-    <Compile Include="Entities\TicketBrief.cs" />
+    <Compile Include="Entities\Briefs\TicketBrief.cs" />
     <Compile Include="Models\TicketModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Models\Contrahent.Designer.cs">

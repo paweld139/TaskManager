@@ -84,17 +84,17 @@ namespace TaskManager.Web.App_Start
                    .InstancePerRequest();
 
 
-            builder.RegisterGeneric(typeof(SqlRepositoryEntityFrameworkDisconnected<>))
-                   .As(typeof(ISqlRepositoryEntityFrameworkDisconnected<>))
-                   .InstancePerRequest();
+            //builder.RegisterGeneric(typeof(SqlRepositoryEntityFrameworkDisconnected<>))
+            //       .As(typeof(ISqlRepositoryEntityFrameworkDisconnected<>))
+            //       .InstancePerRequest();
 
-            builder.RegisterType<LogRepo>()
-                   .As<ILogRepo>()
-                   .InstancePerRequest();
+            //builder.RegisterType<LogRepo>()
+            //       .As<ILogRepo>()
+            //       .InstancePerRequest();
 
-            builder.RegisterType<DictionaryRepository>()
-                   .As<IDictionaryRepository>()
-                   .InstancePerRequest();
+            //builder.RegisterType<DictionaryRepository>()
+            //       .As<IDictionaryRepository>()
+            //       .InstancePerRequest();
 
 
             builder.RegisterType<LogMessageFactory>()
@@ -106,7 +106,7 @@ namespace TaskManager.Web.App_Start
                    .SingleInstance();
 
 
-            builder.RegisterType<FileLogger>()
+            builder.RegisterType<TraceLogger>()
                    .As<ILogger>()
                    .SingleInstance();
 

@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 namespace TaskManager.BLL.Entities
 {
     [Table("Contrahent", Schema = "dbo")]
-    [DataContract(Name = "contrahent")]
+    [DataContract(Name = "contrahent", Namespace = "")]
     public class Contrahent : IModificationHistory
     {
         [Key]
@@ -47,8 +47,8 @@ namespace TaskManager.BLL.Entities
         [IgnoreDataMember]
         public bool IsOperator { get; set; }
 
-        [Required(ErrorMessage = "Nie uzupełniono pola '{0}'")]
-        [Display(Name = "Klucz licencyjny")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        [Display(Name = "LicenseKey", ResourceType = typeof(Resources.Common))]
         [DataType(DataType.Text)]
         [StringLength(20, MinimumLength = 20, ErrorMessageResourceName = "LicenseKeyInvalid", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [IgnoreDataMember]

@@ -8,9 +8,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManager.BLL.Entities
+namespace TaskManager.BLL.Entities.Briefs
 {
-    [DataContract(Name = "ticket")]
+    [DataContract(Name = "ticket", Namespace = "")]
     public class TicketBrief
     {
         [Key]

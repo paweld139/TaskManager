@@ -1,42 +1,32 @@
-﻿using PDCore.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using PDCore.Interfaces;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.BLL.Entities;
 
 namespace TaskManager.BLL.Models
 {
-    [DataContract(Name = "ticket")]
-    public class TicketModel : TicketBrief
+    [DataContract(Name = "ticket", Namespace = "")]
+    public class TicketModel : IHasRowVersion
     {
-        [DataMember(Name = "type")]
-        public string  TypeValue { get; set; }
-
-        [DataMember(Name = "priority")]
-        public string PriorityValue { get; set; }
-
-        [DataMember(Name = "status")]
-        public string StatusValue { get; set; }
+        [Display(Name = "Id", ResourceType = typeof(Resources.Common))]
+        [DataMember(Name = "id")]
+        public int Id { get; set; }
 
 
-        [DataMember(Name = "contrahent")]
-        public string ContrahentName { get; set; }
+        [Display(Name = "Budget", ResourceType = typeof(Resources.Common))]
+        [DataMember(Name = "budget")]
+        public decimal? Budget { get; set; }
+
+        [Display(Name = "Priority", ResourceType = typeof(Resources.Common))]
+        [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        [DataMember(Name = "priorityId")]
+        public int PriorityId { get; set; }
+
+        [Display(Name = "Operator", ResourceType = typeof(Resources.Common))]
+        [DataMember(Name = "operatorId")]
+        public int? OperatorId { get; set; }
 
 
-        [DataMember(Name = "representativeFirstName")]
-        public string RepresentativeFirstName { get; set; }
-
-        [DataMember(Name = "representativeLastName")]
-        public string RepresentativeLastName { get; set; }
-
-
-        [DataMember(Name = "operatorFirstName")]
-        public string OperatorFirstName { get; set; }
-
-        [DataMember(Name = "operatorLastName")]
-        public string OperatorLastName { get; set; }
+        [DataMember(Name = "rowVersion")]
+        public byte[] RowVersion { get; set; }
     }
 }

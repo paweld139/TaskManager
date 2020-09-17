@@ -34,6 +34,7 @@ namespace TaskManager.Web.Controllers
         {
             var claims = new ClaimsPrincipal(User).Claims.ToArray();
             var identity = new ClaimsIdentity(claims, "Bearer");
+
             AuthenticationManager.SignIn(identity);
             return new EmptyResult();
         }

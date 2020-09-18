@@ -42,7 +42,22 @@ namespace TaskManager.DAL.SampleData
                     PriorityId = 3,
                     StatusId = 6,
                     ContrahentId = 1,
-                    RepresentativeId = 1
+                    RepresentativeId = 1,
+                    Comments = new List<Comment>
+                    {
+                        new Comment
+                        {
+                           Content = "Dzięki",
+                           EmployeeId = 1,
+                           TicketId = 1
+                        },
+                        new Comment
+                        {
+                           Content = "Jeszcze raz dzięki",
+                           EmployeeId = 1,
+                           TicketId = 1
+                        }
+                    }
                 },
 
                 new Ticket
@@ -54,7 +69,16 @@ namespace TaskManager.DAL.SampleData
                     PriorityId = 5,
                     StatusId = 10,
                     ContrahentId = 1,
-                    RepresentativeId = 1
+                    RepresentativeId = 1,
+                    Comments = new List<Comment>
+                    {
+                        new Comment
+                        {
+                           Content = "Witam",
+                           EmployeeId = 1,
+                           TicketId = 2
+                        }
+                    }
                 }
 
             };

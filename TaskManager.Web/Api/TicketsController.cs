@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TaskManager.BLL.Entities;
+using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Entities.DTO;
 using TaskManager.DAL.Contracts;
@@ -21,14 +22,13 @@ namespace TaskManager.Web.Api
     public class TicketsController : ApiController
     {
         private readonly ITaskManagerUow taskManagerUow;
-        private readonly IMapper mapper;
 
-        public TicketsController(ITaskManagerUow taskManagerUow, IMapper mapper)
+        public TicketsController(ITaskManagerUow taskManagerUow)
         {
             this.taskManagerUow = taskManagerUow;
-            this.mapper = mapper;
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("admin")]
         public IQueryable<Ticket> Get(bool includeSub = false)
         {
@@ -47,6 +47,7 @@ namespace TaskManager.Web.Api
             return taskManagerUow.Tickets.FindAll<TicketDTO>();
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("admin/{id:int}", Name = "GetTicketAdmin")]
         [ResponseType(typeof(Ticket))]
         public async Task<IHttpActionResult> Get(int id, bool includeSub = false)
@@ -65,7 +66,7 @@ namespace TaskManager.Web.Api
         [ResponseType(typeof(TicketDetails))]
         public async Task<IHttpActionResult> Get(int id)
         {
-            var ticket = await taskManagerUow.Tickets.FindDetailsByIdAsync(id);
+            var ticket = await taskManagerUow.Tickets.FindByIdAsync<TicketDetails>(id);
 
             if (ticket == null)
             {
@@ -119,6 +120,7 @@ namespace TaskManager.Web.Api
             return taskManagerUow.Tickets.GetKeyValuePairs(t => t.Id, t => t.Subject, sortByValue);
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("admin")]
         [ResponseType(typeof(Ticket))]
         public async Task<IHttpActionResult> Post(Ticket ticket)
@@ -133,8 +135,8 @@ namespace TaskManager.Web.Api
             return CreatedAtRoute("GetTicketAdmin", new { id = ticket.Id }, ticket);
         }
 
-        [ResponseType(typeof(TicketDetails))]
-        public async Task<IHttpActionResult> Post(TicketDetails ticket)
+        [ResponseType(typeof(TicketBasic))]
+        public async Task<IHttpActionResult> Post(TicketBasic ticket) //Dodać walidację
         {
             if (!ModelState.IsValid)
             {
@@ -147,15 +149,15 @@ namespace TaskManager.Web.Api
         }
 
         [Route("{id:int}")]
-        [ResponseType(typeof(TicketDetails))]
-        public async Task<IHttpActionResult> Put(int id, TicketDetails details)
+        [ResponseType(typeof(TicketBasic))]
+        public async Task<IHttpActionResult> Put(int id, TicketBasic basic)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != details.Id)
+            if (id != basic.Id)
             {
                 return BadRequest();
             }
@@ -167,11 +169,11 @@ namespace TaskManager.Web.Api
                 return NotFound();
             }
 
-            bool success = await taskManagerUow.Tickets.SaveUpdatedWithOptimisticConcurrencyAsync(details, ticket, User, ModelState.AddModelError);
+            bool success = await taskManagerUow.Tickets.SaveUpdatedWithOptimisticConcurrencyAsync(basic, ticket, User, ModelState.AddModelError);
 
             if (success)
             {
-                return Ok(details);
+                return Ok(basic);
             }
 
             if (!taskManagerUow.Tickets.Exists(id))

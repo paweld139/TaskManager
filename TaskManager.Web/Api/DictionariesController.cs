@@ -125,7 +125,9 @@ namespace TaskManager.Web.Api
 
             if (success)
             {
-                return Ok(dictionary);
+                var result = await taskManagerUow.Dictionaries.FindByIdAsync(id);
+
+                return Ok(result);
             }
 
             if (!taskManagerUow.Dictionaries.Exists(id))

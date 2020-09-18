@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities;
+using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Briefs;
 using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Entities.DTO;
@@ -25,18 +26,31 @@ namespace TaskManager.DAL
             //CreateMap<Ticket, TicketModel>()
             //    .ReverseMap();
 
-            CreateMap<Ticket, TicketDetails>()
-                .ReverseMap()
-                .ForMember(t => t.Contrahent, opt => opt.Ignore())
-                .ForMember(t => t.Operator, opt => opt.Ignore())
-                .ForMember(t => t.Representative, opt => opt.Ignore())
-                .ForMember(t => t.Type, opt => opt.Ignore())
-                .ForMember(t => t.Priority, opt => opt.Ignore())
-                .ForMember(t => t.Status, opt => opt.Ignore());
+            //CreateMap<Ticket, TicketDetails>()
+            //    .ReverseMap()
+            //    .ForMember(t => t.Contrahent, opt => opt.Ignore())
+            //    .ForMember(t => t.Operator, opt => opt.Ignore())
+            //    .ForMember(t => t.Representative, opt => opt.Ignore())
+            //    .ForMember(t => t.Type, opt => opt.Ignore())
+            //    .ForMember(t => t.Priority, opt => opt.Ignore())
+            //    .ForMember(t => t.Status, opt => opt.Ignore());
 
             CreateMap<Ticket, TicketDTO>()
                 .ReverseMap();
+
+            CreateMap<Ticket, TicketBasic>()
+                .ReverseMap();
             //.ForMember(t => t.RowVersion, opt => opt.Ignore());
+
+            CreateMap<Ticket, TicketDetails>()
+              .ReverseMap();
+
+
+            CreateMap<Comment, CommentDTO>()
+                .ReverseMap();
+
+            CreateMap<Comment, CommentBasic>()
+                .ReverseMap();
 
             //ForAllMaps((typeMap, map) =>
             //{

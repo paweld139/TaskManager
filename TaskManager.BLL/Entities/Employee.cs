@@ -2,6 +2,7 @@
 using PDCore.Utils;
 using PDCoreNew.Attributes;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
@@ -38,6 +39,10 @@ namespace TaskManager.BLL.Entities
         [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "lastName")]
         public string LastName { get; set; }
+
+        [IgnoreDataMember]
+        public virtual ICollection<Comment> Comments { get; set; }
+
 
         public DateTime DateModified { get; set; }
 

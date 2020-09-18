@@ -46,10 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Basic\CommentBasic.cs" />
+    <Compile Include="Entities\Basic\TicketBasic.cs" />
+    <Compile Include="Entities\Briefs\CommentBrief.cs" />
+    <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\Contrahent.cs" />
     <Compile Include="Entities\Details\TicketDetails.cs" />
     <Compile Include="Entities\Dictionary.cs" />
     <Compile Include="Entities\Briefs\DictionaryBrief.cs" />
+    <Compile Include="Entities\DTO\CommentDTO.cs" />
     <Compile Include="Entities\DTO\TicketDTO.cs" />
     <Compile Include="Entities\Lookups.cs" />
     <Compile Include="Entities\Ticket.cs" />

@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\CommentConfiguration.cs" />
     <Compile Include="Configuration\TaskManagerDbConfiguration.cs" />
     <Compile Include="Configuration\TicketConfiguration.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
@@ -71,6 +72,10 @@
     <Compile Include="Migrations\202009131911516_Fix.cs" />
     <Compile Include="Migrations\202009131911516_Fix.designer.cs">
       <DependentUpon>202009131911516_Fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009180049405_Comments.cs" />
+    <Compile Include="Migrations\202009180049405_Comments.designer.cs">
+      <DependentUpon>202009180049405_Comments.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009131911516_Fix.resx">
       <DependentUpon>202009131911516_Fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009180049405_Comments.resx">
+      <DependentUpon>202009180049405_Comments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

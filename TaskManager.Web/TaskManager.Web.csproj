@@ -211,6 +211,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\CommentsController.cs" />
     <Compile Include="Api\DictionariesController.cs" />
     <Compile Include="Api\LookupsController.cs" />
     <Compile Include="Api\OperationsController.cs" />

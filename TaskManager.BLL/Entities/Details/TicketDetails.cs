@@ -1,30 +1,42 @@
 ﻿using PDCore.Interfaces;
-using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
+using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.DTO;
 
 namespace TaskManager.BLL.Entities.Details
 {
     [DataContract(Name = "ticket", Namespace = "")]
-    public class TicketDetails : TicketDTO, IHasRowVersion
+    public class TicketDetails : TicketBasic
     {
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [Display(Name = "Description", ResourceType = typeof(Resources.Common))]
-        [DataType(DataType.Html)]
-        [DataMember(Name = "description")]
-        public string Description { get; set; }
+        [DataMember(Name = "type")]
+        public string TypeValue { get; set; }
 
-        [Display(Name = "Budget", ResourceType = typeof(Resources.Common))]
-        [DataMember(Name = "budget")]
-        public decimal? Budget { get; set; }
+        [DataMember(Name = "priority")]
+        public string PriorityValue { get; set; }
 
-        [Display(Name = "DateModified", ResourceType = typeof(Resources.Common))]
-        [DataMember(Name = "dateModified")]
-        public DateTime DateModified { get; set; }
+        [DataMember(Name = "status")]
+        public string StatusValue { get; set; }
 
-        [Timestamp]
-        [DataMember(Name = "rowVersion")]
-        public byte[] RowVersion { get; set; }
+
+        [DataMember(Name = "contrahent")]
+        public string ContrahentName { get; set; }
+
+
+        [DataMember(Name = "representativeFirstName")]
+        public string RepresentativeFirstName { get; set; }
+
+        [DataMember(Name = "representativeLastName")]
+        public string RepresentativeLastName { get; set; }
+
+
+        [DataMember(Name = "operatorFirstName")]
+        public string OperatorFirstName { get; set; }
+
+        [DataMember(Name = "operatorLastName")]
+        public string OperatorLastName { get; set; }
+
+        [DataMember(Name = "comments")]
+        public virtual ICollection<CommentDTO> Comments { get; set; }
     }
 }

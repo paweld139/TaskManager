@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities;
+using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Details;
 
 namespace TaskManager.DAL.Contracts
@@ -18,13 +19,11 @@ namespace TaskManager.DAL.Contracts
 
         void Update(Ticket ticket, IPrincipal principal);
 
-        void Update(TicketDetails source, Ticket destination, IPrincipal principal);
+        void Update(TicketBasic source, Ticket destination, IPrincipal principal);
 
         Task<bool> SaveUpdatedWithOptimisticConcurrencyAsync(Ticket ticket, IPrincipal principal, Action<string, string> writeError);
 
-        Task<bool> SaveUpdatedWithOptimisticConcurrencyAsync(TicketDetails source, Ticket destination, IPrincipal principal, Action<string, string> writeError);
-        
-        Task<TicketDetails> FindDetailsByIdAsync(int id);
+        Task<bool> SaveUpdatedWithOptimisticConcurrencyAsync(TicketBasic source, Ticket destination, IPrincipal principal, Action<string, string> writeError);
 
         Task<TicketDetails> FindDetailsByNumberAsync(string number);
     }

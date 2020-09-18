@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities;
+using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Details;
 using TaskManager.DAL.Contracts;
 
@@ -33,7 +34,8 @@ namespace TaskManager.DAL.Repositories
                     .Include(t => t.Status)
                     .Include(t => t.Contrahent)
                     .Include(t => t.Representative)
-                    .Include(t => t.Operator);
+                    .Include(t => t.Operator)
+                    .Include(t => t.Comments);
         }
 
         public Task<Ticket> FindByIdAsync(int id, bool includeSubobjects, bool asNoTracking = true)
@@ -44,11 +46,6 @@ namespace TaskManager.DAL.Repositories
         public Task<Ticket> FindByNumberAsync(string number, bool includeSubobjects)
         {
             return Find(includeSubobjects).SingleOrDefaultAsync(t => t.Number == number);
-        }
-
-        public Task<TicketDetails> FindDetailsByIdAsync(int id)
-        {
-            return FindAll<TicketDetails>().SingleOrDefaultAsync(t => t.Id == id);
         }
 
         public Task<TicketDetails> FindDetailsByNumberAsync(string number)
@@ -100,7 +97,7 @@ namespace TaskManager.DAL.Repositories
             UpdateWithIncludeOrExcludeProperties(ticket, true, properties);
         }
 
-        public void Update(TicketDetails source, Ticket destination, IPrincipal principal)
+        public void Update(TicketBasic source, Ticket destination, IPrincipal principal)
         {
             if (principal.IsInRole("Admin"))
             {
@@ -121,13 +118,14 @@ namespace TaskManager.DAL.Repositories
             return SaveUpdatedWithOptimisticConcurrencyAsync(ticket, writeError, false);
         }
 
-        public async Task<bool> SaveUpdatedWithOptimisticConcurrencyAsync(TicketDetails source, Ticket destination, IPrincipal principal, Action<string, string> writeError)
+        public async Task<bool> SaveUpdatedWithOptimisticConcurrencyAsync(TicketBasic source, Ticket destination, IPrincipal principal, Action<string, string> writeError)
         {
             Update(source, destination, principal);
 
             var result = await SaveUpdatedWithOptimisticConcurrencyAsync(destination, writeError, false);
 
-            mapper.Map(destination, source);
+            if (result)
+                mapper.Map(destination, source);
 
             return result;
         }

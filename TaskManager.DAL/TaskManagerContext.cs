@@ -31,6 +31,8 @@ namespace TaskManager.DAL
 
         public DbSet<Employee> Employees { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -39,6 +41,7 @@ namespace TaskManager.DAL
 
 
             modelBuilder.Configurations.Add(new TicketConfiguration());
+            modelBuilder.Configurations.Add(new CommentConfiguration());
 
 
             base.OnModelCreating(modelBuilder);

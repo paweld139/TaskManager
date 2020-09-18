@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
+using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Briefs;
 
 namespace TaskManager.BLL.Entities
@@ -24,19 +25,8 @@ namespace TaskManager.BLL.Entities
 
     [Table("Ticket", Schema = "dbo")]
     [DataContract(Name = "ticket", Namespace = "")]
-    public class Ticket : TicketBrief, IModificationHistory
+    public class Ticket : TicketBasic, IModificationHistory
     {
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [Display(Name = "Description", ResourceType = typeof(Resources.Common))]
-        [DataType(DataType.Html)]
-        [DataMember(Name = "description")]
-        public string Description { get; set; }
-
-        [Display(Name = "Budget", ResourceType = typeof(Resources.Common))]
-        [DataMember(Name = "budget")]
-        public decimal? Budget { get; set; }
-        
-
         #region Proxies
 
         [ForeignKey("TypeId")]
@@ -65,16 +55,11 @@ namespace TaskManager.BLL.Entities
         [DataMember(Name = "operator")]
         public virtual Employee Operator { get; set; }
 
+        [DataMember(Name = "comments")]
+        public virtual ICollection<Comment> Comments { get; set; }
+
         #endregion
 
-
-        [Display(Name = "DateModified", ResourceType = typeof(Resources.Common))]
-        [DataMember(Name = "dateModified")]
-        public DateTime DateModified { get; set; }
-
-        [Timestamp]
-        [DataMember(Name = "rowVersion")]
-        public byte[] RowVersion { get; set; }
 
         [IgnoreDataMember]
         public bool IsDirty { get; set; }

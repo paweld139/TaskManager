@@ -14,5 +14,6 @@ namespace TaskManager.DAL.Contracts
         // Repositories
         IDictionaryRepository Dictionaries { get; }
         ITicketRepository Tickets { get; }
+        ISqlRepositoryEntityFrameworkDisconnected<Comment> Comments { get; }
     }
 }

@@ -39,5 +39,11 @@ namespace TaskManager.BLL.Entities.Details
 
         [DataMember(Name = "comments")]
         public virtual ICollection<CommentDTO> Comments { get; set; }
+
+        [DataMember(Name = "representativeEmail")]
+        public string RepresentativeApplicationUserEmail { get; set; }
+
+        [DataMember(Name = "representativePhoneNumber")]
+        public string RepresentativeApplicationUserPhoneNumber { get; set; }
     }
 }

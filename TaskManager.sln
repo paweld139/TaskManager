@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.DAL", "TaskMana
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.BLL", "TaskManager.BLL\TaskManager.BLL.csproj", "{70E89075-BC71-4642-975E-3C10266C07EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.DAL.Contracts", "TaskManager.DAL.Contracts\TaskManager.DAL.Contracts.csproj", "{527C2B7B-C254-42E7-8073-533046EAC0FE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,14 +85,6 @@ Global
 		{70E89075-BC71-4642-975E-3C10266C07EB}.Test|Any CPU.Build.0 = Debug|Any CPU
 		{70E89075-BC71-4642-975E-3C10266C07EB}.Test2|Any CPU.ActiveCfg = Debug|Any CPU
 		{70E89075-BC71-4642-975E-3C10266C07EB}.Test2|Any CPU.Build.0 = Debug|Any CPU
-		{527C2B7B-C254-42E7-8073-533046EAC0FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{527C2B7B-C254-42E7-8073-533046EAC0FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{527C2B7B-C254-42E7-8073-533046EAC0FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{527C2B7B-C254-42E7-8073-533046EAC0FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{527C2B7B-C254-42E7-8073-533046EAC0FE}.Test|Any CPU.ActiveCfg = Debug|Any CPU
-		{527C2B7B-C254-42E7-8073-533046EAC0FE}.Test|Any CPU.Build.0 = Debug|Any CPU
-		{527C2B7B-C254-42E7-8073-533046EAC0FE}.Test2|Any CPU.ActiveCfg = Debug|Any CPU
-		{527C2B7B-C254-42E7-8073-533046EAC0FE}.Test2|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,11 +1,8 @@
 ﻿using PDCore.Repositories.IRepo;
-using System;
 using System.Linq;
-using System.Security.Principal;
 using System.Threading.Tasks;
-using TaskManager.BLL.Entities;
-using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Details;
+using TaskManager.DAL.Entities;
 
 namespace TaskManager.DAL.Contracts
 {

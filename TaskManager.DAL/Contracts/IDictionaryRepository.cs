@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities.Briefs;
+using TaskManager.DAL.Entities;
 
 namespace TaskManager.DAL.Contracts
 {

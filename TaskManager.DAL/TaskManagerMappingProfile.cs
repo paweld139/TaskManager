@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
-using PDCore.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.BLL.Entities;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Briefs;
-using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Entities.DTO;
+using TaskManager.DAL.Entities;
+using TaskManager.DAL.Proxies;
 
 namespace TaskManager.DAL
 {
@@ -35,14 +29,14 @@ namespace TaskManager.DAL
             //    .ForMember(t => t.Priority, opt => opt.Ignore())
             //    .ForMember(t => t.Status, opt => opt.Ignore());
 
-            CreateMap<Ticket, TicketDTO>()
-                .ReverseMap();
+            CreateMap<Ticket, TicketDTOProxy>()
+              .ReverseMap();
 
             CreateMap<Ticket, TicketBasic>()
                 .ReverseMap();
             //.ForMember(t => t.RowVersion, opt => opt.Ignore());
 
-            CreateMap<Ticket, TicketDetails>()
+            CreateMap<Ticket, TicketDetailsProxy>()
               .ReverseMap();
 
 

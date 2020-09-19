@@ -3,16 +3,16 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Fix : DbMigration
+    public partial class NumberFIx1 : DbMigration
     {
         public override void Up()
         {
-            DropColumn("dbo.Employee", "CreateDate");
+            AlterColumn("dbo.Ticket", "Number", c => c.String());
         }
         
         public override void Down()
         {
-            AddColumn("dbo.Employee", "CreateDate", c => c.DateTimeOffset(nullable: false, precision: 7));
+            AlterColumn("dbo.Ticket", "Number", c => c.String(nullable: false));
         }
     }
 }

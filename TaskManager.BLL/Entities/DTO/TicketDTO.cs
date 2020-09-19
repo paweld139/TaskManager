@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using TaskManager.BLL.Entities;
 using TaskManager.BLL.Entities.Briefs;
+using TaskManager.BLL.Translators;
 
 namespace TaskManager.BLL.Entities.DTO
 {
@@ -14,7 +15,7 @@ namespace TaskManager.BLL.Entities.DTO
         public string PriorityValue { get; set; }
 
         [DataMember(Name = "status")]
-        public string StatusValue { get; set; }
+        public virtual string StatusValue { get; set; }
 
 
         [DataMember(Name = "contrahent")]

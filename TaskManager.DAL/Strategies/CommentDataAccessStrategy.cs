@@ -1,0 +1,57 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Principal;
+using TaskManager.BLL.Entities.Basic;
+using TaskManager.DAL.Entities;
+
+namespace TaskManager.DAL.Strategies
+{
+    public class CommentDataAccessStrategy : TaskManagerDataAccessStrategy<Comment>
+    {
+        public CommentDataAccessStrategy(IPrincipal principal) : base(principal)
+        {
+        }
+
+        public override bool CanDelete(Comment entity)
+        {
+            return NoRestrictions() || EmployeeId == entity.EmployeeId;
+        }
+
+        public override bool CanAdd(params object[] args)
+        {
+            bool result = false;
+
+            if (args[1] is Ticket ticket)
+            {
+                result = ticket.ContrahentId == ContrahentId;
+            }
+
+            return NoRestrictions() || result;
+        }
+
+        public override void PrepareForAdd(params object[] args)
+        {
+            if (args[0] is CommentBasic entity
+                && args[1] is Ticket ticket)
+            {
+                entity.TicketId = ticket.Id;
+                entity.EmployeeId = EmployeeId;
+            }
+        }
+
+        public override bool CanUpdate(Comment entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override ICollection<string> GetPropertiesForUpdate(Comment entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override IQueryable<Comment> PrepareQuery(IQueryable<Comment> entities)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+}

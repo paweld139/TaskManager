@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.DTO;
+using TaskManager.BLL.Translators;
 
 namespace TaskManager.BLL.Entities.Details
 {
@@ -16,7 +17,7 @@ namespace TaskManager.BLL.Entities.Details
         public string PriorityValue { get; set; }
 
         [DataMember(Name = "status")]
-        public string StatusValue { get; set; }
+        public virtual string StatusValue { get; set; }
 
 
         [DataMember(Name = "contrahent")]

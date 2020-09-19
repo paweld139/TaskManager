@@ -7,13 +7,13 @@ namespace TaskManager.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Comments : IMigrationMetadata
+    public sealed partial class NumberFIx5 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Comments));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(NumberFIx5));
         
         string IMigrationMetadata.Id
         {
-            get { return "202009180049405_Comments"; }
+            get { return "202009192228528_NumberFIx5"; }
         }
         
         string IMigrationMetadata.Source

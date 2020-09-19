@@ -1,10 +1,8 @@
 ﻿using PDWebCore.Context;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using TaskManager.BLL.Entities;
 using TaskManager.DAL.Configuration;
 using TaskManager.DAL.Entities;
-using TaskManager.DAL.SampleData;
 
 namespace TaskManager.DAL
 {
@@ -42,6 +40,8 @@ namespace TaskManager.DAL
 
             modelBuilder.Configurations.Add(new TicketConfiguration());
             modelBuilder.Configurations.Add(new CommentConfiguration());
+            //modelBuilder.Configurations.Add(new EmployeeConfiguration());
+            //modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
 
 
             base.OnModelCreating(modelBuilder);

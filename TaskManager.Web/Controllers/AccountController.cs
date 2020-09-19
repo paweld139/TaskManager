@@ -18,12 +18,14 @@ namespace TaskManager.Web.Controllers
     public class AccountController : Controller
     {
         private ApplicationSignInManager signInManager;
+        private readonly IAuthenticationManager authenticationManager;
         private ApplicationUserManager userManager;
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.authenticationManager = authenticationManager;
         }
 
         // The Authorize Action is the end point which gets called when you access any
@@ -35,7 +37,7 @@ namespace TaskManager.Web.Controllers
             var claims = new ClaimsPrincipal(User).Claims.ToArray();
             var identity = new ClaimsIdentity(claims, "Bearer");
 
-            AuthenticationManager.SignIn(identity);
+            authenticationManager.SignIn(identity);
             return new EmptyResult();
         }
 
@@ -309,7 +311,7 @@ namespace TaskManager.Web.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            var loginInfo = await authenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
@@ -349,7 +351,7 @@ namespace TaskManager.Web.Controllers
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+                var info = await authenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
                     return View("ExternalLoginFailure");
@@ -378,7 +380,7 @@ namespace TaskManager.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
 
@@ -413,14 +415,6 @@ namespace TaskManager.Web.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
 
         private void AddErrors(IdentityResult result)
         {

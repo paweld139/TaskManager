@@ -51,10 +51,6 @@
       <Project>{5AC8CB92-D1B0-4F43-A444-E8D5E747DB4D}</Project>
       <Name>PDCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TaskManager.BLL\TaskManager.BLL.csproj">
-      <Project>{70E89075-BC71-4642-975E-3C10266C07EB}</Project>
-      <Name>TaskManager.BLL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

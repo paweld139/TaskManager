@@ -1,5 +1,6 @@
-﻿using System.Data.Entity.ModelConfiguration;
-using TaskManager.BLL.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
+using TaskManager.DAL.Entities;
 
 namespace TaskManager.DAL.Configuration
 {
@@ -26,6 +27,9 @@ namespace TaskManager.DAL.Configuration
                 .WithMany(d => d.Tickets)
                 .HasForeignKey(d => d.ContrahentId)
                 .WillCascadeOnDelete(false);
+
+            Property(t => t.Number)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         }
     }
 }

@@ -1,23 +1,24 @@
 ﻿using PDCore.Interfaces;
 using PDCore.Utils;
-using PDCoreNew.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
-namespace TaskManager.BLL.Entities
+namespace TaskManager.DAL.Entities
 {
     [Table("Employee", Schema = "dbo")]
     [DataContract(Name = "employee", Namespace = "")]
     public class Employee : IModificationHistory
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Id", ResourceType = typeof(Resources.Common))]
         [DataMember(Name = "id")]
-        public int Id { get; set; }
+        [ForeignKey("ApplicationUser")]
+        public string Id { get; set; }
+
 
         [Display(Name = "Contractor", ResourceType = typeof(Resources.Common))]
         [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
@@ -25,6 +26,14 @@ namespace TaskManager.BLL.Entities
 
         [ForeignKey("ContrahentId")]
         public virtual Contrahent Contrahent { get; set; }
+
+        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        //[Display(Name = "User", ResourceType = typeof(Resources.Common))]
+        //[ForeignKey("ApplicationUser")]
+        //public string ApplicationUserId { get; set; }
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [Display(Name = "FirstName", ResourceType = typeof(Resources.Common))]

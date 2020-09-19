@@ -9,7 +9,26 @@
         <h2>Your information</h2>
         <p>This section shows how you can call ASP.NET Web API to get the user details.</p>
         <p data-bind="text: myHometown"></p>
-       
+
+        <table class="table table-bordered table-condensed table-hover table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th>Numer</th>
+                    <th>Temat</th>
+                    <th>Status</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: tickets">
+                <tr>
+                    <th data-bind="text: number"></th>
+                    <th data-bind="text: subject"></th>
+                    <th data-bind="text: status"></th>
+                    <th data-bind="fromISODateTime: dateCreated"></th>
+                </tr>
+            </tbody>
+        </table>
+
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=273732">Learn more &raquo;</a></p>
     </div>
 

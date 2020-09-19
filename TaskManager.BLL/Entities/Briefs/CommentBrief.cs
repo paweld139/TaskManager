@@ -25,9 +25,9 @@ namespace TaskManager.BLL.Entities.Briefs
         public string Content { get; set; }
 
         [Display(Name = "Employee", ResourceType = typeof(Resources.Common))]
-        [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "employeeId")]
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
 
 
         [DataMember(Name = "dateCreated")]

@@ -1,14 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using PDCore.Extensions;
-using PDCoreNew.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.DAL.Entities;
+﻿using System.Data.Entity;
 
 namespace TaskManager.DAL.SampleData
 {

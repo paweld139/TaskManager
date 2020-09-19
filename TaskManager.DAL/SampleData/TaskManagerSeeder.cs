@@ -31,30 +31,32 @@ namespace TaskManager.DAL.SampleData
 
         private void SeedTickets(TaskManagerContext context)
         {
+            string userId = context.Users.First().Id;
+
             var tickets = new[]
             {
                 new Ticket
                 {
                     Subject = "Coś nie działa",
                     Description = "Jest bardzo źle",
-                    Number = "TIC/2020/09/1",
-                    TypeId = 15,
+                    Number = "TIC/2020/09/001",
+                    TypeId = 12,
                     PriorityId = 3,
                     StatusId = 6,
                     ContrahentId = 1,
-                    RepresentativeId = 1,
+                    RepresentativeId = userId,
                     Comments = new List<Comment>
                     {
                         new Comment
                         {
                            Content = "Dzięki",
-                           EmployeeId = 1,
+                           EmployeeId = userId,
                            TicketId = 1
                         },
                         new Comment
                         {
                            Content = "Jeszcze raz dzięki",
-                           EmployeeId = 1,
+                           EmployeeId = userId,
                            TicketId = 1
                         }
                     }
@@ -64,18 +66,18 @@ namespace TaskManager.DAL.SampleData
                 {
                     Subject = "Znowu nie działa",
                     Description = "Jest jeszcze gorzej",
-                    Number = "TIC/2020/09/2",
-                    TypeId = 16,
+                    Number = "TIC/2020/09/002",
+                    TypeId = 13,
                     PriorityId = 5,
-                    StatusId = 10,
-                    ContrahentId = 1,
-                    RepresentativeId = 1,
+                    StatusId = 7,
+                    ContrahentId = 2,
+                    RepresentativeId = userId,
                     Comments = new List<Comment>
                     {
                         new Comment
                         {
                            Content = "Witam",
-                           EmployeeId = 1,
+                           EmployeeId = userId,
                            TicketId = 2
                         }
                     }
@@ -92,7 +94,7 @@ namespace TaskManager.DAL.SampleData
         {
             var vals = new[]
             {
-                "Nieokreœlony",
+                "Nieokreślony",
                 "Nieznany",
                 "Niski",
                 "Średni",
@@ -105,9 +107,9 @@ namespace TaskManager.DAL.SampleData
             vals = new[]
             {
                 "Przyjęte",
-                "Do zatwierdzenia",
-                "Zatwierdzone",
-                "Do wypuszczenia",
+                //"Do zatwierdzenia",
+                //"Zatwierdzone",
+                //"Do wypuszczenia",
                 "Do odbioru",
                 "Do wyjaśnienia",
                 "Anulowane",
@@ -180,24 +182,12 @@ namespace TaskManager.DAL.SampleData
 
             if (!context.Users.Any(u => u.UserName == userName))
             {
-                var employee = new Employee
-                {
-                    ContrahentId = 1,
-                    FirstName = "Paweł",
-                    LastName = "Dywan"
-                };
-
-                context.Employees.Add(employee);
-
-                context.SaveChangesWithModificationHistory();
-
                 var applicationUser = new ApplicationUser
                 {
                     UserName = userName,
                     Email = userName,
                     EmailConfirmed = true,
                     Hometown = "Nowa Ruda",
-                    EmployeeId = employee.Id
                 };
 
                 var userResult = manager.Create(applicationUser, "hasloos@1Z");
@@ -206,6 +196,18 @@ namespace TaskManager.DAL.SampleData
                 {
                     manager.AddToRole(applicationUser.Id, "Serwisant");
                 }
+
+                var employee = new Employee
+                {
+                    ContrahentId = 1,
+                    FirstName = "Paweł",
+                    LastName = "Dywan",
+                    Id = applicationUser.Id
+                };
+
+                context.Employees.Add(employee);
+
+                context.SaveChangesWithModificationHistory();
             }
 
             manager.Dispose();

@@ -1,12 +1,11 @@
 ﻿using PDCore.Interfaces;
-using PDCoreNew.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
-namespace TaskManager.BLL.Entities
+namespace TaskManager.DAL.Entities
 {
     [Table("Contrahent", Schema = "dbo")]
     [DataContract(Name = "contrahent", Namespace = "")]

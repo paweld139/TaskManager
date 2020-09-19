@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using TaskManager.BLL.Entities.Basic;
-using TaskManager.BLL.Entities.Briefs;
 
-namespace TaskManager.BLL.Entities
+namespace TaskManager.DAL.Entities
 {
     [Table("Comment", Schema = "dbo")]
     [DataContract(Name = "comment", Namespace = "")]

@@ -1,29 +1,24 @@
-﻿using Autofac.Core.Activators.Reflection;
-using AutoMapper;
-using Microsoft.Web.Http;
-using PDCore.Extensions;
-using PDCore.Models;
-using PDCore.Repositories.IRepo;
+﻿using PDCore.Extensions;
 using PDWebCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using TaskManager.BLL.Entities;
 using TaskManager.BLL.Entities.Briefs;
 using TaskManager.DAL.Contracts;
+using TaskManager.DAL.Entities;
 
 namespace TaskManager.Web.Api
 {
+    [Authorize(Roles = "Admin")]
     [RoutePrefix("api/dictionaries")]
     public class DictionariesController : ApiController
     {
-        private readonly ITaskManagerUow taskManagerUow;
+        private readonly IDictionaryRepository dictionaryRepo;
 
-        public DictionariesController(ITaskManagerUow taskManagerUow)
+        public DictionariesController(IDictionaryRepository dictionaryRepo)
         {
-            this.taskManagerUow = taskManagerUow;
+            this.dictionaryRepo = dictionaryRepo;
         }
 
         [Route]
@@ -37,7 +32,7 @@ namespace TaskManager.Web.Api
         [Route("briefs")]
         public IQueryable<DictionaryBrief> GetBriefs()
         {
-            return taskManagerUow.Dictionaries.FindAll<DictionaryBrief>();
+            return dictionaryRepo.FindAll<DictionaryBrief>();
         }
 
         // GET: api/dictionaries
@@ -51,7 +46,7 @@ namespace TaskManager.Web.Api
         [ResponseType(typeof(Dictionary))]
         public async Task<IHttpActionResult> Get(int id)
         {
-            var dictionary = await taskManagerUow.Dictionaries.FindByIdAsync(id);
+            var dictionary = await dictionaryRepo.FindByIdAsync(id);
 
             if (dictionary == null)
             {
@@ -65,7 +60,7 @@ namespace TaskManager.Web.Api
         [ResponseType(typeof(Dictionary))]
         public async Task<IHttpActionResult> Get(string name, string value = null)
         {
-            var dictionaries = await taskManagerUow.Dictionaries.GetAsync(name, value);
+            var dictionaries = await dictionaryRepo.GetAsync(name, value);
 
             if (dictionaries.IsEmpty())
             {
@@ -80,7 +75,7 @@ namespace TaskManager.Web.Api
         [ResponseType(typeof(DictionaryBrief))]
         public async Task<IHttpActionResult> GetBriefs(string name, string value = null)
         {
-            var dictionaries = await taskManagerUow.Dictionaries.GetBriefsAsync(name, value);
+            var dictionaries = await dictionaryRepo.GetBriefsAsync(name, value);
 
             if (dictionaries.IsEmpty())
             {
@@ -100,7 +95,7 @@ namespace TaskManager.Web.Api
                 return BadRequest(ModelState);
             }
 
-            await taskManagerUow.Dictionaries.SaveNewAsync(dictionary);
+            await dictionaryRepo.SaveNewAsync(dictionary);
 
             return CreatedAtRoute("GetDictionary", new { id = dictionary.Id }, dictionary);
         }
@@ -121,18 +116,13 @@ namespace TaskManager.Web.Api
                 return BadRequest();
             }
 
-            bool success = await taskManagerUow.Dictionaries.SaveUpdatedWithOptimisticConcurrencyAsync(dictionary, ModelState.AddModelError, true);
+            bool success = await dictionaryRepo.SaveUpdatedWithOptimisticConcurrencyAsync(dictionary, ModelState.AddModelError);
 
             if (success)
             {
-                var result = await taskManagerUow.Dictionaries.FindByIdAsync(id);
+                var result = await dictionaryRepo.FindByIdAsync(id);
 
                 return Ok(result);
-            }
-
-            if (!taskManagerUow.Dictionaries.Exists(id))
-            {
-                return NotFound();
             }
 
             return BadRequest(ModelState);
@@ -142,14 +132,14 @@ namespace TaskManager.Web.Api
         [Route("{id:int}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            var dictionary = await taskManagerUow.Dictionaries.FindByIdAsync(id);
+            var dictionary = await dictionaryRepo.FindByIdAsync(id);
 
             if (dictionary == null)
             {
                 return NotFound();
             }
 
-            bool success = await taskManagerUow.Dictionaries.DeleteAndCommitWithOptimisticConcurrencyAsync(dictionary, ModelState.AddModelError);
+            bool success = await dictionaryRepo.DeleteAndCommitWithOptimisticConcurrencyAsync(dictionary, ModelState.AddModelError);
 
             if (success)
             {

@@ -1,12 +1,10 @@
 ﻿using Autofac;
-using Autofac.Builder;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using AutoMapper;
 using CommonServiceLocator;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security;
 using PDCore.Factories.Fac;
 using PDCore.Factories.IFac;
 using PDCore.Interfaces;
@@ -14,7 +12,6 @@ using PDCore.Repositories.IRepo;
 using PDCore.Services.IServ;
 using PDCore.Services.Serv.Time;
 using PDCoreNew.Context.IContext;
-using PDCoreNew.Factories.Fac.Repository;
 using PDCoreNew.Helpers;
 using PDCoreNew.Loggers;
 using PDCoreNew.Repositories.IRepo;
@@ -23,16 +20,20 @@ using PDCoreNew.Services.Serv;
 using PDWebCore.Context.IContext;
 using PDWebCore.Factories.Fac;
 using PDWebCore.Factories.IFac;
+using PDWebCore.Models;
 using PDWebCore.Services.IServ;
 using PDWebCore.Services.Serv;
 using System.Data.Entity;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using TaskManager.BLL.Translators;
 using TaskManager.DAL;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 using TaskManager.DAL.Repositories;
+using TaskManager.DAL.Strategies;
 using CacheService = PDWebCore.Services.Serv.CacheService;
 
 namespace TaskManager.Web.App_Start
@@ -64,37 +65,54 @@ namespace TaskManager.Web.App_Start
                    .As<IUserStore<ApplicationUser>>()
                    .UsingConstructor(typeof(DbContext));
 
+            builder.RegisterType<HttpContextPrinciple>()
+                   .As<IPrincipal>()
+                   .SingleInstance();
+
 
             builder.RegisterType<TaskManagerContext>()
                    .As<IEntityFrameworkDbContext>()
                    .As<IMainDbContext>() //LogRepository
                    .As<IMainWebDbContext>() //FileRepository
-                   .As<DbContext>(); //UserStore
+                   .As<DbContext>()
+                   .InstancePerRequest(); //UserStore
 
-            builder.RegisterType<RepositoryFactories>()
-                   .AsSelf()
+            //builder.RegisterType<RepositoryFactories>()
+            //       .AsSelf()
+            //       .SingleInstance();
+
+            //builder.RegisterType<RepositoryProvider>()
+            //       .As<IRepositoryProvider>()
+            //       .InstancePerRequest();
+
+            //builder.RegisterType<TaskManagerUow>()
+            //       .As<ITaskManagerUow>()
+            //       .InstancePerRequest();
+
+            builder.RegisterType<TicketDataAccessStrategy>()
+                   .As<IDataAccessStrategy<Ticket>>()
                    .SingleInstance();
 
-            builder.RegisterType<RepositoryProvider>()
-                   .As<IRepositoryProvider>()
+            builder.RegisterType<CommentDataAccessStrategy>()
+                   .As<IDataAccessStrategy<Comment>>()
+                   .SingleInstance();
+
+
+            builder.RegisterGeneric(typeof(SqlRepositoryEntityFrameworkDisconnected<>))
+                   .As(typeof(ISqlRepositoryEntityFrameworkDisconnected<>))
                    .InstancePerRequest();
 
-            builder.RegisterType<TaskManagerUow>()
-                   .As<ITaskManagerUow>()
+            builder.RegisterType<LogRepo>()
+                   .As<ILogRepo>()
                    .InstancePerRequest();
 
+            builder.RegisterType<DictionaryRepository>()
+                   .As<IDictionaryRepository>()
+                   .InstancePerRequest();
 
-            //builder.RegisterGeneric(typeof(SqlRepositoryEntityFrameworkDisconnected<>))
-            //       .As(typeof(ISqlRepositoryEntityFrameworkDisconnected<>))
-            //       .InstancePerRequest();
-
-            //builder.RegisterType<LogRepo>()
-            //       .As<ILogRepo>()
-            //       .InstancePerRequest();
-
-            //builder.RegisterType<DictionaryRepository>()
-            //       .As<IDictionaryRepository>()
-            //       .InstancePerRequest();
+            builder.RegisterType<TicketRepository>()
+                   .As<ITicketRepository>()
+                   .InstancePerRequest();
 
 
             builder.RegisterType<LogMessageFactory>()
@@ -125,6 +143,10 @@ namespace TaskManager.Web.App_Start
             builder.RegisterType<MailServiceAsyncTask>()
                    .As<IMailServiceAsyncTask>()
                    .UsingConstructor(typeof(ILogger))
+                   .SingleInstance();
+
+            builder.RegisterType<TaskManagerTranslator>()
+                   .AsSelf()
                    .SingleInstance();
         }
 

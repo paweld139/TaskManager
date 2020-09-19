@@ -2,8 +2,8 @@
 using PDCoreNew.Context.IContext;
 using PDCoreNew.Factories.Fac.Repository;
 using PDCoreNew.UnitOfWork;
-using TaskManager.BLL.Entities;
 using TaskManager.DAL.Contracts;
+using TaskManager.DAL.Entities;
 using TaskManager.DAL.Repositories;
 
 namespace TaskManager.DAL

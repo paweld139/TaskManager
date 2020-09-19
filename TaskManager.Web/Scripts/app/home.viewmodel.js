@@ -3,6 +3,8 @@
 
     self.myHometown = ko.observable("");
 
+    self.tickets = ko.observableArray();
+
     Sammy(function () {
         this.get('#home', function () {
             // Make a call to the protected Web API by passing in a Bearer Authorization Header
@@ -15,6 +17,18 @@
                 },
                 success: function (data) {
                     self.myHometown('Your Hometown is : ' + data.hometown);
+                }
+            });
+
+            $.ajax({
+                method: 'get',
+                url: 'api/tickets/briefs',
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                },
+                success: function (data) {
+                    self.tickets(data);
                 }
             });
         });

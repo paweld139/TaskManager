@@ -2531,10 +2531,6 @@
       <Project>{70E89075-BC71-4642-975E-3C10266C07EB}</Project>
       <Name>TaskManager.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TaskManager.DAL.Contracts\TaskManager.DAL.Contracts.csproj">
-      <Project>{527C2B7B-C254-42E7-8073-533046EAC0FE}</Project>
-      <Name>TaskManager.DAL.Contracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TaskManager.DAL\TaskManager.DAL.csproj">
       <Project>{66A81A04-7813-4BCD-B65F-016D9B4E10A7}</Project>
       <Name>TaskManager.DAL</Name>

@@ -1,12 +1,7 @@
-﻿using PDCoreNew.Attributes;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaskManager.BLL.Entities.Briefs
 {
@@ -19,10 +14,11 @@ namespace TaskManager.BLL.Entities.Briefs
         [DataMember(Name = "id")]
         public int Id { get; set; }
 
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = "Number", ResourceType = typeof(Resources.Common))]
         [DataType(DataType.Text)]
-        [StringLength(50, MinimumLength = 4, ErrorMessageResourceName = "StringLength_GreaterAndLess", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        //[StringLength(50, MinimumLength = 4, ErrorMessageResourceName = "StringLength_GreaterAndLess", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "number")]
         public string Number { get; set; } //Surrogate key
 
@@ -69,14 +65,12 @@ namespace TaskManager.BLL.Entities.Briefs
         #region Employee
 
         [Display(Name = "Representative", ResourceType = typeof(Resources.Common))]
-        [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "representativeId")]
-        public int RepresentativeId { get; set; }
+        public string RepresentativeId { get; set; }
 
-
-        [Display(Name = "Operator", ResourceType = typeof(Resources.Common))]
         [DataMember(Name = "operatorId")]
-        public int? OperatorId { get; set; }
+        public string OperatorId { get; set; }
 
         #endregion
 

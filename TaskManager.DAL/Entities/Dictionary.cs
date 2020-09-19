@@ -1,5 +1,4 @@
 ﻿using PDCore.Interfaces;
-using PDCoreNew.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using TaskManager.BLL.Entities.Briefs;
 
-namespace TaskManager.BLL.Entities
+namespace TaskManager.DAL.Entities
 {
     [Table("Dictionary", Schema = "dbo")]
     [DataContract(Name = "dictionary", Namespace = "")]

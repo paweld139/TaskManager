@@ -5,13 +5,10 @@ using PDCoreNew.Repositories.Repo;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TaskManager.BLL.Entities;
 using TaskManager.DAL.Contracts;
 using System.Data.Entity;
-using PDCore.Extensions;
-using System.Linq.Expressions;
-using System;
 using TaskManager.BLL.Entities.Briefs;
+using TaskManager.DAL.Entities;
 
 namespace TaskManager.DAL.Repositories
 {

@@ -23,33 +23,31 @@ namespace TaskManager.Web.Api
     [RoutePrefix("api/tickets")]
     public class TicketsController : ApiController
     {
-        private readonly ITicketRepository ticketRepo;
-        private readonly IDataAccessStrategy<Ticket> dataAccessStrategy;
+        private readonly ITaskManagerUow taskManagerUow;
 
-        public TicketsController(ITicketRepository ticketRepo, IDataAccessStrategy<Ticket> dataAccessStrategy)
+        public TicketsController(ITaskManagerUow taskManagerUow)
         {
-            this.ticketRepo = ticketRepo;
-            this.dataAccessStrategy = dataAccessStrategy;
+            this.taskManagerUow = taskManagerUow;
         }
 
         [Authorize(Roles = "Admin")]
         [Route("admin")]
         public IQueryable<Ticket> Get(bool includeSub = false)
         {
-            return ticketRepo.Find(includeSub);
+            return taskManagerUow.Tickets.Find(includeSub);
         }
 
         [Authorize(Roles = "Admin")]
         [Route]
         public IQueryable<TicketDetails> Get()
         {
-            return ticketRepo.FindAll<TicketDetails>();
+            return taskManagerUow.Tickets.FindAll<TicketDetails>();
         }
 
         [Route("briefs")]
         public IQueryable<TicketDTO> GetBriefs()
         {
-            return ticketRepo.FindAll<TicketDTOProxy>();
+            return taskManagerUow.Tickets.FindAll<TicketDTOProxy>();
         }
 
         [Authorize(Roles = "Admin")]
@@ -57,7 +55,7 @@ namespace TaskManager.Web.Api
         [ResponseType(typeof(Ticket))]
         public async Task<IHttpActionResult> Get(int id, bool includeSub = false)
         {
-            var ticket = await ticketRepo.FindByIdAsync(id, includeSub);
+            var ticket = await taskManagerUow.Tickets.FindByIdAsync(id, includeSub);
 
             if (ticket == null)
             {
@@ -71,7 +69,7 @@ namespace TaskManager.Web.Api
         [ResponseType(typeof(TicketDetails))]
         public async Task<IHttpActionResult> Get(int id)
         {
-            var ticket = await ticketRepo.FindByIdAsync<TicketDetailsProxy>(id);
+            var ticket = await taskManagerUow.Tickets.FindByIdAsync<TicketDetailsProxy>(id);
 
             if (ticket == null)
             {
@@ -86,7 +84,7 @@ namespace TaskManager.Web.Api
         [ResponseType(typeof(TicketDetails))]
         public async Task<IHttpActionResult> Get(string number)
         {
-            var ticket = await ticketRepo.FindDetailsByNumberAsync(number);
+            var ticket = await taskManagerUow.Tickets.FindDetailsByNumberAsync(number);
 
             if (ticket == null)
             {
@@ -99,94 +97,78 @@ namespace TaskManager.Web.Api
         [Route("briefs/getByDate")]
         public IQueryable<TicketDTO> GetByDate(DateTime createDate)
         {
-            return ticketRepo.FindByDateCreated<TicketDTOProxy>(createDate.Date, createDate.Date);
+            return taskManagerUow.Tickets.FindByDateCreated<TicketDTOProxy>(createDate.Date, createDate.Date);
         }
 
         [Route("briefs/getByDate")]
         public IQueryable<TicketDTO> Get(DateTime dateFrom, DateTime dateTo)
         {
-            return ticketRepo.FindByDateCreated<TicketDTOProxy>(dateFrom.Date, dateTo.Date);
+            return taskManagerUow.Tickets.FindByDateCreated<TicketDTOProxy>(dateFrom.Date, dateTo.Date);
         }
 
         [Route("briefs/getByPage")]
         public IQueryable<TicketDTO> Get(int page, int size)
         {
-            return ticketRepo.FindPage<TicketDTOProxy>(page, size);
+            return taskManagerUow.Tickets.FindPage<TicketDTOProxy>(page, size);
         }
 
         [Authorize(Roles = "Admin")]
         [Route("briefs/getBySubject")]
         public IQueryable<TicketDTO> GetBySubject(string subject)
         {
-            return ticketRepo.FindByFilter<TicketDTO>(t => t.Subject, subject);
+            return taskManagerUow.Tickets.FindByFilter<TicketDTO>(t => t.Subject, subject);
         }
 
         [Authorize(Roles = "Admin")]
         [Route("getKVP")]
         public IEnumerable<KeyValuePair<int, string>> GetKVP(bool sortByValue = true)
         {
-            return ticketRepo.GetKeyValuePairs(t => t.Id, t => t.Subject, sortByValue);
+            return taskManagerUow.Tickets.GetKeyValuePairs(t => t.Id, t => t.Subject, sortByValue);
         }
 
         [Authorize(Roles = "Admin")]
         [Route("admin")]
         [ResponseType(typeof(Ticket))]
-        public async Task<IHttpActionResult> Post(Ticket ticket)
+        public async Task<IHttpActionResult> Post(Ticket model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            await taskManagerUow.Tickets.SaveNewAsync(model);
 
-            await ticketRepo.SaveNewAsync(ticket);
+            var ticket = await taskManagerUow.Tickets.FindByIdAsync(model.Id, true);
 
             return CreatedAtRoute("GetTicketAdmin", new { id = ticket.Id }, ticket);
         }
 
-        [ResponseType(typeof(TicketBasic))]
-        public async Task<IHttpActionResult> Post(TicketBasic ticket) // TODO: Dodać walidację
+        [ResponseType(typeof(TicketDetails))]
+        public async Task<IHttpActionResult> Post(TicketBasic model)
         {
-            if (!ModelState.IsValid)
+            bool success = await taskManagerUow.Tickets.SaveNewAsync(model, User);
+
+            if(success)
             {
-                return BadRequest(ModelState);
+                var ticket = await taskManagerUow.Tickets.FindByIdAsync<TicketDetailsProxy>(model.Id);
+
+                return CreatedAtRoute("GetTicket", new { id = ticket.Id }, ticket);
             }
 
-            bool result = await ticketRepo.SaveNewAsync(ticket, dataAccessStrategy, User);
-
-            if (!result)
-            {
-                return this.Forbid();
-            }
-
-            return CreatedAtRoute("GetTicket", new { id = ticket.Id }, ticket);
+            return this.Forbid();
         }
 
         [Route("{id:int}")]
         [ResponseType(typeof(TicketDetails))]
-        public async Task<IHttpActionResult> Put(int id, TicketBasic basic)
+        public async Task<IHttpActionResult> Put(int id, TicketBasic model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != basic.Id)
+            if (id != model.Id)
             {
                 return BadRequest();
             }
 
-            var ticket = await ticketRepo.FindByIdAsync(id, true, false);
+            bool success = await taskManagerUow.Tickets.SaveUpdatedWithOptimisticConcurrencyAsync(model, User, ModelState.AddModelError);
 
-            if(ticket == null)
+            if (success)
             {
-                return NotFound();
-            }
+                var ticket = await taskManagerUow.Tickets.FindByIdAsync<TicketDetailsProxy>(id);
 
-            var result = await ticketRepo.SaveUpdatedWithOptimisticConcurrencyAsync<TicketDetailsProxy>(basic, ticket, dataAccessStrategy, User, ModelState.AddModelError);
-
-            if (ModelState.IsValid)
-            {
-                return Ok(result);
+                return Ok(ticket);
             }
 
             return BadRequest(ModelState);
@@ -197,21 +179,16 @@ namespace TaskManager.Web.Api
         [ResponseType(typeof(Ticket))]
         public async Task<IHttpActionResult> Put(int id, Ticket model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != model.Id)
             {
                 return BadRequest();
             }
 
-            bool success = await ticketRepo.SaveUpdatedWithOptimisticConcurrencyAsync(model, dataAccessStrategy, User, ModelState.AddModelError);
+            bool success = await taskManagerUow.Tickets.SaveUpdatedWithOptimisticConcurrencyAsync(model, User, ModelState.AddModelError);
 
             if (success)
             {
-                var ticket = await ticketRepo.FindByIdAsync(id, true);
+                var ticket = await taskManagerUow.Tickets.FindByIdAsync(id);
 
                 return Ok(ticket);
             }
@@ -223,14 +200,14 @@ namespace TaskManager.Web.Api
         [Route("{id:int}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            var ticket = await ticketRepo.FindByIdAsync(id);
+            var ticket = await taskManagerUow.Tickets.FindByIdAsync(id);
 
             if (ticket == null)
             {
                 return NotFound();
             }
 
-            bool success = await ticketRepo.DeleteAndCommitWithOptimisticConcurrencyAsync(ticket, ModelState.AddModelError);
+            bool success = await taskManagerUow.Tickets.DeleteAndCommitWithOptimisticConcurrencyAsync(ticket, ModelState.AddModelError);
 
             if (success)
             {

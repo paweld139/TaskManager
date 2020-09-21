@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using TaskManager.BLL.Entities.Basic;
@@ -21,7 +22,7 @@ namespace TaskManager.DAL.Strategies
         {
             bool result = false;
 
-            if (args[1] is Ticket ticket)
+            if (args[0] is Ticket ticket)
             {
                 result = ticket.ContrahentId == ContrahentId;
             }
@@ -31,8 +32,8 @@ namespace TaskManager.DAL.Strategies
 
         public override void PrepareForAdd(params object[] args)
         {
-            if (args[0] is CommentBasic entity
-                && args[1] is Ticket ticket)
+            if (args[1] is CommentBasic entity
+                && args[0] is Ticket ticket)
             {
                 entity.TicketId = ticket.Id;
                 entity.EmployeeId = EmployeeId;
@@ -41,17 +42,12 @@ namespace TaskManager.DAL.Strategies
 
         public override bool CanUpdate(Comment entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override ICollection<string> GetPropertiesForUpdate(Comment entity)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override IQueryable<Comment> PrepareQuery(IQueryable<Comment> entities)
-        {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

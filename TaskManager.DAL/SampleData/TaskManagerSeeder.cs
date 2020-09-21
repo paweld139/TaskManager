@@ -194,7 +194,7 @@ namespace TaskManager.DAL.SampleData
 
                 if (userResult.Succeeded)
                 {
-                    manager.AddToRole(applicationUser.Id, "Serwisant");
+                    manager.AddToRole(applicationUser.Id, "Klient");
                 }
 
                 var employee = new Employee

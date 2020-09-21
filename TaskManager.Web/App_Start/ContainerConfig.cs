@@ -12,9 +12,9 @@ using PDCore.Repositories.IRepo;
 using PDCore.Services.IServ;
 using PDCore.Services.Serv.Time;
 using PDCoreNew.Context.IContext;
+using PDCoreNew.Factories.Fac.Repository;
 using PDCoreNew.Helpers;
 using PDCoreNew.Loggers;
-using PDCoreNew.Repositories.IRepo;
 using PDCoreNew.Repositories.Repo;
 using PDCoreNew.Services.Serv;
 using PDWebCore.Context.IContext;
@@ -32,7 +32,6 @@ using TaskManager.BLL.Translators;
 using TaskManager.DAL;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
-using TaskManager.DAL.Repositories;
 using TaskManager.DAL.Strategies;
 using CacheService = PDWebCore.Services.Serv.CacheService;
 
@@ -74,20 +73,20 @@ namespace TaskManager.Web.App_Start
                    .As<IEntityFrameworkDbContext>()
                    .As<IMainDbContext>() //LogRepository
                    .As<IMainWebDbContext>() //FileRepository
-                   .As<DbContext>()
-                   .InstancePerRequest(); //UserStore
+                   .As<DbContext>();
+                   //.InstancePerRequest(); //UserStore
 
-            //builder.RegisterType<RepositoryFactories>()
-            //       .AsSelf()
-            //       .SingleInstance();
+            builder.RegisterType<RepositoryFactories>()
+                   .AsSelf()
+                   .SingleInstance();
 
-            //builder.RegisterType<RepositoryProvider>()
-            //       .As<IRepositoryProvider>()
-            //       .InstancePerRequest();
+            builder.RegisterType<RepositoryProvider>()
+                   .As<IRepositoryProvider>()
+                   .InstancePerRequest();
 
-            //builder.RegisterType<TaskManagerUow>()
-            //       .As<ITaskManagerUow>()
-            //       .InstancePerRequest();
+            builder.RegisterType<TaskManagerUow>()
+                   .As<ITaskManagerUow>()
+                   .InstancePerRequest();
 
             builder.RegisterType<TicketDataAccessStrategy>()
                    .As<IDataAccessStrategy<Ticket>>()
@@ -102,17 +101,17 @@ namespace TaskManager.Web.App_Start
                    .As(typeof(ISqlRepositoryEntityFrameworkDisconnected<>))
                    .InstancePerRequest();
 
-            builder.RegisterType<LogRepo>()
-                   .As<ILogRepo>()
-                   .InstancePerRequest();
+            //builder.RegisterType<LogRepo>()
+            //       .As<ILogRepo>()
+            //       .InstancePerRequest();
 
-            builder.RegisterType<DictionaryRepository>()
-                   .As<IDictionaryRepository>()
-                   .InstancePerRequest();
+            //builder.RegisterType<DictionaryRepository>()
+            //       .As<IDictionaryRepository>()
+            //       .InstancePerRequest();
 
-            builder.RegisterType<TicketRepository>()
-                   .As<ITicketRepository>()
-                   .InstancePerRequest();
+            //builder.RegisterType<TicketRepository>()
+            //       .As<ITicketRepository>()
+            //       .InstancePerRequest();
 
 
             builder.RegisterType<LogMessageFactory>()

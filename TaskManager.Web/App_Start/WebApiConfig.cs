@@ -3,6 +3,7 @@ using Microsoft.Web.Http;
 using Microsoft.Web.Http.Routing;
 using Microsoft.Web.Http.Versioning;
 using Newtonsoft.Json.Serialization;
+using PDWebCore.Filters.WebApi;
 using PDWebCore.Handlers;
 using PDWebCore.Helpers.ModelBinding.WebApi;
 using System;
@@ -56,6 +57,9 @@ namespace TaskManager.Web
             // Use camel case for JSON data.
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
+            // Add model validation, globally
+            config.Filters.Add(new ValidationActionFilterAttribute());
+
             //config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
 
             var constraintResolver = new DefaultInlineConstraintResolver
@@ -77,57 +81,57 @@ namespace TaskManager.Web
             var routes = config.Routes;
 
             ////PAPA: This was the default route. I removed this and replaced with theones below.
+            //routes.MapHttpRoute(
+            //    name: "DefaultApi",
+            //    routeTemplate: "api/{controller}/{id}",
+            //    defaults: new { id = RouteParameter.Optional }
+            //);
+
+            // This controller-per-type route is ideal for GetAll calls.
+            // It finds the method on the controller using WebAPI conventions
+            // The template has no parameters.
+            //
+            // ex: api/tickets
             routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: ControllerOnly,
+                routeTemplate: "api/{controller}"
             );
 
-            //// This controller-per-type route is ideal for GetAll calls.
-            //// It finds the method on the controller using WebAPI conventions
-            //// The template has no parameters.
-            ////
-            //// ex: api/tickets
-            //routes.MapHttpRoute(
-            //    name: ControllerOnly,
-            //    routeTemplate: "api/{controller}"
-            //);
+            // This is the default route that a "File | New MVC 4 " project creates.
+            // (I changed the name, removed the defaults, and added the constraints)
+            //
+            // This controller-per-type route lets us fetch a single resource by numeric id
+            // It finds the appropriate method GetById method
+            // on the controller using WebAPI conventions
+            // The {id} is not optional, must be an integer, and 
+            // must match a method with a parameter named "id" (case insensitive)
+            //
+            //  ex: api/tickets/1
+            routes.MapHttpRoute(
+                name: ControllerAndId,
+                routeTemplate: "api/{controller}/{id}",
+                defaults: null, //defaults: new { id = RouteParameter.Optional } //,
+                constraints: new { id = @"^\d+$" } // id must be all digits
+            );
 
-            //// This is the default route that a "File | New MVC 4 " project creates.
-            //// (I changed the name, removed the defaults, and added the constraints)
-            ////
-            //// This controller-per-type route lets us fetch a single resource by numeric id
-            //// It finds the appropriate method GetById method
-            //// on the controller using WebAPI conventions
-            //// The {id} is not optional, must be an integer, and 
-            //// must match a method with a parameter named "id" (case insensitive)
-            ////
-            ////  ex: api/tickets/1
-            //routes.MapHttpRoute(
-            //    name: ControllerAndId,
-            //    routeTemplate: "api/{controller}/{id}",
-            //    defaults: null, //defaults: new { id = RouteParameter.Optional } //,
-            //    constraints: new { id = @"^\d+$" } // id must be all digits
-            //);
+            /********************************************************
+            * The integer id constraint is necessary to distinguish 
+            * the {id} route above from the {action} route below.
+            * For example, the route above handles
+            *     "api/tickets/1" 
+            * whereas the route below handles
+            *     "api/lookups/all"
+            ********************************************************/
 
-            ///********************************************************
-            //* The integer id constraint is necessary to distinguish 
-            //* the {id} route above from the {action} route below.
-            //* For example, the route above handles
-            //*     "api/tickets/1" 
-            //* whereas the route below handles
-            //*     "api/lookups/all"
-            //********************************************************/
-
-            //// This RPC style route is great for lookups and custom calls
-            //// It matches the {action} to a method on the controller 
-            ////
-            //// ex: api/lookups/all
-            //// ex: api/lookups/operators
-            //routes.MapHttpRoute(
-            //    name: ControllerAction,
-            //    routeTemplate: "api/{controller}/{action}"
-            //);
+            // This RPC style route is great for lookups and custom calls
+            // It matches the {action} to a method on the controller 
+            //
+            // ex: api/lookups/all
+            // ex: api/lookups/operators
+            routes.MapHttpRoute(
+                name: ControllerAction,
+                routeTemplate: "api/{controller}/{action}"
+            );
         }
     }
 }

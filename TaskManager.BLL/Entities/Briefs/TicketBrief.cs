@@ -41,6 +41,11 @@ namespace TaskManager.BLL.Entities.Briefs
         [DataMember(Name = "receiptDate")]
         public DateTimeOffset? ReceiptDate { get; set; }
 
+        [Display(Name = "Tags", ResourceType = typeof(Resources.Common))]
+        [DataType(DataType.Text)]
+        [DataMember(Name = "tags")]
+        public string Tags { get; set; }
+
 
         #region Dictionary
 

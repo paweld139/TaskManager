@@ -107,11 +107,19 @@
     <Compile Include="Migrations\202009192228528_NumberFIx5.designer.cs">
       <DependentUpon>202009192228528_NumberFIx5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009202027509_Tags.cs" />
+    <Compile Include="Migrations\202009202027509_Tags.designer.cs">
+      <DependentUpon>202009202027509_Tags.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\TicketDetailsProxy.cs" />
     <Compile Include="Proxies\TicketDTOProxy.cs" />
+    <Compile Include="Repositories\ContrahentRepository.cs" />
     <Compile Include="Repositories\DictionaryRepository.cs" />
+    <Compile Include="Repositories\EmployeeRepository.cs" />
+    <Compile Include="Contracts\IEmployeeRepository.cs" />
+    <Compile Include="Contracts\IContrahentRepository.cs" />
     <Compile Include="Repositories\TicketRepository.cs" />
     <Compile Include="SampleData\TaskManagerDbInitializer.cs" />
     <Compile Include="SampleData\TaskManagerSeeder.cs" />
@@ -169,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009192228528_NumberFIx5.resx">
       <DependentUpon>202009192228528_NumberFIx5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009202027509_Tags.resx">
+      <DependentUpon>202009202027509_Tags.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

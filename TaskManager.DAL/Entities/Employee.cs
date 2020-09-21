@@ -5,21 +5,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using TaskManager.BLL.Entities.Briefs;
 
 namespace TaskManager.DAL.Entities
 {
     [Table("Employee", Schema = "dbo")]
     [DataContract(Name = "employee", Namespace = "")]
-    public class Employee : IModificationHistory
+    public class Employee : EmployeeBrief, IModificationHistory
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Display(Name = "Id", ResourceType = typeof(Resources.Common))]
-        [DataMember(Name = "id")]
-        [ForeignKey("ApplicationUser")]
-        public string Id { get; set; }
-
-
         [Display(Name = "Contractor", ResourceType = typeof(Resources.Common))]
         [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         public int ContrahentId { get; set; }

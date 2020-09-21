@@ -19,7 +19,7 @@ namespace TaskManager.BLL.Entities.Briefs
         public int Id { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [Display(Name = "Comment", ResourceType = typeof(Resources.Common))]
+        [Display(Name = "Content", ResourceType = typeof(Resources.Common))]
         [DataType(DataType.Html)]
         [DataMember(Name = "content")]
         public string Content { get; set; }

@@ -28,9 +28,21 @@ namespace TaskManager.DAL.Repositories
             return Find(name, value).ToListAsync();
         }
 
+        public IQueryable<DictionaryBrief> FindBriefs(string name, string value = null, bool orderByValue = true)
+        {
+            var query = mapper.ProjectTo<DictionaryBrief>(Find(name, value));
+
+            if(orderByValue)
+            {
+                query = query.OrderBy(d => d.Value);
+            }
+
+            return query;
+        }
+
         public Task<List<DictionaryBrief>> GetBriefsAsync(string name, string value = null)
         {
-            return mapper.ProjectTo<DictionaryBrief>(Find(name, value)).ToListAsync();
+            return FindBriefs(name, value, false).ToListAsync();
         }
     }
 }

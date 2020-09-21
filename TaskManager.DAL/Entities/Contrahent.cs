@@ -4,26 +4,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using TaskManager.BLL.Entities.Briefs;
 
 namespace TaskManager.DAL.Entities
 {
     [Table("Contrahent", Schema = "dbo")]
     [DataContract(Name = "contrahent", Namespace = "")]
-    public class Contrahent : IModificationHistory
+    public class Contrahent : ContrahentBrief, IModificationHistory
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Display(Name = "Id", ResourceType = typeof(Resources.Common))]
-        [DataMember(Name = "id")]
-        public int Id { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [Display(Name = "Name", ResourceType = typeof(Resources.Common))]
-        [DataType(DataType.Text)]
-        [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [DataMember(Name = "name")]
-        public string Name { get; set; }
-
         [Display(Name = "Archived", ResourceType = typeof(Resources.Common))]
         [IgnoreDataMember]
         public bool Archived { get; set; }

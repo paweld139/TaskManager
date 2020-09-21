@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using PDCore.Interfaces;
+using PDCore.Models;
 using PDCoreNew.Context.IContext;
 using PDCoreNew.Repositories.Repo;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,19 +16,10 @@ namespace TaskManager.DAL.Repositories
 {
     public class TicketRepository : SqlRepositoryEntityFrameworkDisconnected<Ticket>, ITicketRepository
     {
-        private readonly IDataAccessStrategy<Ticket> dataAccessStrategy;
-
         public TicketRepository(IEntityFrameworkDbContext ctx,
             ILogger logger,
-            IMapper mapper,
-            IDataAccessStrategy<Ticket> dataAccessStrategy) : base(ctx, logger, mapper)
+            IMapper mapper) : base(ctx, logger, mapper)
         {
-            this.dataAccessStrategy = dataAccessStrategy;
-        }
-
-        public override IQueryable<Ticket> FindAll(bool asNoTracking)
-        {
-            return dataAccessStrategy.PrepareQuery(base.FindAll(asNoTracking));
         }
 
         public IQueryable<Ticket> Find(bool includeSubobjects, bool asNoTracking = true)
@@ -60,11 +54,57 @@ namespace TaskManager.DAL.Repositories
             return FindAll<TicketDetails>().SingleOrDefaultAsync(t => t.Number == number);
         }
 
-        public override void Update(Ticket entity)
+        /// <summary>
+        /// Get the unique tags from all of the tickets
+        /// as a list of <see cref="TagGroup"/>.
+        /// </summary>
+        /// <remarks>
+        ///See <see cref="ITicketRepository.GetTagGroups"/> for details.
+        /// </remarks>
+        public IEnumerable<TagGroup> GetTagGroups()
         {
-            base.Update(entity);
 
-            ctx.Entry(entity).Property(e => e.Number).IsModified = false;
+            var tagGroups =
+                // extract the delimited tags string and ticket id from all tickets
+                FindAll().Select(s => new { s.Tags, s.Id })
+                    .ToArray() // we'll process them in memory.
+
+                    // split the "Tags" string into individual tags 
+                    // and flatten into {tag, id} pairs
+                    .SelectMany(
+                        s =>
+                        s.Tags.Split(_tagDelimiter, StringSplitOptions.RemoveEmptyEntries)
+                            .Select(t => new { Tag = t, s.Id })
+                    )
+
+                    // group {tag, id} by tag into unique {tag, [session-id-array]}
+                    .GroupBy(g => g.Tag, data => data.Id)
+
+                    // project the group into TagGroup instances
+                    // ensuring that ids array in each array are unique
+                    .Select(tg => new TagGroup
+                    {
+                        Tag = tg.Key,
+                        Ids = tg.Distinct().ToArray(),
+                    })
+                    .OrderBy(tg => tg.Tag);
+
+            return tagGroups;
         }
+
+        private readonly char[] _tagDelimiter = new[] { '|' };
+
+
+        //public override void Update(Ticket entity)
+        //{
+        //    base.Update(entity);
+
+        //    ctx.Entry(entity).Property(e => e.Number).IsModified = false;
+        //}
+
+        //public override IQueryable<Ticket> FindAll(bool asNoTracking)
+        //{
+        //    return dataAccessStrategy.PrepareQuery(base.FindAll(asNoTracking));
+        //}
     }
 }

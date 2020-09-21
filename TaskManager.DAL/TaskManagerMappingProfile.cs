@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PDCore.Utils;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Briefs;
 using TaskManager.BLL.Entities.DTO;
@@ -14,36 +15,33 @@ namespace TaskManager.DAL
             CreateMap<Dictionary, DictionaryBrief>()
                 .ReverseMap();
 
+
             CreateMap<Ticket, TicketBrief>()
                 .ReverseMap();
 
-            //CreateMap<Ticket, TicketModel>()
-            //    .ReverseMap();
-
-            //CreateMap<Ticket, TicketDetails>()
-            //    .ReverseMap()
-            //    .ForMember(t => t.Contrahent, opt => opt.Ignore())
-            //    .ForMember(t => t.Operator, opt => opt.Ignore())
-            //    .ForMember(t => t.Representative, opt => opt.Ignore())
-            //    .ForMember(t => t.Type, opt => opt.Ignore())
-            //    .ForMember(t => t.Priority, opt => opt.Ignore())
-            //    .ForMember(t => t.Status, opt => opt.Ignore());
-
             CreateMap<Ticket, TicketDTOProxy>()
-              .ReverseMap();
+                .ReverseMap();
 
             CreateMap<Ticket, TicketBasic>()
                 .ReverseMap();
-            //.ForMember(t => t.RowVersion, opt => opt.Ignore());
 
             CreateMap<Ticket, TicketDetailsProxy>()
-              .ReverseMap();
+                .ReverseMap();
 
 
             CreateMap<Comment, CommentDTO>()
                 .ReverseMap();
 
             CreateMap<Comment, CommentBasic>()
+                .ReverseMap();
+
+
+            CreateMap<Contrahent, ContrahentBrief>()
+                .ReverseMap();
+
+
+            CreateMap<Employee, EmployeeDTO>()
+                .ForMember(d => d.FullName, opt => opt.MapFrom(e => string.Concat(e.FirstName, " ", e.LastName)))
                 .ReverseMap();
 
             //ForAllMaps((typeMap, map) =>
@@ -65,6 +63,20 @@ namespace TaskManager.DAL
 
             //CreateMap<Speaker, SpeakerModel>()
             //    .ReverseMap();
+
+            //CreateMap<Ticket, TicketModel>()
+            //    .ReverseMap();
+
+            //CreateMap<Ticket, TicketDetails>()
+            //    .ReverseMap()
+            //    .ForMember(t => t.Contrahent, opt => opt.Ignore())
+            //    .ForMember(t => t.Operator, opt => opt.Ignore())
+            //    .ForMember(t => t.Representative, opt => opt.Ignore())
+            //    .ForMember(t => t.Type, opt => opt.Ignore())
+            //    .ForMember(t => t.Priority, opt => opt.Ignore())
+            //    .ForMember(t => t.Status, opt => opt.Ignore());
+
+            //.ForMember(t => t.RowVersion, opt => opt.Ignore());
         }
     }
 }

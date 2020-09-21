@@ -16,24 +16,18 @@ namespace TaskManager.Web.Api
     [RoutePrefix("api/tickets/{ticketId:int}/comments")]
     public class CommentsController : ApiController
     {
-        private readonly ISqlRepositoryEntityFrameworkDisconnected<Comment> commentRepo;
-        private readonly IDataAccessStrategy<Comment> dataAccessStrategy;
-        private readonly ITicketRepository ticketRepo;
+        private readonly ITaskManagerUow taskManagerUow;
 
-        public CommentsController(ISqlRepositoryEntityFrameworkDisconnected<Comment> commentRepo,
-            IDataAccessStrategy<Comment> savingStrategy,
-            ITicketRepository ticketRepo)
+        public CommentsController(ITaskManagerUow taskManagerUow)
         {
-            this.commentRepo = commentRepo;
-            this.dataAccessStrategy = savingStrategy;
-            this.ticketRepo = ticketRepo;
+            this.taskManagerUow = taskManagerUow;
         }
 
         [Authorize(Roles = "Admin")]
         [Route]
         public IQueryable<CommentDTO> Get(int ticketId)
         {
-            return commentRepo.Find<CommentDTO>(c => c.TicketId == ticketId).OrderByDescending(c => c.DateCreated);
+            return taskManagerUow.Comments.Find<CommentDTO>(c => c.TicketId == ticketId).OrderByDescending(c => c.DateCreated);
         }
 
         [Authorize(Roles = "Admin")]
@@ -43,7 +37,7 @@ namespace TaskManager.Web.Api
         {
             _ = ticketId;
 
-            var comment = await commentRepo.FindByIdAsync<CommentDTO>(id);
+            var comment = await taskManagerUow.Comments.FindByIdAsync<CommentDTO>(id);
 
             if (comment == null)
             {
@@ -54,42 +48,39 @@ namespace TaskManager.Web.Api
         }
 
         [Route]
-        [ResponseType(typeof(CommentBasic))]
-        public async Task<IHttpActionResult> Post(int ticketId, CommentBasic comment)
+        [ResponseType(typeof(CommentDTO))]
+        public async Task<IHttpActionResult> Post(int ticketId, CommentBasic model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var ticket = ticketRepo.FindByIdAsync(ticketId);
+            var ticket = await taskManagerUow.Tickets.FindByIdAsync(ticketId);
 
             if(ticket == null)
             {
                 return NotFound();
             }
 
-            bool result = await commentRepo.SaveNewAsync(comment, dataAccessStrategy, User, ticket);
+            bool success = await taskManagerUow.Comments.SaveNewAsync(model, User, args: ticket);
 
-            if(!result)
+            if(success)
             {
-                return this.Forbid();
+                var comment = await taskManagerUow.Comments.FindByIdAsync<CommentDTO>(model.Id);
+
+                return CreatedAtRoute("GetComment", new { id = comment.Id }, comment);
             }
 
-            return CreatedAtRoute("GetComment", new { id = comment.Id }, comment);
+            return this.Forbid();
         }
 
         [Route("{id:int}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            var comment = await commentRepo.FindByIdAsync(id);
+            var comment = await taskManagerUow.Comments.FindByIdAsync(id);
 
             if (comment == null)
             {
                 return NotFound();
             }
 
-            bool success = await commentRepo.DeleteAndCommitWithOptimisticConcurrencyAsync(comment, ModelState.AddModelError);
+            bool success = await taskManagerUow.Comments.DeleteAndCommitWithOptimisticConcurrencyAsync(comment, User, ModelState.AddModelError);
 
             if (success)
             {

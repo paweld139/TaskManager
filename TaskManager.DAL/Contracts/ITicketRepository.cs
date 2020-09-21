@@ -1,4 +1,6 @@
-﻿using PDCore.Repositories.IRepo;
+﻿using PDCore.Models;
+using PDCore.Repositories.IRepo;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities.Details;
@@ -15,5 +17,7 @@ namespace TaskManager.DAL.Contracts
         Task<Ticket> FindByNumberAsync(string number, bool includeSubobjects);
 
         Task<TicketDetails> FindDetailsByNumberAsync(string number);
+
+        IEnumerable<TagGroup> GetTagGroups();
     }
 }

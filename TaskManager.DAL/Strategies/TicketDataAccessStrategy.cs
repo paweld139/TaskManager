@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.DAL.Entities;
 
@@ -40,14 +41,22 @@ namespace TaskManager.DAL.Strategies
             return properties;
         }
 
-        public override bool CanAdd(params object[] args) => EmployeeId != null && ContrahentId > 0;
+        public override Task<bool> CanAdd(params object[] args)
+        {
+            bool result = HasRole && EmployeeId != null && ContrahentId > 0;
+
+            return Task.FromResult(result);
+        }
 
         public override void PrepareForAdd(params object[] args)
         {
             if (args[0] is TicketBasic ticket)
             {
-                ticket.ContrahentId = ContrahentId;
-                ticket.RepresentativeId = EmployeeId;
+                if (IsCustomer) //Serwisanci mogą tworzyć zadanie dla wybranego kontrahenta i przedstawiciela
+                {
+                    ticket.ContrahentId = ContrahentId;
+                    ticket.RepresentativeId = EmployeeId;
+                }
 
                 ticket.StatusId = 6;
 

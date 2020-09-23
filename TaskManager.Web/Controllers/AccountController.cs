@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -8,8 +9,13 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using PDCore.Extensions;
+using PDCore.Interfaces;
+using PDWebCore;
 using PDWebCore.Helpers.MultiLanguage;
+using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
+using TaskManager.Web.Helpers;
 using TaskManager.Web.Models;
 
 namespace TaskManager.Web.Controllers
@@ -19,13 +25,21 @@ namespace TaskManager.Web.Controllers
     {
         private ApplicationSignInManager signInManager;
         private readonly IAuthenticationManager authenticationManager;
+        private readonly ITaskManagerUow taskManagerUow;
+        private readonly IDataAccessStrategy<ApplicationUser> dataAccessStrategy;
         private ApplicationUserManager userManager;
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager)
+        public AccountController(ApplicationUserManager userManager,
+            ApplicationSignInManager signInManager,
+            IAuthenticationManager authenticationManager,
+            ITaskManagerUow taskManagerUow,
+            IDataAccessStrategy<ApplicationUser> dataAccessStrategy)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.authenticationManager = authenticationManager;
+            this.taskManagerUow = taskManagerUow;
+            this.dataAccessStrategy = dataAccessStrategy;
         }
 
         // The Authorize Action is the end point which gets called when you access any
@@ -38,6 +52,7 @@ namespace TaskManager.Web.Controllers
             var identity = new ClaimsIdentity(claims, "Bearer");
 
             authenticationManager.SignIn(identity);
+
             return new EmptyResult();
         }
 
@@ -65,6 +80,7 @@ namespace TaskManager.Web.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -126,8 +142,10 @@ namespace TaskManager.Web.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public async Task<ActionResult> Register()
         {
+            ViewData["Contrahents"] = await taskManagerUow.Contrahents.GetSelectList();
+
             return View();
         }
 
@@ -138,24 +156,58 @@ namespace TaskManager.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            ModelState.Remove("Contrahent.Name");
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = model.Hometown };
-                var result = await userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                bool canAdd = await dataAccessStrategy.CanAdd(model.Employee, model.Contrahent);
+
+                if (!canAdd)
                 {
-                    await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    ModelState.AddModelError("", Resources.Global.ContractorInvalid);
                 }
-                AddErrors(result);
+                else
+                {
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = model.Hometown };
+
+                    var result = await userManager.CreateAsync(user, model.Password);
+
+                    if (result.Succeeded)
+                    {
+                        result = await userManager.AddToRoleAsync(user.Id, model.Contrahent.RoleName);
+
+                        if (result.Succeeded)
+                        {
+                            bool success = await taskManagerUow.Employees.SaveNewAsync(model.Employee, User, args: user);
+
+                            if (!success)
+                            {
+                                ModelState.AddModelError("", Resources.Global.EmployeeAddingProblem);
+                            }
+                            else
+                            {
+                                TempData["Message"] = Resources.Common.RegistrationSuccessful;
+
+                                //user.Employee = taskManagerUow.Employees.FindByKeyValues(employee.Id);
+
+                                //await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                                // Send an email with this link
+                                // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                                // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                                // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                                return RedirectToAction("Index", "Home");
+                            }
+                        }
+                    }
+
+                    AddErrors(result);
+                }
             }
+
+            ViewData["Contrahents"] = await taskManagerUow.Contrahents.GetSelectList();
 
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -454,10 +506,12 @@ namespace TaskManager.Web.Controllers
             public override void ExecuteResult(ControllerContext context)
             {
                 var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
+
                 if (UserId != null)
                 {
                     properties.Dictionary[XsrfKey] = UserId;
                 }
+
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }

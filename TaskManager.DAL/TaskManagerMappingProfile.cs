@@ -44,6 +44,9 @@ namespace TaskManager.DAL
                 .ForMember(d => d.FullName, opt => opt.MapFrom(e => string.Concat(e.FirstName, " ", e.LastName)))
                 .ReverseMap();
 
+            CreateMap<Employee, EmployeeBasic>()
+                .ReverseMap();
+
             //ForAllMaps((typeMap, map) =>
             //{
             //    if (typeMap.SourceType is IModificationHistory && typeMap.DestinationType is IModificationHistory destinationType)

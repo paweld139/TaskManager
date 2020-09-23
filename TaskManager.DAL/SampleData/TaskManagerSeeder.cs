@@ -22,41 +22,47 @@ namespace TaskManager.DAL.SampleData
 
         public void Seed()
         {
-            SeedRoles(context);
-            SeedContrahents(context);
-            SeedUsers(context);
-            SeedDictionary(context);
-            SeedTickets(context);
+            SeedRoles();
+            SeedContrahents();
+            SeedUsers();
+            SeedDictionary();
+            SeedTickets();
         }
 
-        private void SeedTickets(TaskManagerContext context)
+        private void SeedTickets()
         {
-            string userId = context.Users.First().Id;
+            var users = context.Users.ToArray();
 
             var tickets = new[]
             {
                 new Ticket
                 {
                     Subject = "Coś nie działa",
-                    Description = "Jest bardzo źle",
+                    Description = "Jest źle",
                     Number = "TIC/2020/09/001",
                     TypeId = 12,
-                    PriorityId = 3,
+                    PriorityId = 1,
                     StatusId = 6,
-                    ContrahentId = 1,
-                    RepresentativeId = userId,
+                    ContrahentId = 2,
+                    RepresentativeId = users[0].Id,
                     Comments = new List<Comment>
                     {
                         new Comment
                         {
-                           Content = "Dzięki",
-                           EmployeeId = userId,
+                           Content = "Jestem klientem i dodałem to zadanie",
+                           EmployeeId = users[0].Id,
                            TicketId = 1
                         },
                         new Comment
                         {
-                           Content = "Jeszcze raz dzięki",
-                           EmployeeId = userId,
+                           Content = "Jestem serwisantem",
+                           EmployeeId = users[1].Id,
+                           TicketId = 1
+                        },
+                        new Comment
+                        {
+                           Content = "Adminem jestem",
+                           EmployeeId = users[2].Id,
                            TicketId = 1
                         }
                     }
@@ -68,21 +74,52 @@ namespace TaskManager.DAL.SampleData
                     Description = "Jest jeszcze gorzej",
                     Number = "TIC/2020/09/002",
                     TypeId = 13,
-                    PriorityId = 5,
+                    PriorityId = 2,
                     StatusId = 7,
-                    ContrahentId = 2,
-                    RepresentativeId = userId,
+                    ContrahentId = 1,
+                    RepresentativeId = users[1].Id,
                     Comments = new List<Comment>
                     {
                         new Comment
                         {
-                           Content = "Witam",
-                           EmployeeId = userId,
+                           Content = "Jestem serwisantem i dodałem to zadanie. Klient nie widzi tego zadania.",
+                           EmployeeId = users[1].Id,
+                           TicketId = 2
+                        },
+                        new Comment
+                        {
+                           Content = "Adminem jestem",
+                           EmployeeId = users[2].Id,
                            TicketId = 2
                         }
                     }
+                },
+                new Ticket
+                {
+                    Subject = "Jest najgorzej",
+                    Description = "Gorzej być nie może",
+                    Number = "TIC/2020/09/003",
+                    TypeId = 14,
+                    PriorityId = 3,
+                    StatusId = 8,
+                    ContrahentId = 1,
+                    RepresentativeId = users[2].Id,
+                    Comments = new List<Comment>
+                    {
+                        new Comment
+                        {
+                           Content = "Jestem adminem i dodałem to zadanie. Klient nie widzi tego zadania.",
+                           EmployeeId = users[2].Id,
+                           TicketId = 3
+                        },
+                        new Comment
+                        {
+                           Content = "Serwisantem jestem",
+                           EmployeeId = users[1].Id,
+                           TicketId = 3
+                        }
+                    }
                 }
-
             };
 
             tickets.ForEach(x => context.Set<Ticket>().AddOrUpdate(c => c.Number, x));
@@ -90,7 +127,7 @@ namespace TaskManager.DAL.SampleData
             context.SaveChangesWithModificationHistory();
         }
 
-        private void SeedDictionary(TaskManagerContext context)
+        private void SeedDictionary()
         {
             var vals = new[]
             {
@@ -101,15 +138,12 @@ namespace TaskManager.DAL.SampleData
                 "Wysoki"
             };
 
-            AddDictionary("Priorytet", vals, context);
+            AddDictionary("Priorytet", vals);
 
 
             vals = new[]
             {
                 "Przyjęte",
-                //"Do zatwierdzenia",
-                //"Zatwierdzone",
-                //"Do wypuszczenia",
                 "Do odbioru",
                 "Do wyjaśnienia",
                 "Anulowane",
@@ -117,7 +151,7 @@ namespace TaskManager.DAL.SampleData
                 "Zakończone"
             };
 
-            AddDictionary("Status", vals, context);
+            AddDictionary("Status", vals);
 
 
             vals = new[]
@@ -128,20 +162,20 @@ namespace TaskManager.DAL.SampleData
                 "Wewnętrzne"
             };
 
-            AddDictionary("Typ", vals, context);
+            AddDictionary("Typ", vals);
 
 
             context.SaveChangesWithModificationHistory();
         }
 
-        private void AddDictionary(string name, IEnumerable<string> positions, TaskManagerContext context)
+        private void AddDictionary(string name, IEnumerable<string> positions)
         {
             var dics = positions.Select(x => new Dictionary { Name = name, Value = x });
 
             dics.ForEach(x => context.Set<Dictionary>().AddOrUpdate(d => new { d.Name, d.Value }, x));
         }
 
-        private void SeedRoles(TaskManagerContext context)
+        private void SeedRoles()
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
@@ -149,13 +183,7 @@ namespace TaskManager.DAL.SampleData
 
             CreateRole(roleManager, "Admin");
 
-            CreateRole(roleManager, "Zatwierdzający");
-
-            CreateRole(roleManager, "Potwierdzający");
-
             CreateRole(roleManager, "Klient");
-
-            CreateRole(roleManager, "Wewnętrzny");
 
             roleManager.Dispose();
         }
@@ -173,13 +201,53 @@ namespace TaskManager.DAL.SampleData
             }
         }
 
-        private void SeedUsers(TaskManagerContext context)
+        private void SeedUsers()
         {
             var store = new UserStore<ApplicationUser>(context);
             var manager = new UserManager<ApplicationUser>(store);
 
-            string userName = "pawell139139@gmail.com";
+            var employee = new Employee
+            {
+                ContrahentId = 2,
+                FirstName = "Paweł",
+                LastName = "Klient",
+            };
 
+            CreateUser(manager, "klient@gmail.com", "hasloos@1Z", "Klient", "Klientów", employee);
+
+
+            employee = new Employee
+            {
+                ContrahentId = 1,
+                FirstName = "Paweł",
+                LastName = "Operator",
+            };
+
+            CreateUser(manager, "serwisant@gmail.com", "hasloos@1Z2", "Serwisant", "Serwisantów", employee);
+
+
+            employee = new Employee
+            {
+                ContrahentId = 1,
+                FirstName = "Paweł",
+                LastName = "Admin",
+            };
+
+            CreateUser(manager, "admin@gmail.com", "hasloos@1Z3", "Admin", "Adminów", employee);
+
+
+            manager.Dispose();
+
+            store.Dispose();
+        }
+
+        private void CreateUser(UserManager<ApplicationUser> manager,
+            string userName,
+            string password,
+            string roleName,
+            string hometown,
+            Employee employee)
+        {
             if (!context.Users.Any(u => u.UserName == userName))
             {
                 var applicationUser = new ApplicationUser
@@ -187,41 +255,33 @@ namespace TaskManager.DAL.SampleData
                     UserName = userName,
                     Email = userName,
                     EmailConfirmed = true,
-                    Hometown = "Nowa Ruda",
+                    Hometown = hometown
                 };
 
-                var userResult = manager.Create(applicationUser, "hasloos@1Z");
+                var userResult = manager.Create(applicationUser, password);
 
                 if (userResult.Succeeded)
                 {
-                    manager.AddToRole(applicationUser.Id, "Klient");
+                    manager.AddToRole(applicationUser.Id, roleName);
+
+
+                    employee.Id = applicationUser.Id;
+
+                    context.Employees.Add(employee);
+
+
+                    context.SaveChangesWithModificationHistory();
                 }
-
-                var employee = new Employee
-                {
-                    ContrahentId = 1,
-                    FirstName = "Paweł",
-                    LastName = "Dywan",
-                    Id = applicationUser.Id
-                };
-
-                context.Employees.Add(employee);
-
-                context.SaveChangesWithModificationHistory();
             }
-
-            manager.Dispose();
-
-            store.Dispose();
         }
 
-        private void SeedContrahents(TaskManagerContext context)
+        private void SeedContrahents()
         {
             var contrahents = new[]
             {
                 new Contrahent()
                 {
-                    Name = "IBM",
+                    Name = "IBM Serwisant",
                     NIP = "1234567890",
                     Email = "IBM@wp.pl",
                     IsOperator = true,
@@ -230,7 +290,7 @@ namespace TaskManager.DAL.SampleData
 
                 new Contrahent()
                 {
-                    Name = "Microsoft",
+                    Name = "Microsoft Klient",
                     NIP = "1234567891",
                     Email = "Microsoft@wp.pl",
                     LicenseKey = "12345678911234567891"

@@ -32,6 +32,7 @@ using TaskManager.BLL.Translators;
 using TaskManager.DAL;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
+using TaskManager.DAL.Repositories;
 using TaskManager.DAL.Strategies;
 using CacheService = PDWebCore.Services.Serv.CacheService;
 
@@ -96,6 +97,18 @@ namespace TaskManager.Web.App_Start
                    .As<IDataAccessStrategy<Comment>>()
                    .SingleInstance();
 
+            builder.RegisterType<ContrahentDataAccessStrategy>()
+                  .As<IDataAccessStrategy<Contrahent>>()
+                  .SingleInstance();
+
+            builder.RegisterType<EmployeeDataAccessStrategy>()
+                   .As<IDataAccessStrategy<Employee>>()
+                   .SingleInstance();
+
+            builder.RegisterType<ApplicationUserDataAccessStrategy>()
+                    .As<IDataAccessStrategy<ApplicationUser>>()
+                    .InstancePerRequest();
+
 
             builder.RegisterGeneric(typeof(SqlRepositoryEntityFrameworkDisconnected<>))
                    .As(typeof(ISqlRepositoryEntityFrameworkDisconnected<>))
@@ -112,6 +125,10 @@ namespace TaskManager.Web.App_Start
             //builder.RegisterType<TicketRepository>()
             //       .As<ITicketRepository>()
             //       .InstancePerRequest();
+
+            builder.RegisterType<ContrahentRepository>()
+                   .As<IContrahentRepository>()
+                   .InstancePerRequest();
 
 
             builder.RegisterType<LogMessageFactory>()

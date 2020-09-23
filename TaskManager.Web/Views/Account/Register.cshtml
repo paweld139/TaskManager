@@ -1,45 +1,72 @@
 ﻿@model TaskManager.Web.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = Resources.Common.Registration;
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4>@Resources.Common.CreateAccount</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    <div class="form-row">
+        <div class="form-group col-sm">
+            @Html.LabelFor(m => m.Email)
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="emailGroupPrepend">@@</span>
+                </div>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", aria_describedby = "emailGroupPrepend" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Hometown, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="form-group col-sm">
+            @Html.LabelFor(m => m.Hometown)
             @Html.TextBoxFor(m => m.Hometown, new { @class = "form-control" })
         </div>
-    </div>    
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-sm">
+            @Html.LabelFor(m => m.Password)
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="form-group col-sm">
+            @Html.LabelFor(m => m.ConfirmPassword)
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+    <div class="form-row">
+        <div class="form-group col-sm">
+            @Html.LabelFor(m => m.Employee.FirstName)
+            @Html.TextBoxFor(m => m.Employee.FirstName, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-sm">
+            @Html.LabelFor(m => m.Employee.LastName)
+            @Html.TextBoxFor(m => m.Employee.LastName, new { @class = "form-control" })
         </div>
     </div>
+    <div class="form-row">
+        <div class="form-group col-lg-4 col-md-7">
+            @Html.LabelFor(m => m.Employee.ContrahentId)
+            @Html.DropDownListFor(m => m.Employee.ContrahentId, (ViewData["Contrahents"] as SelectList), new { @class = "custom-select" })
+        </div>
+        <div class="form-group col-lg-3 col-md">
+            @Html.LabelFor(m => m.Contrahent.NIP)
+            @Html.TextBoxFor(m => m.Contrahent.NIP, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-lg">
+            @Html.LabelFor(m => m.Contrahent.LicenseKey)
+            @Html.TextBoxFor(m => m.Contrahent.LicenseKey, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-check">
+            @Html.CheckBoxFor(m => m.Contrahent.IsOperator, new { @class = "form-check-input" })
+            @Html.LabelFor(m => m.Contrahent.IsOperator, new { @class = "form-check-label" })
+        </div>
+    </div>
+    <input type="submit" class="btn btn-outline-secondary" value="@Resources.Common.Register" />
 }
 
 @section Scripts {

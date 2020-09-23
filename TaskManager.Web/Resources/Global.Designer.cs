@@ -68,5 +68,23 @@ namespace Resources {
                 return ResourceManager.GetString("APP_NAME", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid contractor data was provided.
+        /// </summary>
+        public static string ContractorInvalid {
+            get {
+                return ResourceManager.GetString("ContractorInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was a problem adding an employee.
+        /// </summary>
+        public static string EmployeeAddingProblem {
+            get {
+                return ResourceManager.GetString("EmployeeAddingProblem", resourceCulture);
+            }
+        }
     }
 }

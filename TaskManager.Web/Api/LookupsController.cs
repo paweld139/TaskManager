@@ -7,6 +7,7 @@ using TaskManager.DAL.Contracts;
 
 namespace TaskManager.Web.Api
 {
+    [Authorize]
     public class LookupsController : ApiController
     {
         private readonly ITaskManagerUow taskManagerUow;
@@ -34,7 +35,6 @@ namespace TaskManager.Web.Api
         {
             return taskManagerUow.Dictionaries.FindBriefs("Status");
         }
-
 
         [ActionName("contrahents")]
         public IQueryable<ContrahentBrief> GetContrahents()

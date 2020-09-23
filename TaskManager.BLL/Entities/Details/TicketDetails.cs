@@ -11,10 +11,10 @@ namespace TaskManager.BLL.Entities.Details
     public class TicketDetails : TicketBasic
     {
         [DataMember(Name = "type")]
-        public string TypeValue { get; set; }
+        public virtual string TypeValue { get; set; }
 
         [DataMember(Name = "priority")]
-        public string PriorityValue { get; set; }
+        public virtual string PriorityValue { get; set; }
 
         [DataMember(Name = "status")]
         public virtual string StatusValue { get; set; }

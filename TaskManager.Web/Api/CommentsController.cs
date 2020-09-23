@@ -49,18 +49,18 @@ namespace TaskManager.Web.Api
 
         [Route]
         [ResponseType(typeof(CommentDTO))]
-        public async Task<IHttpActionResult> Post(int ticketId, CommentBasic model)
+        public async Task<IHttpActionResult> Post(int ticketId, [FromBody] CommentBasic model)
         {
             var ticket = await taskManagerUow.Tickets.FindByIdAsync(ticketId);
 
-            if(ticket == null)
+            if (ticket == null)
             {
                 return NotFound();
             }
 
             bool success = await taskManagerUow.Comments.SaveNewAsync(model, User, args: ticket);
 
-            if(success)
+            if (success)
             {
                 var comment = await taskManagerUow.Comments.FindByIdAsync<CommentDTO>(model.Id);
 

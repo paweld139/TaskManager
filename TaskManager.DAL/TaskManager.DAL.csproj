@@ -123,7 +123,10 @@
     <Compile Include="Repositories\TicketRepository.cs" />
     <Compile Include="SampleData\TaskManagerDbInitializer.cs" />
     <Compile Include="SampleData\TaskManagerSeeder.cs" />
+    <Compile Include="Strategies\ApplicationUserDataAccessStrategy.cs" />
     <Compile Include="Strategies\CommentDataAccessStrategy.cs" />
+    <Compile Include="Strategies\ContrahentDataAccessStrategy.cs" />
+    <Compile Include="Strategies\EmployeeDataAccessStrategy.cs" />
     <Compile Include="Strategies\TaskManagerDataAccessStrategy.cs" />
     <Compile Include="Strategies\TicketDataAccessStrategy.cs" />
     <Compile Include="TaskManagerContext.cs" />

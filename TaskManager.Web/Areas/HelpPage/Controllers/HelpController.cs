@@ -3,18 +3,19 @@ using System.Web.Http;
 using System.Web.Mvc;
 using TaskManager.Web.Areas.HelpPage.ModelDescriptions;
 using TaskManager.Web.Areas.HelpPage.Models;
+using AuthorizeAttribute = System.Web.Mvc.AuthorizeAttribute;
 
 namespace TaskManager.Web.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.
     /// </summary>
+    [Authorize(Roles = "Admin")]
     public class HelpController : Controller
     {
         private const string ErrorViewName = "Error";
 
-        public HelpController()
-            : this(GlobalConfiguration.Configuration)
+        public HelpController() : this(GlobalConfiguration.Configuration)
         {
         }
 
@@ -28,14 +29,16 @@ namespace TaskManager.Web.Areas.HelpPage.Controllers
         public ActionResult Index()
         {
             ViewBag.DocumentationProvider = Configuration.Services.GetDocumentationProvider();
+
             return View(Configuration.Services.GetApiExplorer().ApiDescriptions);
         }
 
         public ActionResult Api(string apiId)
         {
-            if (!String.IsNullOrEmpty(apiId))
+            if (!string.IsNullOrEmpty(apiId))
             {
                 HelpPageApiModel apiModel = Configuration.GetHelpPageApiModel(apiId);
+
                 if (apiModel != null)
                 {
                     return View(apiModel);
@@ -47,11 +50,11 @@ namespace TaskManager.Web.Areas.HelpPage.Controllers
 
         public ActionResult ResourceModel(string modelName)
         {
-            if (!String.IsNullOrEmpty(modelName))
+            if (!string.IsNullOrEmpty(modelName))
             {
                 ModelDescriptionGenerator modelDescriptionGenerator = Configuration.GetModelDescriptionGenerator();
-                ModelDescription modelDescription;
-                if (modelDescriptionGenerator.GeneratedModels.TryGetValue(modelName, out modelDescription))
+
+                if (modelDescriptionGenerator.GeneratedModels.TryGetValue(modelName, out ModelDescription modelDescription))
                 {
                     return View(modelDescription);
                 }

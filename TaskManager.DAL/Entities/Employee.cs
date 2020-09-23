@@ -5,18 +5,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Briefs;
 
 namespace TaskManager.DAL.Entities
 {
     [Table("Employee", Schema = "dbo")]
     [DataContract(Name = "employee", Namespace = "")]
-    public class Employee : EmployeeBrief, IModificationHistory
+    public class Employee : EmployeeBasic, IModificationHistory
     {
-        [Display(Name = "Contractor", ResourceType = typeof(Resources.Common))]
-        [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        public int ContrahentId { get; set; }
-
         [ForeignKey("ContrahentId")]
         public virtual Contrahent Contrahent { get; set; }
 
@@ -27,20 +24,6 @@ namespace TaskManager.DAL.Entities
 
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [Display(Name = "FirstName", ResourceType = typeof(Resources.Common))]
-        [DataType(DataType.Text)]
-        [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [DataMember(Name = "firstName")]
-        public string FirstName { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [Display(Name = "LastName", ResourceType = typeof(Resources.Common))]
-        [DataType(DataType.Text)]
-        [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [DataMember(Name = "lastName")]
-        public string LastName { get; set; }
 
         [IgnoreDataMember]
         public virtual ICollection<Comment> Comments { get; set; }

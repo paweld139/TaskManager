@@ -120,4 +120,10 @@
   <data name="APP_NAME" xml:space="preserve">
     <value>Portal Zgłoszeniowy</value>
   </data>
+  <data name="ContractorInvalid" xml:space="preserve">
+    <value>Podano nieprawidłowe dane kontrahenta</value>
+  </data>
+  <data name="EmployeeAddingProblem" xml:space="preserve">
+    <value>Wystąpił problem podczas dodawania pracownika</value>
+  </data>
 </root>

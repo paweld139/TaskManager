@@ -9,10 +9,10 @@ namespace TaskManager.BLL.Entities.DTO
     public class TicketDTO : TicketBrief
     {
         [DataMember(Name = "type")]
-        public string TypeValue { get; set; }
+        public virtual string TypeValue { get; set; }
 
         [DataMember(Name = "priority")]
-        public string PriorityValue { get; set; }
+        public virtual string PriorityValue { get; set; }
 
         [DataMember(Name = "status")]
         public virtual string StatusValue { get; set; }

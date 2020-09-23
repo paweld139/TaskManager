@@ -9,10 +9,12 @@ using System.Web.Http;
 
 namespace TaskManager.Web.Api
 {
+    [Authorize]
     [RoutePrefix("api")]
     public class OperationsController : ApiController
     {
         // OPTIONS: api/refreshconfig
+        [Authorize(Roles = "Admin")]
         [HttpOptions]
         [Route("refreshconfig")]
         public IHttpActionResult RefreshAppSettings()

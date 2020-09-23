@@ -18,7 +18,7 @@ namespace TaskManager.Web.Api
 {
     [Authorize]
     [ApiVersion("1.0")]
-    //[ApiVersion("1.1")]
+    [ApiVersion("1.1")]
     //[RoutePrefix("api/v{version:apiVersion}/tasks")]
     [RoutePrefix("api/tickets")]
     public class TicketsController : ApiController
@@ -138,12 +138,27 @@ namespace TaskManager.Web.Api
             return CreatedAtRoute("GetTicketAdmin", new { id = ticket.Id }, ticket);
         }
 
-        [ResponseType(typeof(TicketDetails))]
-        public async Task<IHttpActionResult> Post(TicketBasic model)
+        [MapToApiVersion("1.0")]
+        [ResponseType(typeof(TicketBasic))]
+        public async Task<IHttpActionResult> Post([FromBody] TicketBasic model)
         {
             bool success = await taskManagerUow.Tickets.SaveNewAsync(model, User);
 
-            if(success)
+            if (success)
+            {
+                return CreatedAtRoute("GetTicket", new { id = model.Id }, model);
+            }
+
+            return this.Forbid();
+        }
+
+        [MapToApiVersion("1.1")]
+        [ResponseType(typeof(TicketDetails))]
+        public async Task<IHttpActionResult> PostTicket([FromBody] TicketBasic model)
+        {
+            bool success = await taskManagerUow.Tickets.SaveNewAsync(model, User);
+
+            if (success)
             {
                 var ticket = await taskManagerUow.Tickets.FindByIdAsync<TicketDetailsProxy>(model.Id);
 

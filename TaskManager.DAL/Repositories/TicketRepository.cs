@@ -22,6 +22,13 @@ namespace TaskManager.DAL.Repositories
         {
         }
 
+        public TicketRepository(IEntityFrameworkDbContext ctx,
+             ILogger logger,
+             IMapper mapper,
+             IDataAccessStrategy<Ticket> strategy) : base(ctx, logger, mapper, strategy)
+        {
+        }
+
         public IQueryable<Ticket> Find(bool includeSubobjects, bool asNoTracking = true)
         {
             if (!includeSubobjects)

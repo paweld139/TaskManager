@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.DAL.Entities;
 
@@ -18,7 +19,7 @@ namespace TaskManager.DAL.Strategies
             return NoRestrictions() || EmployeeId == entity.EmployeeId;
         }
 
-        public override bool CanAdd(params object[] args)
+        public override Task<bool> CanAdd(params object[] args)
         {
             bool result = false;
 
@@ -27,7 +28,9 @@ namespace TaskManager.DAL.Strategies
                 result = ticket.ContrahentId == ContrahentId;
             }
 
-            return NoRestrictions() || result;
+            result = NoRestrictions() || result;
+
+            return Task.FromResult(result);
         }
 
         public override void PrepareForAdd(params object[] args)

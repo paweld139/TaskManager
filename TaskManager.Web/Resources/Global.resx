@@ -120,4 +120,10 @@
   <data name="APP_NAME" xml:space="preserve">
     <value>Service Portal</value>
   </data>
+  <data name="ContractorInvalid" xml:space="preserve">
+    <value>Invalid contractor data was provided</value>
+  </data>
+  <data name="EmployeeAddingProblem" xml:space="preserve">
+    <value>There was a problem adding an employee</value>
+  </data>
 </root>

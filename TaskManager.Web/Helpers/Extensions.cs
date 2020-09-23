@@ -9,7 +9,7 @@ namespace TaskManager.Web.Helpers
     {
         public static async Task<SelectList> GetSelectList(this IContrahentRepository contrahentRepository)
         {
-            var kvp = await contrahentRepository.GetKeyValuePairsAsync();
+            var kvp = await contrahentRepository.GetKeyValuePairsAsync().ConfigureAwait(false);
 
             return kvp.ToSelectList();
         }

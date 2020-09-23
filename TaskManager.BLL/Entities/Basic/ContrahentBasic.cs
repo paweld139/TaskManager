@@ -24,8 +24,5 @@ namespace TaskManager.BLL.Entities.Basic
         [StringLength(20, MinimumLength = 20, ErrorMessageResourceName = "LicenseKeyInvalid", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "licenseKey")]
         public string LicenseKey { get; set; }
-
-        [NotMapped]
-        public string RoleName => IsOperator ? "Serwisant" : "Klient";
     }
 }

@@ -16,7 +16,7 @@ namespace TaskManager.DAL.Strategies
 
         public override bool CanDelete(Comment entity)
         {
-            return NoRestrictions() || EmployeeId == entity.EmployeeId;
+            return EmployeeId == entity.EmployeeId || NoRestrictions();
         }
 
         public override Task<bool> CanAdd(params object[] args)
@@ -28,7 +28,7 @@ namespace TaskManager.DAL.Strategies
                 result = ticket.ContrahentId == ContrahentId;
             }
 
-            result = NoRestrictions() || result;
+            result = result || NoRestrictions();
 
             return Task.FromResult(result);
         }

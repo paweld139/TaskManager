@@ -17,7 +17,7 @@ namespace TaskManager.DAL.Strategies
         {
             bool result = !IsCustomer || (IsCustomer && entity.ContrahentId == ContrahentId);
 
-            return NoRestrictions() || result;
+            return result || NoRestrictions();
         }
 
         public override ICollection<string> GetPropertiesForUpdate(Ticket entity)

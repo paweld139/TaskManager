@@ -25,6 +25,8 @@ namespace TaskManager.BLL.Translators
             ["Z wyceny"] = () => Resources.Common.FromValuation,
             ["Handlowe"] = () => Resources.Common.Commercial,
             ["Wewnętrzne"] = () => Resources.Common.Internal,
+
+            ["Invalid token."] = () => Resources.Common.InvalidToken
         };
 
         protected override Dictionary<string, Func<string>> Words => new Dictionary<string, Func<string>>();

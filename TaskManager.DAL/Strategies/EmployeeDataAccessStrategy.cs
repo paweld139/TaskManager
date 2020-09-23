@@ -23,7 +23,7 @@ namespace TaskManager.DAL.Strategies
                 result = !string.IsNullOrWhiteSpace(user.Id); 
             }
 
-            result = NoRestrictions() || result;
+            result = result || NoRestrictions();
 
             return Task.FromResult(result);
         }

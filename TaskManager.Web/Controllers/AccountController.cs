@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,8 +12,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PDCore.Extensions;
 using PDCore.Interfaces;
+using PDCore.Utils;
 using PDWebCore;
 using PDWebCore.Helpers.MultiLanguage;
+using PDWebCore.Services.IServ;
+using TaskManager.BLL.Translators;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 using TaskManager.Web.Helpers;
@@ -27,19 +31,25 @@ namespace TaskManager.Web.Controllers
         private readonly IAuthenticationManager authenticationManager;
         private readonly ITaskManagerUow taskManagerUow;
         private readonly IDataAccessStrategy<ApplicationUser> dataAccessStrategy;
+        private readonly TaskManagerTranslator taskManagerTranslator;
+        private readonly IUserDataService userDataService;
         private ApplicationUserManager userManager;
 
         public AccountController(ApplicationUserManager userManager,
             ApplicationSignInManager signInManager,
             IAuthenticationManager authenticationManager,
             ITaskManagerUow taskManagerUow,
-            IDataAccessStrategy<ApplicationUser> dataAccessStrategy)
+            IDataAccessStrategy<ApplicationUser> dataAccessStrategy,
+            TaskManagerTranslator taskManagerTranslator,
+            IUserDataService userDataService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.authenticationManager = authenticationManager;
             this.taskManagerUow = taskManagerUow;
             this.dataAccessStrategy = dataAccessStrategy;
+            this.taskManagerTranslator = taskManagerTranslator;
+            this.userDataService = userDataService;
         }
 
         // The Authorize Action is the end point which gets called when you access any
@@ -77,23 +87,47 @@ namespace TaskManager.Web.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var user = await userManager.FindAsync(model.Email, model.Password);
 
-            switch (result)
+            if (user != null)
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                if (!user.EmailConfirmed)
+                {
+                    ModelState.AddModelError("", Resources.Common.MailUnconfirmed);
+                }
+                else
+                {
+                    var userDataTask = userDataService.GetAsync();
+
+                    // This doesn't count login failures towards account lockout
+                    // To enable password failures to trigger account lockout, change to shouldLockout: true
+                    var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+                    var userData = await userDataTask;
+
+                    await taskManagerUow.UserData.SaveNewAsync(userData);
+
+                    switch (result)
+                    {
+                        case SignInStatus.Success:
+                            return RedirectToLocal(returnUrl);
+                        case SignInStatus.LockedOut:
+                            return View("Lockout");
+                        case SignInStatus.RequiresVerification:
+                            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
+                        case SignInStatus.Failure:
+                        default:
+                            ModelState.AddModelError("", Resources.Common.InvalidLoginAttempt);
+                            return View(model);
+                    }
+                }
             }
+            else
+            {
+                ModelState.AddModelError("", Resources.Common.InvalidLoginData);
+            }
+
+            return View(model);
         }
 
         //
@@ -194,9 +228,11 @@ namespace TaskManager.Web.Controllers
 
                                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                                 // Send an email with this link
-                                // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                                // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                                // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                                string code = await userManager.GenerateEmailConfirmationTokenAsync(user.Id);
+
+                                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
+
+                                await userManager.SendEmailAsync(user.Id, Resources.Common.ConfirmAccount, $"{Resources.Common.ConfirmAccountInstruction} {WebUtils.GetHTMLA(callbackUrl, Resources.Common.Here)}");
 
                                 return RedirectToAction("Index", "Home");
                             }
@@ -220,10 +256,30 @@ namespace TaskManager.Web.Controllers
         {
             if (userId == null || code == null)
             {
-                return View("Error");
+                return View("_Error");
+
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var result = await userManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+
+            IdentityResult result;
+
+            try
+            {
+                result = await userManager.ConfirmEmailAsync(userId, code);
+            }
+            catch (InvalidOperationException/* ioe*/)
+            {
+                // ConfirmEmailAsync throws when the userId is not found.
+
+                return View("_Error"/*, model: ioe.Message*/);
+            }
+
+            if (result.Succeeded)
+                return View("ConfirmEmail");
+
+            //AddErrors(result);
+
+            return View("_Error", model: Resources.Common.ConfirmEmailFailed);
         }
 
         //
@@ -244,6 +300,7 @@ namespace TaskManager.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userManager.FindByNameAsync(model.Email);
+
                 if (user == null || !(await userManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -252,10 +309,13 @@ namespace TaskManager.Web.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await userManager.GeneratePasswordResetTokenAsync(user.Id);
+
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
+
+                await userManager.SendEmailAsync(user.Id, Resources.Common.ResetPassword, $"{Resources.Common.ResetPasswordInstruction} {WebUtils.GetHTMLA(callbackUrl, Resources.Common.Here)}");
+
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -275,7 +335,7 @@ namespace TaskManager.Web.Controllers
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            return code == null ? View("Error") : View();
+            return code == null ? View("_Error") : View();
         }
 
         //
@@ -289,18 +349,24 @@ namespace TaskManager.Web.Controllers
             {
                 return View(model);
             }
+
             var user = await userManager.FindByNameAsync(model.Email);
+
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
             var result = await userManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
             AddErrors(result);
+
             return View();
         }
 
@@ -472,7 +538,7 @@ namespace TaskManager.Web.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                ModelState.AddModelError("", taskManagerTranslator.TranslateText(error));
             }
         }
 

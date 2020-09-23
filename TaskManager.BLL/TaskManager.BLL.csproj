@@ -53,6 +53,7 @@
     <Compile Include="Entities\Briefs\CommentBrief.cs" />
     <Compile Include="Entities\Briefs\ContrahentBrief.cs" />
     <Compile Include="Entities\Briefs\EmployeeBrief.cs" />
+    <Compile Include="Entities\Details\ContrahentDetails.cs" />
     <Compile Include="Entities\Details\TicketDetails.cs" />
     <Compile Include="Entities\Briefs\DictionaryBrief.cs" />
     <Compile Include="Entities\DTO\CommentDTO.cs" />

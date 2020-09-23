@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TaskManager.BLL.Entities.Basic;
+using TaskManager.BLL.Entities.Details;
 
 namespace TaskManager.Web.Models
 {
@@ -93,7 +94,7 @@ namespace TaskManager.Web.Models
 
         public EmployeeBasic Employee { get; set; }
 
-        public ContrahentBasic Contrahent { get; set; }
+        public ContrahentDetails Contrahent { get; set; }
     }
 
     public class ResetPasswordViewModel

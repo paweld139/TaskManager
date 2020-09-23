@@ -33,7 +33,7 @@ namespace TaskManager.DAL.Repositories
 
         public async Task<List<KeyValuePair<int, string>>> GetKeyValuePairsAsync(bool orderByName = true)
         {
-            var data = await FindBriefs().ToListAsync();
+            var data = await FindBriefs().ToListAsync().ConfigureAwait(false);
 
             return data.GetKVP(c => c.Id, c => c.Name);
         }

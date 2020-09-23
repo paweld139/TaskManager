@@ -27,15 +27,16 @@ namespace TaskManager.Web.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                message == ManageMessageId.ChangePasswordSuccess ? $"{Resources.Common.PasswordChanged}."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.Error ? $"{Resources.ErrorMessages.ErrorOccured}."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
             var userId = User.Identity.GetUserId();
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -44,6 +45,7 @@ namespace TaskManager.Web.Controllers
                 Logins = await userManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+
             return View(model);
         }
 
@@ -152,18 +154,24 @@ namespace TaskManager.Web.Controllers
             {
                 return View(model);
             }
+
             var result = await userManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
+
             if (result.Succeeded)
             {
                 var user = await userManager.FindByIdAsync(User.Identity.GetUserId());
+
                 if (user != null)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
+
                 return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
+
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Failed to verify phone");
+
             return View(model);
         }
 
@@ -174,15 +182,19 @@ namespace TaskManager.Web.Controllers
         public async Task<ActionResult> RemovePhoneNumber()
         {
             var result = await userManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
+
             if (!result.Succeeded)
             {
                 return RedirectToAction("Index", new { Message = ManageMessageId.Error });
             }
+
             var user = await userManager.FindByIdAsync(User.Identity.GetUserId());
+
             if (user != null)
             {
                 await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
+
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
@@ -203,17 +215,23 @@ namespace TaskManager.Web.Controllers
             {
                 return View(model);
             }
+
             var result = await userManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+
             if (result.Succeeded)
             {
                 var user = await userManager.FindByIdAsync(User.Identity.GetUserId());
+
                 if (user != null)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
+
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
+
             AddErrors(result);
+
             return View(model);
         }
 
@@ -233,15 +251,19 @@ namespace TaskManager.Web.Controllers
             if (ModelState.IsValid)
             {
                 var result = await userManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+
                 if (result.Succeeded)
                 {
                     var user = await userManager.FindByIdAsync(User.Identity.GetUserId());
+
                     if (user != null)
                     {
                         await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     }
+
                     return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
                 }
+
                 AddErrors(result);
             }
 
@@ -257,14 +279,20 @@ namespace TaskManager.Web.Controllers
                 message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
+
             var user = await userManager.FindByIdAsync(User.Identity.GetUserId());
+
             if (user == null)
             {
                 return View("Error");
             }
+
             var userLogins = await userManager.GetLoginsAsync(User.Identity.GetUserId());
+
             var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
+
             ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
+
             return View(new ManageLoginsViewModel
             {
                 CurrentLogins = userLogins,
@@ -287,11 +315,14 @@ namespace TaskManager.Web.Controllers
         public async Task<ActionResult> LinkLoginCallback()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
+
             if (loginInfo == null)
             {
                 return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
             }
+
             var result = await userManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
@@ -338,20 +369,24 @@ namespace TaskManager.Web.Controllers
         private bool HasPassword()
         {
             var user = userManager.FindById(User.Identity.GetUserId());
+
             if (user != null)
             {
                 return user.PasswordHash != null;
             }
+
             return false;
         }
 
         private bool HasPhoneNumber()
         {
             var user = userManager.FindById(User.Identity.GetUserId());
+
             if (user != null)
             {
                 return user.PhoneNumber != null;
             }
+
             return false;
         }
 

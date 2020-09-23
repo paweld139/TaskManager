@@ -63,7 +63,8 @@ namespace TaskManager.Web.App_Start
 
             builder.RegisterType<UserStore<ApplicationUser>>()
                    .As<IUserStore<ApplicationUser>>()
-                   .UsingConstructor(typeof(DbContext));
+                   .UsingConstructor(typeof(DbContext))
+                   .InstancePerRequest();
 
             builder.RegisterType<HttpContextPrinciple>()
                    .As<IPrincipal>()

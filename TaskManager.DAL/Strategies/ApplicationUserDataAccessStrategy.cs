@@ -6,6 +6,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities.Basic;
+using TaskManager.BLL.Entities.Details;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 
@@ -24,7 +25,7 @@ namespace TaskManager.DAL.Strategies
         {
             Task<bool> result = Task.FromResult(false);
 
-            if(args[0] is EmployeeBasic employee && args[1] is ContrahentBasic contrahent)
+            if(args[0] is EmployeeBasic employee && args[1] is ContrahentDetails contrahent)
             {
                 result = taskManagerUow.Contrahents.Find(c => c.Id == employee.ContrahentId
                                                                             && c.NIP == contrahent.NIP

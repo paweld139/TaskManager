@@ -29,10 +29,17 @@
                 <h5>
                     @Resources.Common.ErrorOccuredDetailsWeb
                 </h5>
+                @Html.ValidationSummary("", new { @class = "text-danger" })
                 @if (Model != null)
                 {
                     <p class="text-justify">
                         @Model
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        @(Resources.ErrorMessages.ErrorOccuredOnRequest).
                     </p>
                 }
             </div>

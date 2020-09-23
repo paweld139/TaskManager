@@ -1,4 +1,5 @@
 ﻿using PDCore.Repositories.IRepo;
+using PDWebCore.Models;
 using TaskManager.DAL.Entities;
 
 namespace TaskManager.DAL.Contracts
@@ -17,5 +18,6 @@ namespace TaskManager.DAL.Contracts
         ISqlRepositoryEntityFrameworkDisconnected<Comment> Comments { get; }
         IContrahentRepository Contrahents { get; }
         IEmployeeRepository Employees { get; }
+        ISqlRepositoryEntityFrameworkDisconnected<UserDataModel> UserData { get; }
     }
 }

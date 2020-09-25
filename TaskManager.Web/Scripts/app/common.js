@@ -41,10 +41,6 @@ window.common = (function () {
         return data;
     }
 
-    common.setUserLoginDate = function () {
-        $("hidUserLoginDate").val(new Date());
-    }
-
     common.setTimezoneOffset = function () {
         setTimezoneCookie();
     }

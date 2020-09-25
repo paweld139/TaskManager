@@ -22,17 +22,11 @@ namespace TaskManager.BLL.Entities.DTO
         public string ContrahentName { get; set; }
 
 
-        [DataMember(Name = "representativeFirstName")]
-        public string RepresentativeFirstName { get; set; }
-
-        [DataMember(Name = "representativeLastName")]
-        public string RepresentativeLastName { get; set; }
+        [DataMember(Name = "representative")]
+        public string Representative { get; set; }
 
 
-        [DataMember(Name = "operatorFirstName")]
-        public string OperatorFirstName { get; set; }
-
-        [DataMember(Name = "operatorLastName")]
-        public string OperatorLastName { get; set; }
+        [DataMember(Name = "operator")]
+        public string Operator { get; set; }
     }
 }

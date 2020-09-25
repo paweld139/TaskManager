@@ -97,13 +97,13 @@ namespace TaskManager.Web.Api
         [Route("briefs/getByDate")]
         public IQueryable<TicketDTO> GetByDate(DateTime createDate)
         {
-            return taskManagerUow.Tickets.FindByDateCreated<TicketDTOProxy>(createDate.Date, createDate.Date);
+            return taskManagerUow.Tickets.FindByDateCreated<TicketDTOProxy>(createDate, createDate);
         }
 
         [Route("briefs/getByDate")]
         public IQueryable<TicketDTO> Get(DateTime dateFrom, DateTime dateTo)
         {
-            return taskManagerUow.Tickets.FindByDateCreated<TicketDTOProxy>(dateFrom.Date, dateTo.Date);
+            return taskManagerUow.Tickets.FindByDateCreated<TicketDTOProxy>(dateFrom, dateTo);
         }
 
         [Route("briefs/getByPage")]

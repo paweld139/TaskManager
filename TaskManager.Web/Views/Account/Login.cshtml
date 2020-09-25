@@ -63,4 +63,17 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        (function () {
+            var newUrl = window.location.hash.substr(1);
+            $('#passUrl').val(newUrl);
+        })();
+
+        function preventBack() { window.history.forward(); }
+
+        setTimeout("preventBack ()", 0);
+
+        window.onunload = function () { null };
+    </script>
 }

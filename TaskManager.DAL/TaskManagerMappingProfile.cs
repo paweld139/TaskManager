@@ -20,6 +20,8 @@ namespace TaskManager.DAL
                 .ReverseMap();
 
             CreateMap<Ticket, TicketDTOProxy>()
+                .ForMember(d => d.Operator, opt => opt.MapFrom(t => string.Concat(t.Operator.FirstName, " ", t.Operator.LastName)))
+                .ForMember(d => d.Representative, opt => opt.MapFrom(t => string.Concat(t.Representative.FirstName, " ", t.Representative.LastName)))
                 .ReverseMap();
 
             CreateMap<Ticket, TicketBasic>()

@@ -11,9 +11,9 @@ namespace TaskManager.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js"
-                 /*"~/Scripts/PDWebCore/jquery.enhsplitter.js",
-                 "~/Scripts/PDWebCore/jquery.panel.js"*/));
+                "~/Scripts/jquery-{version}.js",
+                //"~/Scripts/PDWebCore/jquery.enhsplitter.js",
+                "~/Scripts/PDWebCore/jquery.card.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/tooltip").Include(
                "~/Scripts/PDWebCore/tether.min.js",
@@ -35,7 +35,8 @@ namespace TaskManager.Web
             bundles.Add(new ScriptBundle("~/bundles/Index").Include(
                 "~/Scripts/PDWebCore/Objects.js",
                 "~/Scripts/PDWebCore/Tools.js",
-                "~/Scripts/PDWebCore/cookies.js"));
+                "~/Scripts/PDWebCore/cookies.js",
+                "~/Scripts/PDWebCore/SortUtil.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                 "~/Scripts/jquery-ui-{version}.js",
@@ -47,6 +48,8 @@ namespace TaskManager.Web
                 "~/Scripts/app/app.datamodel.js",
                 "~/Scripts/app/app.viewmodel.js",
                 "~/Scripts/app/home.viewmodel.js",
+                "~/Scripts/app/add.viewmodel.js",
+                "~/Scripts/app/details.viewmodel.js",
                 "~/Scripts/app/_run.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -55,22 +58,26 @@ namespace TaskManager.Web
                 "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.js"
+                "~/Scripts/umd/popper.js",
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/bootstrap-select.js"
                 /*"~/Scripts/PDWebCore/bootstrap-select.js",*/
                 /*"~/Content/PDWebCore/fontawesome/js/all.js"*/));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
+                "~/Content/bootstrap-select.css",
                 "~/Content/themes/base/jquery-ui.css").Include(
                 "~/Content/PDWebCore/fontawesome/css/all.css", new CssRewriteUrlTransform()).Include(
-                "~/Content/Site.css"));
+                "~/Content/flag-icon-css/css/flag-icon.css",
+                "~/Content/PDWebCore/tooltip-theme-arrows.min.css",
+                "~/Content/PDWebCore/tooltip.css",
+                "~/Content/Site.css"
                 /*"~/Content/PDWebCore/bootstrap-select.css",
                 "~/Content/PDWebCore/Main.css",
                 "~/Content/PDWebCore/webmail.css",
                 "~/Content/PDWebCore/jquery.enhsplitter.css",
-                "~/Content/jquery-ui.css",
-                "~/Content/PDWebCore/tooltip-theme-arrows.min.css",
-                "~/Content/PDWebCore/tooltip.css"*/
+                "~/Content/jquery-ui.css",*/));
         }
     }
 }

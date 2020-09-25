@@ -5,5 +5,8 @@
     ko.validation.init({ grouping: { observable: false } });
     ko.applyBindings(app, document.body);
 
-    window.common.setTimezoneOffset();
+    //$(".selectpicker").selectpicker('val', getCookie("culture"))
+    //$('#languages').selectpicker('refresh');
+
+    //checkCookie();
 });

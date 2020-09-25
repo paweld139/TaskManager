@@ -1,57 +1,136 @@
 ﻿<!-- ko with: home -->
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="table-responsive">
-    <table class="table table-bordered table-condensed table-hover table-striped">
-        <thead>
-            <tr>
-                <th>@Resources.Common.Number</th>
-                <th>@Resources.Common.Subject</th>
-                <th>@Resources.Common.Status</th>
-                <th>@Resources.Common.Priority</th>
-                <th>@Resources.Common.Type</th>
-                <th>@Resources.Common.CreateDate</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: tickets">
-            <tr>
-                <th data-bind="text: number"></th>
-                <th data-bind="text: subject"></th>
-                <th data-bind="text: status"></th>
-                <th data-bind="text: priority"></th>
-                <th data-bind="text: type"></th>
-                <th data-bind="fromISODateTime: dateCreated"></th>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<div class="folder" id="home">
+    <section>
+        <div id="filtersCard">
+            <div class="card-header" role="button">
+                <span class="fa fa-chevron-up button-icon"></span>Filtry<a href="javascript:void(0)" id="filtersTooltip"><span class="sr-only">@Resources.Common.SortingInstruction</span></a>
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-5 col-sm form-group">
+                        <input class="form-control" placeholder="@Resources.Common.Number"
+                               data-bind="value: searchByNumber, valueUpdate: 'afterkeydown'" />
+                    </div>
+                    <div class="col-md col-sm form-group">
+                        <input class="form-control" placeholder="@Resources.Common.Subject"
+                               data-bind="value: searchBySubject, valueUpdate: 'afterkeydown'" />
+                    </div>
+                </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Your information</h2>
-        <p>This section shows how you can call ASP.NET Web API to get the user details.</p>
-        <p data-bind="text: myHometown"></p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=273732">Learn more &raquo;</a></p>
-    </div>
+                <!-- ko with: lookups -->
+                <div class="form-row">
+                    @if (!User.IsInRole("Klient"))
+                    {
+                        <div class="col-lg-4 col-md-6 form-group">
+                            <select class="selectpicker form-control" id="contrahentsFilter" multiple data-live-search="true" title="@Resources.Common.Contractor"
+                                    data-bind="options: contrahents, optionsText: 'name', optionsValue: 'id', selectedOptions: $parent.selectedContrahents">
+                            </select>
+                        </div>
+                    }
+                    <div class="col-lg-4 col-md-6 form-group">
+                        <select class="selectpicker form-control" id="operatorsFilter" multiple data-live-search="true" title="@Resources.Common.Operator"
+                                data-bind="options: operators, optionsText: 'fullName', optionsValue: 'id', selectedOptions: $parent.selectedOperators">
+                        </select>
+                    </div>
+                    <div class="col-lg-4 col-md-6 form-group">
+                        <select class="selectpicker form-control" id="representativesFilter" multiple data-live-search="true" title="@Resources.Common.Representative"
+                                data-bind="options: representatives, optionsText: 'fullName', optionsValue: 'id', selectedOptions: $parent.selectedRepresentatives">
+                        </select>
+                    </div>
+                    <div class="col-lg-4 col-md-6 form-group">
+                        <select class="selectpicker form-control" id="prioritiesFilter" multiple data-live-search="true" title="@Resources.Common.Priority"
+                                data-bind="options: priorities, optionsText: 'value', optionsValue: 'id', selectedOptions: $parent.selectedPriorities">
+                        </select>
+                    </div>
+                    <div class="col-lg-4 col-md-6 form-group">
+                        <select class="selectpicker form-control" id="typesFilter" multiple data-live-search="true" title="@Resources.Common.Type"
+                                data-bind="options: types, optionsText: 'value', optionsValue: 'id', selectedOptions: $parent.selectedTypes">
+                        </select>
+                    </div>
+                    <div class="col-lg-4 col-md-6 form-group">
+                        <select class="selectpicker form-control" id="statusesFilter" multiple data-live-search="true" title="@Resources.Common.Status"
+                                data-bind="options: statuses, optionsText: 'value', optionsValue: 'id', selectedOptions: $parent.selectedStatuses">
+                        </select>
+                    </div>
+                </div>
+                <!-- /ko -->
+                <div class="row align-items-center">
+                    <div class="col-sm-auto my-2 my-md-1">
+                        <input class="form-control" type="date" data-bind="value: dateFrom" />
+                    </div>
+                    <div class="col-sm-auto my-2 my-md-1">
+                        <input class="form-control" type="date" data-bind="value: dateTo" />
+                    </div>
+                    <div class="col-auto my-2 my-md-1">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" data-bind="checked: showToday" id="ticketsToday">
+                            <label class="form-check-label" for="ticketsToday">
+                                @Resources.Common.TodayOnly
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-auto my-2 my-md-1">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" data-bind="checked: onlyNotBinded" id="ticketsNotBinded">
+                            <label class="form-check-label" for="ticketsNotBinded">
+                                @Resources.Common.OnlyNotBinded
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET Single Page Application (SPA) helps you build applications that include significant client-side interactions using HTML, CSS, and JavaScript.
-            It's now easier than ever before to getting started writing highly interactive web applications.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=273732">Learn more &raquo;</a></p>
-    </div>
+    <section class="mb-4 d-flex justify-content-between justify-content-md-center justify-content-sm-around justify-content-lg-start">
+        <button id="generateCSV" class="btn btn-outline-secondary mr-md-4 mr-sm-0 mr-2" data-bind="click: exportToCSV, enable: ticketsExist">@Resources.Common.GenerateCSV</button>
 
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+        <button class="btn btn-outline-secondary" data-bind="click: getTickets">@Resources.Common.Refresh</button>
+    </section>
+
+    <section>
+        <p class="bold">@(Resources.Common.NumberOfTasks): <span data-bind="text: ticketsCount"></span></p>
+        <div class="table-responsive">
+            <table id="tickets-table" class="table table-bordered table-condensed table-hover table-striped">
+                <thead data-bind="with: sortUtil">
+                    <tr data-bind="foreach: columns">
+                        <th>
+                            <span class="sortable" data-bind="click: $parent.sortClick.bind(property)">
+                                <span data-bind="html: header"></span><i data-bind="css: state"></i>
+                            </span>
+                        </th>
+                        <th>@Resources.Common.Number</th>
+                        <th>@Resources.Common.Subject</th>
+                        <th>@Resources.Common.ExecutionDate</th>
+                        <th>@Resources.Common.ReceiptDate</th>
+                        <th>@Resources.Common.CreateDate</th>
+                        <th>@Resources.Common.Type</th>
+                        <th>@Resources.Common.Priority</th>
+                        <th>@Resources.Common.Status</th>
+                        <th>@Resources.Common.Contractor</th>
+                        <th>@Resources.Common.Representative</th>
+                        <th>@Resources.Common.Operator</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: filteredRecords">
+                    <tr data-bind="click: $root.navigateToDetails.bind($data, id)">
+                        <td data-bind="text: number"></td>
+                        <td data-bind="text: subject"></td>
+                        <td data-bind="text: executionDate"></td>
+                        <td data-bind="text: receiptDate"></td>
+                        <td data-bind="text: dateCreated"></td>
+                        <td data-bind="text: type"></td>
+                        <td data-bind="text: priority"></td>
+                        <td data-bind="text: status"></td>
+                        <td data-bind="text: contrahent"></td>
+                        <td data-bind="text: representative"></td>
+                        <td data-bind="text: operator"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
 
 <!-- /ko -->

@@ -46,7 +46,7 @@ namespace TaskManager.Web.Api
         [ActionName("representatives")]
         public IQueryable<EmployeeDTO> GetRepresentatives()
         {
-            return taskManagerUow.Employees.FindDTOs(false);
+            return taskManagerUow.Employees.FindDTOs();
         }
 
         [ActionName("operators")]

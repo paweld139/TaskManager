@@ -15,9 +15,9 @@ namespace TaskManager.DAL.Repositories
         {
         }
 
-        public IQueryable<EmployeeDTO> FindDTOs(bool isOperator, bool orderByFullName = true)
+        public IQueryable<EmployeeDTO> FindDTOs(bool? isOperator = null, bool orderByFullName = true)
         {
-            var query = Find<EmployeeDTO>(e => e.Contrahent.IsOperator == isOperator);
+            var query = isOperator != null ? Find<EmployeeDTO>(e => e.Contrahent.IsOperator == isOperator.Value) : FindAll<EmployeeDTO>();
 
             if (orderByFullName)
             {

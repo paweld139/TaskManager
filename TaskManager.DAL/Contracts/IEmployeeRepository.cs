@@ -7,6 +7,6 @@ namespace TaskManager.DAL.Contracts
 {
     public interface IEmployeeRepository : ISqlRepositoryEntityFrameworkDisconnected<Employee>
     {
-        IQueryable<EmployeeDTO> FindDTOs(bool isOperator, bool orderByFullName = true);
+        IQueryable<EmployeeDTO> FindDTOs(bool? isOperator = null, bool orderByFullName = true);
     }
 }

@@ -3,6 +3,10 @@
     // Routes
     self.ticketsInfoUrl = "/api/tickets/briefs/getByDate";
     self.lookupsUrl = "api/lookups/all";
+    self.saveTicketUrl = "api/tickets";
+    self.getTicketUrl = "api/tickets/";
+    self.editTicketUrl = "api/tickets/";
+
     self.siteUrl = "/";
 
     // Route operations

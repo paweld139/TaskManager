@@ -154,7 +154,7 @@ namespace TaskManager.Web.Api
 
         [MapToApiVersion("1.1")]
         [ResponseType(typeof(TicketDetails))]
-        public async Task<IHttpActionResult> PostTicket([FromBody] TicketBasic model)
+        public async Task<IHttpActionResult> PostTicket(TicketBasic model)
         {
             bool success = await taskManagerUow.Tickets.SaveNewAsync(model, User);
 

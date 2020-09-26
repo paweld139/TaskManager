@@ -57,6 +57,7 @@ namespace TaskManager.BLL.Entities.Briefs
         [Display(Name = "Priority", ResourceType = typeof(Resources.Common))]
         [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "priorityId")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         public int PriorityId { get; set; }
 
         [Display(Name = "Status", ResourceType = typeof(Resources.Common))]
@@ -75,6 +76,7 @@ namespace TaskManager.BLL.Entities.Briefs
         public string RepresentativeId { get; set; }
 
         [DataMember(Name = "operatorId")]
+        [Display(Name = "Operator", ResourceType = typeof(Resources.Common))]
         public string OperatorId { get; set; }
 
         #endregion
@@ -86,7 +88,7 @@ namespace TaskManager.BLL.Entities.Briefs
         public int ContrahentId { get; set; }
 
 
-        [Display(Name = "DateCreated", ResourceType = typeof(Resources.Common))]
+        [Display(Name = "CreateDate", ResourceType = typeof(Resources.Common))]
         [DataMember(Name = "dateCreated")]
         public DateTime DateCreated { get; set; }
     }

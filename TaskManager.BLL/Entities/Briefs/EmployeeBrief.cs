@@ -18,5 +18,11 @@ namespace TaskManager.BLL.Entities.Briefs
         [DataMember(Name = "id")]
         [ForeignKey("ApplicationUser")]
         public string Id { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        [Display(Name = "Contractor", ResourceType = typeof(Resources.Common))]
+        [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
+        [DataMember(Name = "contrahentId")]
+        public int ContrahentId { get; set; }
     }
 }

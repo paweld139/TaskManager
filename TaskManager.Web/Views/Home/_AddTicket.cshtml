@@ -1,7 +1,70 @@
-﻿<!-- ko with: add -->
+﻿@model TaskManager.BLL.Entities.Basic.TicketBasic
 
-<div class="folder" id="add">
-    <h1>Dodawanie ticketa</h1>
+@using PDCore.Extensions;
+
+@{ 
+    string isNotCustomer = (!User.IsInRole("Klient")).ToLowerString();
+}
+
+<!-- ko with: add -->
+
+<div class="folder container" id="add">
+
+    <h2>@Resources.Common.Adding</h2>
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "addTicketForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.StatusId, new { Value = "6" })
+        <h4>@Resources.Common.CreateTask</h4>
+        <hr />
+        @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+        <p data-bind="flash: errors, flashDuration: 10000" class="model-state-errors text-danger"></p>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Subject)
+            @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @id = "taskDescriptionEditor" })
+            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- ko with: lookups -->
+        <div class="form-group" data-bind="visible: @isNotCustomer">
+            @Html.LabelFor(m => m.ContrahentId)
+            @Html.DropDownListFor(m => m.ContrahentId, Enumerable.Empty<SelectListItem>(),
+                                    new { @class = "form-control", data_live_search = true, title = Resources.Common.Unselected, @id = "ticketContrahent",
+                                        data_bind= $"optionsCaption: '{Resources.Common.Unselected}', options: contrahents, optionsText: 'name', optionsValue: 'id', value: $parent.selectedContrahent, selectPicker: {{}}" })
+            @Html.ValidationMessageFor(m => m.ContrahentId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group" data-bind="visible: @isNotCustomer">
+            @Html.LabelFor(m => m.RepresentativeId)
+            @Html.DropDownListFor(m => m.RepresentativeId, Enumerable.Empty<SelectListItem>(),
+                                        new { @class = "form-control", data_live_search = true, title = Resources.Common.Unselected, @id = "ticketRepresentative",
+                                            data_bind = $"optionsCaption: '{Resources.Common.Unselected}', options: $parent.representatives, optionsText: 'fullName', optionsValue: 'id', value: $parent.selectedRepresentative, selectPicker: {{}}" })
+            @Html.ValidationMessageFor(m => m.RepresentativeId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.TypeId)
+            @Html.DropDownListFor(m => m.TypeId, Enumerable.Empty<SelectListItem>(),
+                                    new { @class = "form-control", data_live_search = true, title = Resources.Common.Unselected, @id = "ticketType",
+                                          data_bind = $"optionsCaption: '{Resources.Common.Unselected}', options: types, optionsText: 'value', optionsValue: 'id', selectPicker: {{}}" })
+            @Html.ValidationMessageFor(m => m.TypeId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PriorityId)
+            @Html.DropDownListFor(m => m.PriorityId, Enumerable.Empty<SelectListItem>(),
+                                    new { @class = "form-control", data_live_search = true, title = Resources.Common.Unselected, @id = "ticketPriority",
+                                          data_bind = $"optionsCaption: '{Resources.Common.Unselected}', options: priorities, optionsText: 'value', optionsValue: 'id', selectPicker: {{}}" })
+            @Html.ValidationMessageFor(m => m.PriorityId, "", new { @class = "text-danger" })
+        </div>
+        <!-- /ko -->
+
+        <input id="saveTicket" type="submit" class="btn btn-outline-secondary" value="@Resources.Common.Create" />
+    }
 </div>
 
 <!-- /ko -->

@@ -92,8 +92,12 @@
     self.initialize = function () {
         window.common.setTimezoneOffset();
 
-        Sammy().run();
+        $.validator.setDefaults({ ignore: [] });
     };
+
+    self.runSammy = function () {
+        Sammy().run();
+    }
 }
 
 var app = new AppViewModel(new AppDataModel());

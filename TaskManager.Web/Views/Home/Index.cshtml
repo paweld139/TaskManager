@@ -1,4 +1,8 @@
-﻿<!-- ko if: loading -->
+﻿@{
+    ViewBag.Title = Resources.Global.APP_NAME;
+}
+
+<!-- ko if: loading -->
 <div class="loading d-block">
     <div class="spinner-grow" role="status">
         <span class="sr-only">Loading...</span>
@@ -14,5 +18,16 @@
 @section Scripts{
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/Index")
+
+    <script type="text/javascript">
+       UserData.isLoggedIn("@ViewBag.isLoggedIn");
+       UserData.userId("@ViewBag.userId");
+       UserData.roles(@Html.Raw(Json.Encode(ViewBag.roles)));
+       UserData.employeeId("@ViewBag.employeeId");
+       UserData.contrahentId("@ViewBag.contrahentId");
+    </script>
+
+    @Scripts.Render("~/bundles/ckeditor")
     @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/jqueryval")
 }

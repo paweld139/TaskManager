@@ -25,10 +25,5 @@ namespace TaskManager.BLL.Entities.Basic
         [MaxLength(100, ErrorMessageResourceName = "MaxLength", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "lastName")]
         public string LastName { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        [Display(Name = "Contractor", ResourceType = typeof(Resources.Common))]
-        [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
-        public int ContrahentId { get; set; }
     }
 }

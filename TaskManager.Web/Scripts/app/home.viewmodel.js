@@ -115,6 +115,8 @@
         self.sortUtil.clearColumnStates();
 
         SendRequest(requestType.GET, app.dataModel.ticketsInfoUrl, { dateFrom: self.dateFrom(), dateTo: self.dateTo() }, null, null, function (data) {
+            data.sortBy(sortTicketsFunction);
+
             fromISODateToLocaleStringConverter(data, "dateCreated", "executionDate", "receiptDate");
 
             self.tickets(data);
@@ -124,6 +126,14 @@
     self.exportToCSV = function () {
         let tickets = objectsToRows(self.tickets());
         exportToCsv('tickets.csv', tickets);
+    }
+
+    function sortTicketsFunction(t) {
+        return -new Date(t.dateCreated);
+    }
+
+    function sortTicketsFunctionAdvanced(t) {
+        return [-new Date(t.dateCreated), -new Date(t.executionDate), -new Date(t.receiptDate)];
     }
 
     //#endregion
@@ -150,14 +160,14 @@
     }
 
     self.RefreshDropdowns = function () {
-        if (self.lookups()) {
-            $("#contrahentsFilter").selectpicker('refresh');
-            $("#representativesFilter").selectpicker('refresh');
-            $("#operatorsFilter").selectpicker('refresh');
-            $("#prioritiesFilter").selectpicker('refresh');
-            $("#typesFilter").selectpicker('refresh');
-            $("#statusesFilter").selectpicker('refresh');
-        }
+        //if (self.lookups()) {
+        //    $("#contrahentsFilter").selectpicker('refresh');
+        //    $("#representativesFilter").selectpicker('refresh');
+        //    $("#operatorsFilter").selectpicker('refresh');
+        //    $("#prioritiesFilter").selectpicker('refresh');
+        //    $("#typesFilter").selectpicker('refresh');
+        //    $("#statusesFilter").selectpicker('refresh');
+        //}
     }
 
     self.InitiateUI = function () {

@@ -23,38 +23,39 @@
                     @if (!User.IsInRole("Klient"))
                     {
                         <div class="col-lg-4 col-md-6 form-group">
-                            <select class="selectpicker form-control" id="contrahentsFilter" multiple data-live-search="true" title="@Resources.Common.Contractor"
-                                    data-bind="options: contrahents, optionsText: 'name', optionsValue: 'id', selectedOptions: $parent.selectedContrahents">
+                            <select class="form-control" id="contrahentsFilter" multiple data-live-search="true" title="@Resources.Common.Contractor"
+                                    data-bind="options: contrahents, optionsText: 'name', optionsValue: 'id', selectedOptions: $parent.selectedContrahents, selectPicker: {}">
                             </select>
                         </div>
                     }
                     <div class="col-lg-4 col-md-6 form-group">
-                        <select class="selectpicker form-control" id="operatorsFilter" multiple data-live-search="true" title="@Resources.Common.Operator"
-                                data-bind="options: operators, optionsText: 'fullName', optionsValue: 'id', selectedOptions: $parent.selectedOperators">
+                        <select class="form-control" id="operatorsFilter" multiple data-live-search="true" title="@Resources.Common.Operator"
+                                data-bind="options: operators, optionsText: 'fullName', optionsValue: 'id', selectedOptions: $parent.selectedOperators, selectPicker: {}">
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-6 form-group">
-                        <select class="selectpicker form-control" id="representativesFilter" multiple data-live-search="true" title="@Resources.Common.Representative"
-                                data-bind="options: representatives, optionsText: 'fullName', optionsValue: 'id', selectedOptions: $parent.selectedRepresentatives">
+                        <select class="form-control" id="representativesFilter" multiple data-live-search="true" title="@Resources.Common.Representative"
+                                data-bind="options: representatives, optionsText: 'fullName', optionsValue: 'id', selectedOptions: $parent.selectedRepresentatives, selectPicker: {}">
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-6 form-group">
-                        <select class="selectpicker form-control" id="prioritiesFilter" multiple data-live-search="true" title="@Resources.Common.Priority"
-                                data-bind="options: priorities, optionsText: 'value', optionsValue: 'id', selectedOptions: $parent.selectedPriorities">
+                        <select class="form-control" id="prioritiesFilter" multiple data-live-search="true" title="@Resources.Common.Priority"
+                                data-bind="options: priorities, optionsText: 'value', optionsValue: 'id', selectedOptions: $parent.selectedPriorities, selectPicker: {}">
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-6 form-group">
-                        <select class="selectpicker form-control" id="typesFilter" multiple data-live-search="true" title="@Resources.Common.Type"
-                                data-bind="options: types, optionsText: 'value', optionsValue: 'id', selectedOptions: $parent.selectedTypes">
+                        <select class="form-control" id="typesFilter" multiple data-live-search="true" title="@Resources.Common.Type"
+                                data-bind="options: types, optionsText: 'value', optionsValue: 'id', selectedOptions: $parent.selectedTypes, selectPicker: {}">
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-6 form-group">
-                        <select class="selectpicker form-control" id="statusesFilter" multiple data-live-search="true" title="@Resources.Common.Status"
-                                data-bind="options: statuses, optionsText: 'value', optionsValue: 'id', selectedOptions: $parent.selectedStatuses">
+                        <select class="form-control" id="statusesFilter" multiple data-live-search="true" title="@Resources.Common.Status"
+                                data-bind="options: statuses, optionsText: 'value', optionsValue: 'id', selectedOptions: $parent.selectedStatuses, selectPicker: {}">
                         </select>
                     </div>
                 </div>
                 <!-- /ko -->
+
                 <div class="row align-items-center">
                     <div class="col-sm-auto my-2 my-md-1">
                         <input class="form-control" type="date" data-bind="value: dateFrom" />

@@ -141,7 +141,7 @@ namespace TaskManager.Web.App_Start
                    .SingleInstance();
 
 
-            builder.RegisterType<TraceLogger>()
+            builder.RegisterType<FileLogger>()
                    .As<ILogger>()
                    .SingleInstance();
 

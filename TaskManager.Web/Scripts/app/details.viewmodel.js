@@ -24,11 +24,11 @@
     //#region Operations
 
     self.refreshTicket = function (data) {
+        data.comments.sortBy(sortCommentsFunction);
+
         fromISODateToLocaleStringConverter(data, "dateCreated", "executionDate", "receiptDate", "dateModified");
 
         fromISODateToLocaleStringConverter(data.comments, "dateCreated");
-
-        data.comments.sortBy(sortCommentsFunction);
 
         self.ticket(data);
 
@@ -100,7 +100,7 @@
             if (ticket) {
                 $(".selectpicker").selectpicker('refresh');
 
-                RefreshUnobtrusiveValidator("editTicketForm");
+                //RefreshUnobtrusiveValidator("editTicketForm");
             }
         })
     }

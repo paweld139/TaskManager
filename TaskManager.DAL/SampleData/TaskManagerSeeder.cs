@@ -33,6 +33,10 @@ namespace TaskManager.DAL.SampleData
         {
             var users = context.Users.ToArray();
 
+            string adminId = users.Single(u => u.UserName.Contains("admin")).Id;
+            string operatorId = users.Single(u => u.UserName.Contains("serwisant")).Id;
+            string customerId = users.Single(u => u.UserName.Contains("klient")).Id;
+
             var tickets = new[]
             {
                 new Ticket
@@ -44,25 +48,25 @@ namespace TaskManager.DAL.SampleData
                     PriorityId = 1,
                     StatusId = 6,
                     ContrahentId = 2,
-                    RepresentativeId = users[0].Id,
+                    RepresentativeId = customerId,
                     Comments = new List<Comment>
                     {
                         new Comment
                         {
                            Content = "Jestem klientem i dodałem to zadanie",
-                           EmployeeId = users[0].Id,
+                           EmployeeId = customerId,
                            TicketId = 1
                         },
                         new Comment
                         {
                            Content = "Jestem serwisantem",
-                           EmployeeId = users[1].Id,
+                           EmployeeId = operatorId,
                            TicketId = 1
                         },
                         new Comment
                         {
                            Content = "Adminem jestem",
-                           EmployeeId = users[2].Id,
+                           EmployeeId = adminId,
                            TicketId = 1
                         }
                     }
@@ -77,19 +81,19 @@ namespace TaskManager.DAL.SampleData
                     PriorityId = 2,
                     StatusId = 7,
                     ContrahentId = 1,
-                    RepresentativeId = users[1].Id,
+                    RepresentativeId = operatorId,
                     Comments = new List<Comment>
                     {
                         new Comment
                         {
                            Content = "Jestem serwisantem i dodałem to zadanie. Klient nie widzi tego zadania.",
-                           EmployeeId = users[1].Id,
+                           EmployeeId = operatorId,
                            TicketId = 2
                         },
                         new Comment
                         {
                            Content = "Adminem jestem",
-                           EmployeeId = users[2].Id,
+                           EmployeeId = adminId,
                            TicketId = 2
                         }
                     }
@@ -103,19 +107,19 @@ namespace TaskManager.DAL.SampleData
                     PriorityId = 3,
                     StatusId = 8,
                     ContrahentId = 1,
-                    RepresentativeId = users[2].Id,
+                    RepresentativeId = adminId,
                     Comments = new List<Comment>
                     {
                         new Comment
                         {
                            Content = "Jestem adminem i dodałem to zadanie. Klient nie widzi tego zadania.",
-                           EmployeeId = users[2].Id,
+                           EmployeeId = adminId,
                            TicketId = 3
                         },
                         new Comment
                         {
                            Content = "Serwisantem jestem",
-                           EmployeeId = users[1].Id,
+                           EmployeeId = operatorId,
                            TicketId = 3
                         }
                     }

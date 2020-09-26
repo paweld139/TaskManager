@@ -26,9 +26,19 @@ namespace TaskManager.BLL.Translators
             ["Handlowe"] = () => Resources.Common.Commercial,
             ["Wewnętrzne"] = () => Resources.Common.Internal,
 
-            ["Invalid token."] = () => Resources.Common.InvalidToken
+            ["Passwords must have at least one non letter or digit character."] = () => Resources.ErrorMessages.PasswordSymbolRequred,
+            ["Passwords must have at least one digit ('0'-'9')."] = () => Resources.ErrorMessages.PasswordDigitRequired,
+            ["Passwords must have at least one uppercase ('A'-'Z')."] = () => Resources.ErrorMessages.PasswordUppercaseRequired,
+            ["Passwords must have at least one lowercase ('a'-'z')."] = () => Resources.ErrorMessages.PasswordLowercaseRequired,
+            ["Invalid token."] = () => Resources.Common.InvalidToken,
+            ["is already taken"] = () => Resources.ErrorMessages.IsAlreadyTaken
         };
 
-        protected override Dictionary<string, Func<string>> Words => new Dictionary<string, Func<string>>();
+        protected override Dictionary<string, Func<string>> Words => new Dictionary<string, Func<string>>
+        {
+            ["Name"] = () => Resources.Common.Name,
+            ["already"] = () => Resources.Common.already,
+            ["taken"] = () => Resources.Common.taken
+        };
     }
 }

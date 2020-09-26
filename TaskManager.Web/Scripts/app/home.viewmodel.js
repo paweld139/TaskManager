@@ -91,6 +91,8 @@
                 &&
                 (self.showToday() === false || rec.dateCreated.includes(new Date().toLocaleDateString()))
                 &&
+                (self.onlyNotBinded() === false || rec.operatorId === null)
+                &&
                 (self.selectedContrahents().length === 0 || self.selectedContrahents().indexOf(rec.contrahentId) > -1)
                 &&
                 (self.selectedRepresentatives().length === 0 || self.selectedRepresentatives().indexOf(rec.representativeId) > -1)

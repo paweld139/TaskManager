@@ -27,12 +27,12 @@
                                     data-bind="options: contrahents, optionsText: 'name', optionsValue: 'id', selectedOptions: $parent.selectedContrahents, selectPicker: {}">
                             </select>
                         </div>
+                        <div class="col-lg-4 col-md-6 form-group">
+                            <select class="form-control" id="operatorsFilter" multiple data-live-search="true" title="@Resources.Common.Operator"
+                                    data-bind="options: operators, optionsText: 'fullName', optionsValue: 'id', selectedOptions: $parent.selectedOperators, selectPicker: {}">
+                            </select>
+                        </div>
                     }
-                    <div class="col-lg-4 col-md-6 form-group">
-                        <select class="form-control" id="operatorsFilter" multiple data-live-search="true" title="@Resources.Common.Operator"
-                                data-bind="options: operators, optionsText: 'fullName', optionsValue: 'id', selectedOptions: $parent.selectedOperators, selectPicker: {}">
-                        </select>
-                    </div>
                     <div class="col-lg-4 col-md-6 form-group">
                         <select class="form-control" id="representativesFilter" multiple data-live-search="true" title="@Resources.Common.Representative"
                                 data-bind="options: representatives, optionsText: 'fullName', optionsValue: 'id', selectedOptions: $parent.selectedRepresentatives, selectPicker: {}">

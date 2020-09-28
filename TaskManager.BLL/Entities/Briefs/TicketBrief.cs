@@ -53,6 +53,7 @@ namespace TaskManager.BLL.Entities.Briefs
         [Display(Name = "Type", ResourceType = typeof(Resources.Common))]
         [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "typeId")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         public int TypeId { get; set; }
 
         [Display(Name = "Priority", ResourceType = typeof(Resources.Common))]

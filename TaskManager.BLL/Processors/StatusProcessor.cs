@@ -1,11 +1,13 @@
 ﻿using PDCore.Extensions;
 using PDCore.Handlers;
+using PDCoreNew.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using TaskManager.BLL.Entities.Briefs;
 using TaskManager.BLL.Enums;
 using TaskManager.BLL.Factories;
+using TaskManager.BLL.Handlers;
 using TaskManager.BLL.Translators;
 
 namespace TaskManager.BLL.Processors
@@ -25,7 +27,7 @@ namespace TaskManager.BLL.Processors
 
             var commands = setStatusCommandFactory.GetAllFactories(ticketBrief, principal).ToArray();
 
-            var handler = new Handler2<ICollection<Status>>(commands);
+            var handler = new TicketStatusHandler(commands);
 
             handler.Handle(statuses);
 

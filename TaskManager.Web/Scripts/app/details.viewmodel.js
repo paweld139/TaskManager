@@ -57,7 +57,7 @@
         //wysyłania formularza czy odświeżyć walidację. Dlatego tak się dzieje, bo te elementy są
         //właśnie w tym widoku przechowywanym przez knockout.
 
-        self.commentTextEditor = new InitializeTextEditor("commentTaskEditor", "en", self.comment.content);
+        self.commentTextEditor = new InitializeTextEditor("commentTaskEditor", self.comment.content);
 
         SetHash("editTicketForm", null, ".editTicket",
             function () {

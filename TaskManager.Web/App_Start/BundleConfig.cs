@@ -29,8 +29,8 @@ namespace TaskManager.Web
                 //"~/Scripts/PDWebCore/knockout-sortable.js",
                 "~/Scripts/knockout.validation.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
-                "~/ckeditor/ckeditor.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
+            //    "~/Scripts/ckeditor/ckeditor.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/Index").Include(
                 "~/Scripts/PDWebCore/Objects.js",
@@ -69,7 +69,7 @@ namespace TaskManager.Web
                 "~/Content/bootstrap-select.css",
                 "~/Content/themes/base/jquery-ui.css").Include(
                 "~/Content/PDWebCore/fontawesome/css/all.css", new CssRewriteUrlTransform()).Include(
-                "~/Content/flag-icon-css/css/flag-icon.css",
+                "~/Content/flag-icon-css/css/flag-icon.css", new CssRewriteUrlTransform()).Include(
                 "~/Content/PDWebCore/tooltip-theme-arrows.min.css",
                 "~/Content/PDWebCore/tooltip.css",
                 "~/Content/Site.css"

@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using TaskManager.DAL.Configuration;
 using TaskManager.DAL.Entities;
+using TaskManager.DAL.SampleData;
 
 namespace TaskManager.DAL
 {
@@ -13,7 +14,7 @@ namespace TaskManager.DAL
         {
 #if DEBUG
             Database.SetInitializer(new NullDatabaseInitializer<TaskManagerContext>()); //Na produkcji też
-#else     
+#else
             Database.SetInitializer(new TaskManagerDbInitializer());
 #endif
 

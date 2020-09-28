@@ -17,6 +17,10 @@
 }
 @section Scripts{
     @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="@Url.Content("~/Scripts/ckeditor/ckeditor.js")"></script>
+
     @Scripts.Render("~/bundles/Index")
 
     <script type="text/javascript">
@@ -27,7 +31,5 @@
        UserData.contrahentId("@ViewBag.contrahentId");
     </script>
 
-    @Scripts.Render("~/bundles/ckeditor")
     @Scripts.Render("~/bundles/app")
-    @Scripts.Render("~/bundles/jqueryval")
 }

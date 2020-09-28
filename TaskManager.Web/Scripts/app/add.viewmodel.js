@@ -17,11 +17,14 @@
     })
 
     self.representatives = ko.computed(function () {
-        return ko.utils.arrayFilter(self.lookups()?.representatives, function (rec) {
+        if (!self.lookups()) {
+            return [];
+        }
+
+        return ko.utils.arrayFilter(self.lookups().representatives, function (rec) {
             return self.selectedContrahent() === rec.contrahentId;
         })
     });
-
 
     self.errors = ko.observable();
 
@@ -78,7 +81,7 @@
     }
 
     self.InitiateElements = function () {
-        self.textEditor = new InitializeTextEditor("taskDescriptionEditor", "en");
+        self.textEditor = new InitializeTextEditor("taskDescriptionEditor");
 
         SetHash("addTicketForm", null, "#saveTicket",
             function () {

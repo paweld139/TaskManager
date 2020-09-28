@@ -1,5 +1,6 @@
 ﻿using PDCore.Extensions;
 using PDCore.Factories.Fac;
+using PDCore.Utils;
 using System;
 using System.Security.Principal;
 using TaskManager.BLL.Commands.Statuses;
@@ -18,7 +19,7 @@ namespace TaskManager.BLL.Factories
                 parameters[1] is IPrincipal principal &&
                 parameters[2] is int statusId)
             {
-                string factoryName = statusId.CastObject<Status>().ToString();
+                string factoryName = EnumUtils.GetEnumName<Status>(statusId);
 
                 Type commandType = GetFactoryTypeFor(factoryName);
 

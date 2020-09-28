@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Statuses\EndedSetStatusCommand.cs" />
+    <Compile Include="Commands\Statuses\SetStatusCommand.cs" />
+    <Compile Include="Commands\Statuses\CanceledSetStatusCommand.cs" />
+    <Compile Include="Commands\Statuses\ClarifySetStatusCommand.cs" />
+    <Compile Include="Commands\Statuses\ReceiptSetStatusCommand.cs" />
+    <Compile Include="Commands\Statuses\RejectedSetStatusCommand.cs" />
     <Compile Include="Entities\Basic\CommentBasic.cs" />
     <Compile Include="Entities\Basic\ContrahentBasic.cs" />
     <Compile Include="Entities\Basic\EmployeeBasic.cs" />
@@ -59,8 +65,12 @@
     <Compile Include="Entities\DTO\CommentDTO.cs" />
     <Compile Include="Entities\DTO\EmployeeDTO.cs" />
     <Compile Include="Entities\DTO\TicketDTO.cs" />
+    <Compile Include="Enums\Status.cs" />
+    <Compile Include="Factories\SetStatusCommandFactory.cs" />
+    <Compile Include="Handlers\TicketStatusHandler.cs" />
     <Compile Include="Models\Lookups.cs" />
     <Compile Include="Entities\Briefs\TicketBrief.cs" />
+    <Compile Include="Processors\StatusProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Models\Contrahent.Designer.cs">
       <DependentUpon>Contrahent.resx</DependentUpon>
@@ -88,8 +98,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Enums\" />
+    <Folder Include="Contracts\" />
+    <Folder Include="Identity\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Models\Contrahent.pl.resx">

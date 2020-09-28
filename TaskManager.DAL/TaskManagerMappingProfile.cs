@@ -15,6 +15,9 @@ namespace TaskManager.DAL
             CreateMap<Dictionary, DictionaryBrief>()
                 .ReverseMap();
 
+            CreateMap<Dictionary, DictionaryBriefProxy>()
+                .ReverseMap();
+
 
             CreateMap<Ticket, TicketBrief>()
                 .ReverseMap();

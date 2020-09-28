@@ -45,5 +45,24 @@ window.common = (function () {
         setTimezoneCookie();
     }
 
+    common.Comment = function (ticketId) {
+        this.ticketId = ticketId;
+        this.employeeId = UserData.employeeId();
+
+        this.content = ko.observable("").extend({ notify: 'always' }).withPausing();
+
+        this.isEmpty = ko.pureComputed(function () {
+            return this.content().length === 0;
+        }, this);
+
+        this.clear = function () {
+            this.content.sneakyUpdate("");
+        }
+
+        this.isValid = function () {
+            return this.content.isValid(); 
+        }
+    }
+
     return common;
 })();

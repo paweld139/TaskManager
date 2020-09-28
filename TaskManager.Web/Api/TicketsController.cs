@@ -1,5 +1,5 @@
 ﻿using Microsoft.Web.Http;
-using PDCore.Interfaces;
+using PDCore.Commands;
 using PDWebCore;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,8 @@ using System.Web.Http.Description;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Entities.DTO;
+using TaskManager.BLL.Enums;
+using TaskManager.BLL.Factories;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 using TaskManager.DAL.Proxies;
@@ -24,10 +26,15 @@ namespace TaskManager.Web.Api
     public class TicketsController : ApiController
     {
         private readonly ITaskManagerUow taskManagerUow;
+        private readonly SetStatusCommandFactory setStatusCommandFactory;
+        private readonly CommandManager commandManager;
 
-        public TicketsController(ITaskManagerUow taskManagerUow)
+        public TicketsController(ITaskManagerUow taskManagerUow, SetStatusCommandFactory setStatusCommandFactory,
+            CommandManager commandManager)
         {
             this.taskManagerUow = taskManagerUow;
+            this.setStatusCommandFactory = setStatusCommandFactory;
+            this.commandManager = commandManager;
         }
 
         [Authorize(Roles = "Admin")]
@@ -154,6 +161,7 @@ namespace TaskManager.Web.Api
 
         [MapToApiVersion("1.1")]
         [ResponseType(typeof(TicketDetails))]
+        //[ValidateAntiForgeryToken]
         public async Task<IHttpActionResult> PostTicket(TicketBasic model)
         {
             bool success = await taskManagerUow.Tickets.SaveNewAsync(model, User);
@@ -170,6 +178,7 @@ namespace TaskManager.Web.Api
 
         [Route("{id:int}")]
         [ResponseType(typeof(TicketDetails))]
+        //[ValidateAntiForgeryToken]
         public async Task<IHttpActionResult> Put(int id, TicketBasic model)
         {
             if (id != model.Id)
@@ -227,6 +236,39 @@ namespace TaskManager.Web.Api
             if (success)
             {
                 return this.NoContent();
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        [HttpPatch]
+        [Route("{id:int}/{statusId:int}")]
+        [ResponseType(typeof(TicketDetails))]
+        public async Task<IHttpActionResult> SetStatus(int id, int statusId)
+        {
+            var ticket = await taskManagerUow.Tickets.FindByIdAsync(id, false, false);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            var command = setStatusCommandFactory.CreateFactoryFor(ticket, User, statusId);
+
+            if(command == null)
+            {
+                return this.Forbid();
+            }
+
+            commandManager.Invoke(command);
+
+            bool success = await taskManagerUow.Tickets.SaveUpdatedWithOptimisticConcurrencyAsync(ticket, ModelState.AddModelError);
+
+            if (success)
+            {
+                var result = await taskManagerUow.Tickets.FindByIdAsync<TicketDetailsProxy>(id);
+
+                return Ok(result);
             }
 
             return BadRequest(ModelState);

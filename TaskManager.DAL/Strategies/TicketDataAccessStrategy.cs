@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities.Basic;
+using TaskManager.BLL.Enums;
 using TaskManager.DAL.Entities;
 
 namespace TaskManager.DAL.Strategies
@@ -58,7 +59,7 @@ namespace TaskManager.DAL.Strategies
                     ticket.RepresentativeId = EmployeeId;
                 }
 
-                ticket.StatusId = 6;
+                ticket.StatusId = (int)Status.New;
 
                 ticket.ExecutionDate = null;
                 ticket.ReceiptDate = null;

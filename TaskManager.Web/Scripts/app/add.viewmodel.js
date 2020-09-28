@@ -7,14 +7,13 @@
     self.lookups = ko.observable();
 
 
-    self.selectedContrahent = ko.observable();
-
     self.selectedRepresentative = ko.observable();
 
 
+    self.selectedContrahent = ko.observable();
+
     self.selectedContrahent.subscribe(function () {
         self.selectedRepresentative(undefined);
-        //$("#ticketRepresentative").selectpicker("refresh");
     })
 
     self.representatives = ko.computed(function () {
@@ -23,14 +22,14 @@
         })
     });
 
-    //self.representatives.subscribe(function () {
-    //    $("#ticketRepresentative").selectpicker("refresh");
-    //})
-
 
     self.errors = ko.observable();
 
-    self.errors.subscribe(scrollTop);
+    self.errors.subscribe(function (value) {
+        if (value) {
+            scrollTop();
+        }
+    });
 
     //#endregion
 
@@ -40,14 +39,14 @@
 
     self.saveTicket = function (data) {
         SendRequest(requestType.POST, app.dataModel.saveTicketUrl, data, null, null, function () {
-            GoToFolder("home");
+            app.navigateToHome();
         },
             function (errors) {
-                if (errors.modelState) {
+                if (errors && errors.modelState) {
                     DisplayModelStateErrors(errors.modelState, self.errors);
                 }
-                else {
-                    self.errors(errors)
+                else if(errors) {
+                    self.errors(errors.message || errors)
                 }
             });
     }
@@ -57,14 +56,31 @@
 
     //#region Initialise
 
-    self.SetHintButtons = function () {
+    self.InitiateLookups = function () {
+        SendRequest(requestType.GET, app.dataModel.lookupsUrl, null, null, null, function (data) {
+            self.lookups(data); //W tym momencie pojawia się element w DOM zawierający selecty do wybierania kontrahenta i przedstawiciela
 
+            self.selectedContrahent(UserData.contrahentId());
+            self.selectedRepresentative(UserData.employeeId());
+
+            self.RefreshValidator();
+        })
+    }
+
+    self.OnLoad = new OnLoad(function () {
+        self.InitiateLookups();
+    });
+
+    self.RefreshValidator = function () {
+        if (self.lookups()) { //Jeśli nie ma jeszcze lookups, to i tak zostaną pobrane później i odświeżą walidator.
+            RefreshUnobtrusiveValidator("addTicketForm");
+        }
     }
 
     self.InitiateElements = function () {
         self.textEditor = new InitializeTextEditor("taskDescriptionEditor", "en");
 
-        SetHash("addTicketForm", null, "saveTicket",
+        SetHash("addTicketForm", null, "#saveTicket",
             function () {
                 $("#addTicketForm").submit();
 
@@ -83,44 +99,11 @@
         });
     }
 
-    self.InitiateLookups = function () {
-        SendRequest(requestType.GET, app.dataModel.lookupsUrl, null, null, null, function (data) {
-            self.lookups(data);
-
-            self.selectedContrahent(UserData.contrahentId());
-            self.selectedRepresentative(UserData.employeeId());
-
-            self.RefreshDropdowns();
-        })
-    }
-
-    self.RefreshDropdowns = function () {
-        if (self.lookups()) {
-            //$("#ticketContrahent").selectpicker("refresh");
-            //$("#ticketRepresentative").selectpicker("refresh");
-            //$("#tickettype").selectpicker("refresh");
-            //$("#ticketpriority").selectpicker("refresh");
-
-
-
-            //$("#ticketContrahent").selectpicker("refresh");
-            //$("#ticketRepresentative").selectpicker("refresh");
-
-            RefreshUnobtrusiveValidator("addTicketForm");
-        }
-    }
-
     self.InitiateUI = function () {
-        self.RefreshDropdowns();
-
-        self.SetHintButtons();
+        self.RefreshValidator();
 
         self.InitiateElements();
     }
-
-    self.OnLoad = new OnLoad(function () {
-        self.InitiateLookups();
-    });
 
     self.Initialize = function () {
         self.InitiateUI();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using PDCore.Commands;
 using PDCore.Extensions;
 using PDCore.Interfaces;
 using PDCore.Utils;
@@ -14,6 +15,7 @@ using System.Web;
 using System.Web.Http.Controllers;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Briefs;
+using TaskManager.BLL.Factories;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 using TaskManager.DAL.Strategies;
@@ -40,7 +42,7 @@ namespace TaskManager.Web.Tests
             var principal = GetPrincipal();
 
 
-            var ticketsController = new TicketsController(unitOfWork.Object);
+            var ticketsController = new TicketsController(unitOfWork.Object, new SetStatusCommandFactory(), new CommandManager());
 
             ticketsController.ControllerContext.RequestContext.Principal = principal;
 

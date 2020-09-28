@@ -36,7 +36,7 @@
 
     self.sortUtil = new SortUtil(self.columns, self.tickets);
 
-    self.InitializeColumns = (function () {
+    self.InitializeColumns = (function () { //Dzieje się to gdy widok jest niewidoczny, przed applyBindings
         const columns = $("#tickets-table th:not(:first)");
 
         const columnsArray = self.columns();
@@ -113,6 +113,10 @@
 
     //#region Operations
 
+    function sortTicketsFunction(t) {
+        return -new Date(t.dateCreated);
+    }
+
     self.getTickets = function () {
         self.sortUtil.clearColumnStates();
 
@@ -130,65 +134,37 @@
         exportToCsv('tickets.csv', tickets);
     }
 
-    function sortTicketsFunction(t) {
-        return -new Date(t.dateCreated);
-    }
-
-    function sortTicketsFunctionAdvanced(t) {
-        return [-new Date(t.dateCreated), -new Date(t.executionDate), -new Date(t.receiptDate)];
-    }
-
     //#endregion
 
 
     //#region Initialise
 
-    self.SetHintButtons = function () {
+    self.InitiateLookups = function () {
+        SendRequest(requestType.GET, app.dataModel.lookupsUrl, null, null, null, function (data) {
+            self.lookups(data); //Następuje utworzenie elementu z selectami w DOM i aktualizacja selectów
+        })
+    }
 
+    self.OnLoad = new OnLoad(function () {
+        self.InitiateLookups();
+    });
+
+    self.SetHintButtons = function () {
         SetHintButton($("#filtersTooltip"));
     }
 
     self.InitiateElements = function () {
         $('#filtersCard').card();
-        //$('#scheduling').enhsplitter({ vertical: false, height: '90vh' });
     }
 
-    self.InitiateLookups = function () {
-        SendRequest(requestType.GET, app.dataModel.lookupsUrl, null, null, null, function (data) {
-            self.lookups(data);
-
-            self.RefreshDropdowns();
-        })
-    }
-
-    self.RefreshDropdowns = function () {
-        //if (self.lookups()) {
-        //    $("#contrahentsFilter").selectpicker('refresh');
-        //    $("#representativesFilter").selectpicker('refresh');
-        //    $("#operatorsFilter").selectpicker('refresh');
-        //    $("#prioritiesFilter").selectpicker('refresh');
-        //    $("#typesFilter").selectpicker('refresh');
-        //    $("#statusesFilter").selectpicker('refresh');
-        //}
-    }
-
-    self.InitiateUI = function () {
-        self.RefreshDropdowns();
-
+    self.InitializeUI = function () {
         self.SetHintButtons();
 
         self.InitiateElements();
     }
 
-    self.OnLoad = new OnLoad(function () {
-        //self.InitiateUI();
-        //self.InitializeColumns()
-
-        self.InitiateLookups();
-    });
-
     self.Initialize = function () {
-        self.InitiateUI();
+        self.InitializeUI();
 
         self.OnLoad.Execute();
 

@@ -23,6 +23,6 @@ namespace TaskManager.BLL.Entities.Briefs
         [DataType(DataType.Text)]
         [StringLength(150, MinimumLength = 3, ErrorMessageResourceName = "StringLength_GreaterAndLess", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "value")]
-        public string Value { get; set; }
+        public virtual string Value { get; set; }
     }
 }

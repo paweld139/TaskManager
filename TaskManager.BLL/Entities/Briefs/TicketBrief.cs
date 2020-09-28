@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using TaskManager.BLL.Enums;
 
 namespace TaskManager.BLL.Entities.Briefs
 {
@@ -64,6 +65,9 @@ namespace TaskManager.BLL.Entities.Briefs
         [Range(1, int.MaxValue, ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.ErrorMessages))]
         [DataMember(Name = "statusId")]
         public int StatusId { get; set; }
+
+        //[NotMapped]
+        //public Status StatusValue { get => (Status)StatusId; set => StatusId = (int)value; }
 
         #endregion
 

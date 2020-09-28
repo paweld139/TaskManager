@@ -28,7 +28,7 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Description)
-            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @id = "taskDescriptionEditor" })
+            @Html.TextAreaFor(m => m.Description, new { id = "taskDescriptionEditor" })
             @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
         </div>
 

@@ -8,7 +8,7 @@ namespace TaskManager.DAL.Strategies
 {
     public abstract class TaskManagerDataAccessStrategy<TEntity> : DataAccessStrategy<TEntity>
     {
-        protected readonly IPrincipal principal;
+        private readonly IPrincipal principal;
 
         protected TaskManagerDataAccessStrategy(IPrincipal principal)
         {
@@ -27,7 +27,6 @@ namespace TaskManager.DAL.Strategies
         protected bool IsOperator => principal.IsInRole("Serwisant");
 
         protected bool IsAdmin => principal.IsInRole("Admin");
-
 
         protected override bool NoRestrictions() => IsAdmin;
 

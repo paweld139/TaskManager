@@ -15,195 +15,206 @@
 
         @Html.ValidationSummary(true, null, new { @class = "text-danger" })
 
-        <div data-bind="if: ticket">
+        <section data-bind="if: ticket">
             <p data-bind="flash: errors, flashDuration: 10000" class="model-state-errors text-danger"></p>
             <div data-bind="flash: info" class="alert alert-info"></div>
-        </div>
+        </section>
 
-        <div class="row" data-bind="with: ticket">
+        <section data-bind="with: ticket">
+            <div class="row">
+                <div class="col-md-6 sub-container">
+                    @Html.HiddenFor(m => m.Id, new { data_bind = "value: id" })
+                    @Html.HiddenFor(m => m.RowVersion, new { data_bind = "value: rowVersion" })
 
-            <div class="col-md-6 sub-container">
-                @Html.HiddenFor(m => m.Id, new { data_bind = "value: id" })
-
-                @Html.HiddenFor(m => m.RowVersion, new { data_bind = "value: rowVersion" })
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Number)
-                    <div class="form-control" data-bind="text: number"></div>
-                    @Html.HiddenFor(m => m.Number, new { data_bind = "value: number" })
-                    @Html.ValidationMessageFor(m => m.Number, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.RepresentativeId)
-                    <div class="form-control resizable-container" data-bind="text: representative"></div>
-                    @Html.HiddenFor(m => m.RepresentativeId, new { data_bind = "value: representativeId" })
-                    @Html.ValidationMessageFor(m => m.RepresentativeId, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Subject)
-                    <div class="form-control resizable-container" data-bind="text: subject"></div>
-                    @Html.HiddenFor(m => m.Subject, new { data_bind = "value: subject" })
-                    @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Description)
-                    <div class="form-control resizable-container">
-                        <span data-bind="html: description"></span>
+                    <div class="form-row" data-bind="foreach: $parent.lookups()?.statuses">
+                        <div class="col-auto mb-2">
+                            <button type="button" class="btn btn-outline-primary" 
+                                    data-bind="text: value, click: $parents[1].setStatus"></button>
+                        </div>
                     </div>
-                    @Html.HiddenFor(m => m.Description, new { data_bind = "value: description" })
-                    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
-                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.DateCreated)
-                    <div class="form-control" data-bind="text: dateCreated"></div>
-                    @Html.ValidationMessageFor(m => m.DateCreated, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Number)
+                        <div class="form-control" data-bind="text: number"></div>
+                        @Html.HiddenFor(m => m.Number, new { data_bind = "value: number" })
+                        @Html.ValidationMessageFor(m => m.Number, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.DateModified)
-                    <div class="form-control" data-bind="text: dateModified"></div>
-                    @Html.ValidationMessageFor(m => m.DateModified, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.RepresentativeId)
+                        <div class="form-control resizable-container" data-bind="text: representative"></div>
+                        @Html.HiddenFor(m => m.RepresentativeId, new { data_bind = "value: representativeId" })
+                        @Html.ValidationMessageFor(m => m.RepresentativeId, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ExecutionDate)
-                    <div class="form-control" data-bind="text: executionDate"></div>
-                    @Html.HiddenFor(m => m.ExecutionDate, new { data_bind = "value: executionDate" })
-                    @Html.ValidationMessageFor(m => m.ExecutionDate, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Subject)
+                        <div class="form-control resizable-container" data-bind="text: subject"></div>
+                        @Html.HiddenFor(m => m.Subject, new { data_bind = "value: subject", id = "ticketSubjectId" })
+                        @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ReceiptDate)
-                    <div class="form-control" data-bind="text: receiptDate"></div>
-                    @Html.HiddenFor(m => m.ReceiptDate, new { data_bind = "value: receiptDate" })
-                    @Html.ValidationMessageFor(m => m.ReceiptDate, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Description)
+                        <div class="form-control resizable-container">
+                            <span data-bind="html: description"></span>
+                        </div>
+                        @Html.HiddenFor(m => m.Description, new { data_bind = "value: description" })
+                        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-group" data-bind="if: comments.length > 0">
-                    <label class="form-control form-group unborder">
-                        Lista komentarzy
-                    </label>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DateCreated)
+                        <div class="form-control" data-bind="text: dateCreated"></div>
+                        @Html.ValidationMessageFor(m => m.DateCreated, "", new { @class = "text-danger" })
+                    </div>
 
-                    <div class="scroll-container" data-bind="foreach: comments">
-                        <label class="form-control">
-                            <span data-bind="text: employeeFirstName + ' ' + employeeLastName + ' ' + dateCreated"></span>
-                            <a class="fa fa-times" data-bind="visible: employeeId == '@currentUserId'@*, click: $parents[1].deleteComment*@"></a>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DateModified)
+                        <div class="form-control" data-bind="text: dateModified"></div>
+                        @Html.ValidationMessageFor(m => m.DateModified, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ExecutionDate)
+                        <div class="form-control" data-bind="text: executionDate"></div>
+                        @Html.HiddenFor(m => m.ExecutionDate, new { data_bind = "value: executionDate" })
+                        @Html.ValidationMessageFor(m => m.ExecutionDate, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ReceiptDate)
+                        <div class="form-control" data-bind="text: receiptDate"></div>
+                        @Html.HiddenFor(m => m.ReceiptDate, new { data_bind = "value: receiptDate" })
+                        @Html.ValidationMessageFor(m => m.ReceiptDate, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group" data-bind="if: comments.length > 0">
+                        <label class="form-control form-group unborder">
+                            @Resources.Common.CommentsList
                         </label>
 
-                        <div>
-                            <div data-bind="html: content" class="form-control resizable-container content"></div>
+                        <div class="scroll-container" data-bind="foreach: comments">
+                            <label class="form-control">
+                                <span data-bind="text: employeeFirstName + ' ' + employeeLastName + ' ' + dateCreated"></span>
+                                <a class="fa fa-times" data-bind="visible: employeeId == '@currentUserId', click: $parents[1].deleteComment"></a>
+                            </label>
+
+                            <div>
+                                <div data-bind="html: content" class="form-control resizable-container content"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-6 sub-container">
+                <div class="col-md-6 sub-container">
+                    <input type="submit" class="btn btn-outline-secondary mb-2 d-none d-md-block edit-ticket" value="@Resources.Common.Save" />
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.TypeId)
-                    <div class="form-control resizable-container" data-bind="text: type"></div>
-                    @Html.HiddenFor(m => m.TypeId, new { data_bind = "value: typeId" })
-                    @Html.ValidationMessageFor(m => m.TypeId, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TypeId)
+                        <div class="form-control resizable-container" data-bind="text: type"></div>
+                        @Html.HiddenFor(m => m.TypeId, new { data_bind = "value: typeId" })
+                        @Html.ValidationMessageFor(m => m.TypeId, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ContrahentId)
-                    <div class="form-control resizable-container" data-bind="text: contrahent"></div>
-                    @Html.HiddenFor(m => m.ContrahentId, new { data_bind = "value: contrahentId" })
-                    @Html.ValidationMessageFor(m => m.ContrahentId, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ContrahentId)
+                        <div class="form-control resizable-container" data-bind="text: contrahent"></div>
+                        @Html.HiddenFor(m => m.ContrahentId, new { data_bind = "value: contrahentId" })
+                        @Html.ValidationMessageFor(m => m.ContrahentId, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.StatusId)
-                    <div class="form-control resizable-container" data-bind="text: status"></div>
-                    @Html.HiddenFor(m => m.StatusId, new { data_bind = "value: statusId" })
-                    @Html.ValidationMessageFor(m => m.StatusId, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StatusId)
+                        <div class="form-control resizable-container" data-bind="text: status"></div>
+                        @Html.HiddenFor(m => m.StatusId, new { data_bind = "value: statusId", id = "taskStatusId" })
+                        @Html.ValidationMessageFor(m => m.StatusId, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.OperatorId)
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OperatorId)
+
+                        @if (!User.IsInRole("Klient"))
+                        {
+                            <text>
+                                @Html.DropDownListFor(m => m.OperatorId, Enumerable.Empty<SelectListItem>(),
+                                new
+                                {
+                                    @class = "form-control",
+                                    data_live_search = true,
+                                    title = Resources.Common.Unselected,
+                                    data_bind = $"valueAllowUnset: true, optionsCaption: '{Resources.Common.Unselected}', options: $parent.lookups()?.operators, optionsText: 'fullName', optionsValue: 'id', value: operatorId, selectPicker: {{}}"
+                                })
+                            </text>
+                        }
+                        else
+                        {
+                            <div class="form-control resizable-container" data-bind="text: operator"></div>
+
+                            <text>
+                                @Html.HiddenFor(m => m.OperatorId, new { data_bind = "value: operatorId" })
+                            </text>
+                        }
+
+                        @Html.ValidationMessageFor(m => m.OperatorId, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PriorityId)
+
+                        @if (User.IsInRole("Klient"))
+                        {
+                            <text>
+                                @Html.DropDownListFor(m => m.PriorityId, Enumerable.Empty<SelectListItem>(),
+                                new
+                                {
+                                    @class = "form-control",
+                                    data_live_search = true,
+                                    title = Resources.Common.Unselected,
+                                    data_bind = $"valueAllowUnset: true, optionsCaption: '{Resources.Common.Unselected}', options: $parent.lookups()?.priorities, optionsText: 'value', optionsValue: 'id', value: priorityId, selectPicker: {{}}"
+                                })
+                            </text>
+                        }
+                        else
+                        {
+                            <div class="form-control resizable-container" data-bind="text: priority"></div>
+
+                            <text>
+                                @Html.HiddenFor(m => m.PriorityId, new { data_bind = "value: priorityId" })
+                            </text>
+                        }
+
+                        @Html.ValidationMessageFor(m => m.PriorityId, "", new { @class = "text-danger" })
+                    </div>
 
                     @if (!User.IsInRole("Klient"))
                     {
-                        <text>
-                            @Html.DropDownListFor(m => m.OperatorId, Enumerable.Empty<SelectListItem>(),
-                            new
-                            {
-                                @class = "form-control",
-                                data_live_search = true,
-                                title = Resources.Common.Unselected,
-                                data_bind = $"valueAllowUnset: true, optionsCaption: '{Resources.Common.Unselected}', options: $parent.lookups()?.operators, optionsText: 'fullName', optionsValue: 'id', value: operatorId, selectPicker: {{}}"
-                            })
-                        </text>
-                    }
-                    else
-                    {
-                        <div class="form-control resizable-container" data-bind="text: operator"></div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Budget)
 
-                        <text>
-                            @Html.HiddenFor(m => m.OperatorId, new { data_bind = "value: operatorId" })
-                        </text>
+                            @Html.TextBoxFor(m => m.Budget, new { @class = "form-control", type = "number", min = "0", step = "0.01", data_bind = "value: budget" })
+
+                            @Html.ValidationMessageFor(m => m.Budget, "", new { @class = "text-danger" })
+                        </div>
                     }
 
-                    @Html.ValidationMessageFor(m => m.OperatorId, "", new { @class = "text-danger" })
-                </div>
+                    <div class="form-group" data-bind="with: $parent.comment">
+                        <label class="form-control unborder element">
+                            @Resources.Common.AddComment
+                        </label>
+                        <textarea data-bind="value: content, validate: { required: { message: '@string.Format(Resources.ErrorMessages.Required, Resources.Common.Content)' } }" id="commentTaskEditor"></textarea>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PriorityId)
+                        <div class="text-danger" data-bind="validationMessage: content"></div>
 
-                    @if (User.IsInRole("Klient"))
-                    {
-                        <text>
-                            @Html.DropDownListFor(m => m.PriorityId, Enumerable.Empty<SelectListItem>(),
-                            new
-                            {
-                                @class = "form-control",
-                                data_live_search = true,
-                                title = Resources.Common.Unselected,
-                                data_bind = $"valueAllowUnset: true, optionsCaption: '{Resources.Common.Unselected}', options: $parent.lookups()?.priorities, optionsText: 'value', optionsValue: 'id', value: priorityId, selectPicker: {{}}"
-                            })
-                        </text>
-                    }
-                    else
-                    {
-                        <div class="form-control resizable-container" data-bind="text: priority"></div>
-
-                        <text>
-                            @Html.HiddenFor(m => m.PriorityId, new { data_bind = "value: priorityId" })
-                        </text>
-                    }
-
-                    @Html.ValidationMessageFor(m => m.PriorityId, "", new { @class = "text-danger" })
-                </div>
-
-                @if (!User.IsInRole("Klient"))
-                {
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Budget)
-
-                        @Html.TextBoxFor(m => m.Budget, new { @class = "form-control", type = "number", min = "0", step = "0.01", data_bind = "value: budget" })
-
-                        @Html.ValidationMessageFor(m => m.Budget, "", new { @class = "text-danger" })
+                        <button data-bind="click: $parents[1].addComment" class="btn btn-outline-secondary">
+                            @Resources.Common.AddComment
+                        </button>
                     </div>
-                }
 
-                <div class="form-group">
-                    <label class="form-control unborder element">
-                        Dodaj komentarz
-                    </label>
-                    <span id="commentTaskEditor"></span>
-                    <button data-bind="click: $parent.addComment" class="btn btn-outline-secondary">
-                        Dodaj komentarz
-                    </button>
+                    <input type="submit" class="btn btn-outline-secondary d-md-none edit-ticket" value="@Resources.Common.Save" />
                 </div>
-
-                <input id="editTicket" type="submit" class="btn btn-outline-secondary" value="@Resources.Common.Save" />
             </div>
-        </div>
+        </section>
     }
 </div>
 

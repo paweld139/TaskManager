@@ -9,6 +9,7 @@ using TaskManager.DAL.Contracts;
 using System.Data.Entity;
 using TaskManager.BLL.Entities.Briefs;
 using TaskManager.DAL.Entities;
+using TaskManager.DAL.Proxies;
 
 namespace TaskManager.DAL.Repositories
 {
@@ -30,7 +31,7 @@ namespace TaskManager.DAL.Repositories
 
         public IQueryable<DictionaryBrief> FindBriefs(string name, string value = null, bool orderByValue = true)
         {
-            var query = mapper.ProjectTo<DictionaryBrief>(Find(name, value));
+            var query = mapper.ProjectTo<DictionaryBriefProxy>(Find(name, value));
 
             if(orderByValue)
             {

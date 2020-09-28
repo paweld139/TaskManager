@@ -5,6 +5,7 @@ using AutoMapper;
 using CommonServiceLocator;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PDCore.Commands;
 using PDCore.Factories.Fac;
 using PDCore.Factories.IFac;
 using PDCore.Interfaces;
@@ -28,6 +29,8 @@ using System.Security.Principal;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using TaskManager.BLL.Factories;
+using TaskManager.BLL.Processors;
 using TaskManager.BLL.Translators;
 using TaskManager.DAL;
 using TaskManager.DAL.Contracts;
@@ -163,6 +166,18 @@ namespace TaskManager.Web.App_Start
                    .SingleInstance();
 
             builder.RegisterType<TaskManagerTranslator>()
+                   .AsSelf()
+                   .SingleInstance();
+
+            builder.RegisterType<SetStatusCommandFactory>()
+                   .AsSelf()
+                   .SingleInstance();
+
+            builder.RegisterType<CommandManager>()
+                   .AsSelf()
+                   .InstancePerRequest();
+
+            builder.RegisterType<StatusProcessor>()
                    .AsSelf()
                    .SingleInstance();
         }

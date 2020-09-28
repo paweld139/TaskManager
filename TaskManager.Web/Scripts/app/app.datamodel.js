@@ -6,6 +6,9 @@
     self.saveTicketUrl = "api/tickets";
     self.getTicketUrl = "api/tickets/";
     self.editTicketUrl = "api/tickets/";
+    self.deleteCommentUrl = "api/tickets/";
+    self.addCommentUrl = "api/tickets/";
+    self.setTicketStatusUrl = "api/tickets/";
 
     self.siteUrl = "/";
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities.Basic;
@@ -25,7 +24,7 @@ namespace TaskManager.DAL.Strategies
 
             if (args[0] is Ticket ticket)
             {
-                result = ticket.ContrahentId == ContrahentId;
+                result = !IsCustomer || ticket.ContrahentId == ContrahentId;
             }
 
             result = result || NoRestrictions();

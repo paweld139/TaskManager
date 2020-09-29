@@ -25,7 +25,7 @@ namespace TaskManager.BLL.Commands.Statuses
 
         public abstract bool CanExecute();
 
-        public void Execute()
+        public virtual void Execute()
         {
             ticket.StatusId = (int)statusToSet;
         }

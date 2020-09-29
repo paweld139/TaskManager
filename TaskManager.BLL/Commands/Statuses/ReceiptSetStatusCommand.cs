@@ -1,4 +1,5 @@
-﻿using System.Security.Principal;
+﻿using System;
+using System.Security.Principal;
 using TaskManager.BLL.Entities.Briefs;
 using TaskManager.BLL.Enums;
 
@@ -16,6 +17,13 @@ namespace TaskManager.BLL.Commands.Statuses
             return !IsCustomer
                    && ticket.OperatorId == EmployeeId
                    && (actualStatus == Status.New || actualStatus == Status.Rejected);
+        }
+
+        public override void Execute()
+        {
+            ticket.ExecutionDate = DateTime.UtcNow;
+
+            base.Execute();
         }
 
         //                    switch (status)

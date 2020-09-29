@@ -77,14 +77,14 @@
 
                     <div class="form-group">
                         @Html.LabelFor(m => m.ExecutionDate)
-                        <div class="form-control" data-bind="text: executionDate"></div>
+                        <div class="form-control" data-bind="fromISODateTime: executionDate"></div>
                         @Html.HiddenFor(m => m.ExecutionDate, new { data_bind = "value: executionDate" })
                         @Html.ValidationMessageFor(m => m.ExecutionDate, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(m => m.ReceiptDate)
-                        <div class="form-control" data-bind="text: receiptDate"></div>
+                        <div class="form-control" data-bind="fromISODateTime: receiptDate"></div>
                         @Html.HiddenFor(m => m.ReceiptDate, new { data_bind = "value: receiptDate" })
                         @Html.ValidationMessageFor(m => m.ReceiptDate, "", new { @class = "text-danger" })
                     </div>

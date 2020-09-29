@@ -111,6 +111,10 @@
     <Compile Include="Migrations\202009202027509_Tags.designer.cs">
       <DependentUpon>202009202027509_Tags.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009282214270_DatesFIx.cs" />
+    <Compile Include="Migrations\202009282214270_DatesFIx.designer.cs">
+      <DependentUpon>202009282214270_DatesFIx.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\DictionaryBriefProxy.cs" />
@@ -185,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009202027509_Tags.resx">
       <DependentUpon>202009202027509_Tags.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009282214270_DatesFIx.resx">
+      <DependentUpon>202009282214270_DatesFIx.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -70,14 +70,17 @@ namespace TaskManager.Web
                 "~/Content/themes/base/jquery-ui.css").Include(
                 "~/Content/PDWebCore/fontawesome/css/all.css", new CssRewriteUrlTransform()).Include(
                 "~/Content/flag-icon-css/css/flag-icon.css", new CssRewriteUrlTransform()).Include(
-                "~/Content/PDWebCore/tooltip-theme-arrows.min.css",
-                "~/Content/PDWebCore/tooltip.css",
-                "~/Content/Site.css"
                 /*"~/Content/PDWebCore/bootstrap-select.css",
                 "~/Content/PDWebCore/Main.css",
                 "~/Content/PDWebCore/webmail.css",
                 "~/Content/PDWebCore/jquery.enhsplitter.css",
                 "~/Content/jquery-ui.css",*/));
+
+            bundles.Add(new StyleBundle("~/Content/customCss").Include(
+                    "~/Content/PDWebCore/tooltip-theme-arrows.min.css",
+                    "~/Content/PDWebCore/tooltip.css",
+                    "~/Content/Site.css"
+                ));
         }
     }
 }

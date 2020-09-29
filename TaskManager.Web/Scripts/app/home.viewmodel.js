@@ -130,7 +130,7 @@
     }
 
     self.exportToCSV = function () {
-        let tickets = objectsToRows(self.tickets());
+        let tickets = objectsToRows(self.filteredRecords());
         exportToCsv('tickets.csv', tickets);
     }
 

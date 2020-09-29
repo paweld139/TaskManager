@@ -34,13 +34,13 @@ namespace TaskManager.BLL.Entities.Briefs
         [DataType(DataType.DateTime)]
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataMember(Name = "executionDate")]
-        public DateTimeOffset? ExecutionDate { get; set; }
+        public DateTime? ExecutionDate { get; set; }
 
         [Display(Name = "ReceiptDate", ResourceType = typeof(Resources.Common))]
         [DataType(DataType.DateTime)]
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataMember(Name = "receiptDate")]
-        public DateTimeOffset? ReceiptDate { get; set; }
+        public DateTime? ReceiptDate { get; set; }
 
         [Display(Name = "Tags", ResourceType = typeof(Resources.Common))]
         [DataType(DataType.Text)]

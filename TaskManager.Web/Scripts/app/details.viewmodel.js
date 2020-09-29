@@ -40,7 +40,7 @@
     self.refreshTicket = function (data) {
         data.comments.sortBy(sortCommentsFunction);
 
-        fromISODateToLocaleStringConverter(data, "dateCreated", "executionDate", "receiptDate", "dateModified");
+        fromISODateToLocaleStringConverter(data, "dateCreated", "dateModified");
 
         fromISODateToLocaleStringConverter(data.comments, "dateCreated");
 

@@ -24,7 +24,7 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 
 *	Wykorzystuje wzorzec Repository, UOW, Strategy, Command, Chain of Responsibility, IoC, Factory itd.
 *	Obsłużona została edycja równoległa w przyjazny dla użytkownika sposób, np. przy edycji widoczne są wartości jakie ustawił inny użytkownik po pobraniu danych przez danego użytkownika,
-*	APi posiada liczne funkcjonalności i operacje dostępne tylko dla admina, np. szyfrowanie i aktualizacja konfiguracji, edycja wszystkich danych, pobieranie wielokryterialne danych w różnej formie.
+*	APi posiada liczne funkcjonalności i operacje dostępne tylko dla admina, np. szyfrowanie i aktualizacja konfiguracji, edycja wszystkich danych, pobieranie wielokryterialne danych w różnej formie. Nie ma jednak skrajności typu RPC.
 *	Aplikacja składa się z warstwy biznesowej, dostępu do danych i warstwy webowej
 *	Web API korzysta z repozytoriów, które działają w oparciu o ustaloną strategię dostępu do danych opartą o role i cechy użytkowników systemu. Każdy użytkownik może edytować określone dane i musi spełnić dane warunki by na przykład utworzyć zgłoszenie czy usunąć komentarz. Sprawia to, że z API będą mogły korzystać także inne aplikacje, np. okienkowe bez zbytniego przywiązywania uwagi do logiki biznesowej i obsługi poświadczeń
 *	Dostęp do API jest autoryzowany tokenem. Na stronie jest zaimplementowana logika tworzenia Bearer Token dla danego użytkownika i odświeżania tokenów.

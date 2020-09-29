@@ -22,7 +22,7 @@ namespace TaskManager.DAL.Entities
             // Add custom user claims here
             var claims = new[]
             {
-               new Claim("EmployeeId", Employee.Id.ToString()),
+               new Claim("EmployeeId", Employee.Id.ToString()), //Id jest takie samo jak w ApplicationUser
                new Claim("ContrahentId", Employee.ContrahentId.ToString()),
             };
 

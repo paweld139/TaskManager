@@ -7,23 +7,34 @@ namespace TaskManager.BLL.Commands.Statuses
 {
     public class ReceiptSetStatusCommand : SetStatusCommand
     {
-        public ReceiptSetStatusCommand(TicketBrief ticket, IPrincipal principal)
-         : base(ticket, principal, Status.Receipt)
+        private readonly DateTime? executionDateBeforeSet;
+
+        public ReceiptSetStatusCommand(TicketBrief ticketToEdit, IPrincipal principal)
+         : base(ticketToEdit, principal, Status.Receipt)
         {
+            executionDateBeforeSet = ticketToEdit.ExecutionDate;
         }
 
         public override bool CanExecute()
         {
             return !IsCustomer
-                   && ticket.OperatorId == EmployeeId
-                   && (actualStatus == Status.New || actualStatus == Status.Rejected);
+                   && ticketToEdit.OperatorId == EmployeeId
+                   && (statusBeforeSet == Status.New || statusBeforeSet == Status.Rejected);
         }
 
         public override void Execute()
         {
-            ticket.ExecutionDate = DateTime.UtcNow;
+            ticketToEdit.ExecutionDate = DateTime.UtcNow;
 
             base.Execute();
+        }
+
+        public override void Undo()
+        {
+            ticketToEdit.ExecutionDate = executionDateBeforeSet; //Możliwe, że data wykonania została ustawiona wcześniej.
+                                                                 //Ma to miejsce wtedy, gdy zadanie jest oznaczone jako odrzucone.
+
+            base.Undo();
         }
 
         //                    switch (status)

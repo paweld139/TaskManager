@@ -1,5 +1,7 @@
 ﻿using PDCore.Commands;
+using PDCore.Extensions;
 using PDCore.Handlers;
+using PDCore.Utils;
 using PDCoreNew.Extensions;
 using System.Collections.Generic;
 using System.Security.Principal;
@@ -10,24 +12,30 @@ namespace TaskManager.BLL.Commands.Statuses
 {
     public abstract class SetStatusCommand : ICommand, IReceiver<ICollection<Status>>
     {
-        protected readonly TicketBrief ticket;
-        private readonly IPrincipal principal;
-        private readonly Status statusToSet;
-        protected readonly Status actualStatus;
+        protected readonly TicketBrief ticketToEdit;
+        protected readonly Status statusBeforeSet;
 
-        protected SetStatusCommand(TicketBrief ticket, IPrincipal principal, Status statusToSet)
+        private readonly Status statusToSet;
+
+        private readonly IPrincipal principal;
+
+        protected SetStatusCommand(TicketBrief ticketToEdit, IPrincipal principal, Status statusToSet)
         {
-            this.ticket = ticket;
-            actualStatus = (Status)ticket.StatusId;
-            this.principal = principal;
+            ObjectUtils.ThrowIfNull(ticketToEdit.GetTuple(nameof(ticketToEdit)), principal.GetTuple(nameof(principal)));
+
+            this.ticketToEdit = ticketToEdit;
+            statusBeforeSet = (Status)ticketToEdit.StatusId;
+
             this.statusToSet = statusToSet;
+
+            this.principal = principal;
         }
 
         public abstract bool CanExecute();
 
         public virtual void Execute()
         {
-            ticket.StatusId = (int)statusToSet;
+            ticketToEdit.StatusId = (int)statusToSet;
         }
 
         public void Handle(ICollection<Status> request)
@@ -38,9 +46,9 @@ namespace TaskManager.BLL.Commands.Statuses
             }
         }
 
-        public void Undo()
+        public virtual void Undo()
         {
-            ticket.StatusId = (int)actualStatus;
+            ticketToEdit.StatusId = (int)statusBeforeSet;
         }
 
         protected bool IsCustomer => principal.IsInRole("Klient");

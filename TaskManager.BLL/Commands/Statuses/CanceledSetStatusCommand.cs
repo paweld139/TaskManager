@@ -13,8 +13,8 @@ namespace TaskManager.BLL.Commands.Statuses
 
         public override bool CanExecute()
         {
-            return actualStatus == Status.New
-                   || (!IsCustomer && (actualStatus == Status.Receipt || actualStatus == Status.Rejected || actualStatus == Status.Clarify));
+            return statusBeforeSet == Status.New
+                   || (!IsCustomer && (statusBeforeSet == Status.Receipt || statusBeforeSet == Status.Rejected || statusBeforeSet == Status.Clarify));
         }
     }
 }

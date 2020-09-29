@@ -14,14 +14,21 @@ namespace TaskManager.BLL.Commands.Statuses
 
         public override bool CanExecute()
         {
-            return IsCustomer && actualStatus == Status.Receipt;
+            return IsCustomer && statusBeforeSet == Status.Receipt;
         }
 
         public override void Execute()
         {
-            ticket.ReceiptDate = DateTime.UtcNow;
+            ticketToEdit.ReceiptDate = DateTime.UtcNow;
 
             base.Execute();
+        }
+
+        public override void Undo()
+        {
+            ticketToEdit.ReceiptDate = null;
+
+            base.Undo();
         }
     }
 }

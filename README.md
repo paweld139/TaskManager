@@ -4,7 +4,7 @@
 
 Strona wdrożona na Azure: https://taskmanagerweb20200911175909.azurewebsites.net/
 
-Dane kontrahentów potrzebne przy rejestracji:
+_Dane kontrahentów potrzebne przy rejestracji_:
 
 ```csharp
 new Contrahent()

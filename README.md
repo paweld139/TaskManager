@@ -30,7 +30,7 @@ new Contrahent()
 }
 ```
 
-Na portalu są także założone konta testowe:
+_Na portalu są także założone konta testowe_:
 
 ```csharp
 var employee = new Employee

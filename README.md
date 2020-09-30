@@ -9,7 +9,7 @@ Role w systemie:
 * Serwisant
 * Klient
 
-Rola jest nadawana użytkownikowi w zależności od tego do jakiego kontrahenta jest przypisan. Klienci widzą zadanie przypisane jedynie do danego kontrahenta. Serwisanci widzą wszystkie zadania. Klienci i Serwisanci mają różne zakresy statusów do przebijania. Serwisant może wybrać kontrahenta i przedstawiciela przy tworzeniu zgłoszenia, a klient nie może. Serwisant może zmieniać wykonawcę zgłoszenia i ustawiać budżet (którego klient nie widzi), a klient może ustawiać priorytet.
+Rola jest nadawana użytkownikowi w zależności od tego do jakiego kontrahenta jest przypisan. Klienci widzą zadanie przypisane jedynie do danego kontrahenta. Serwisanci widzą wszystkie zadania. Klienci i Serwisanci mają różne zakresy statusów do przebijania. Serwisant może wybrać kontrahenta i przedstawiciela przy tworzeniu zgłoszenia, a klient nie może. Serwisant może zmieniać wykonawcę zgłoszenia i ustawiać budżet (którego klient nie widzi), a klient może ustawiać priorytet. Admin może na przykład zmieniać i usuwać wszystko co zechce.
 
 _Dane kontrahentów potrzebne przy rejestracji_:
 

@@ -107,7 +107,7 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 *	Aplikacja korzysta z podmodułów (przede wszystkim z poziomu GitHub)
 *	Aplikacja wyświetla błędy w przyjazny dla użytkownika sposób
 *	Aplikacja loguje i obsługuje wszystkie błędy w aplikacji, w niektórych miejscach lokalnie, a w innych globalnie
-*	Aplikacja wykorzystuje IoC z wykorzystaniem AutoFaca. Dzięki licznym interfejsom, aplikacja jest testowalna i w szybki sposób możliwe jest zastępowanie implementacji czy mockowanie (np. z wykorzystaniem moq) bez zmian w wielu miejscach,
+*	Aplikacja wykorzystuje IoC z pomocą AutoFaca. Dzięki licznym interfejsom, aplikacja jest testowalna i w szybki sposób możliwe jest zastępowanie implementacji czy mockowanie (np. z wykorzystaniem moq) bez zmian w wielu miejscach,
 *	Tłumaczenie nie tyczy się tylko interfejsu, ale także generycznych danych pochodzących z bazy danych czy komunikatów o błędach.
 *	Strona pod kątem interfejsu niemal w całości obsługuje dwa języki: polski i angielski.
 

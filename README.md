@@ -1,8 +1,6 @@
 # TaskManager
 
-**I'm not offering any license**
-
-**Nie udzialam żadnej licencji**
+**I'm not offering any license** | **Nie udzialam żadnej licencji**
 
 Strona wdrożona na Azure: https://taskmanagerweb20200911175909.azurewebsites.net/
 

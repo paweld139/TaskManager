@@ -85,6 +85,9 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 ## Planowane zmiany
 
 *	Bardziej modułowa budowa po stronie JS, np. z wykorzystaniem require.js. Będą moduły dostępu do danych, router, bootstrapper itd.
+*   Nie pobierać co chwilę lookupów, tylko przechowywać je w jednym, wspólnym dla partiali miejscu. Zapisywać stan strony, filtrów itd. Zrobić użytek z local storage.
+*   Dodać czyszczenie filtrów przy bluru
+*   Uniemożliwić wielokrotne wysyłanie tych samych requestów przed zakończenie poprzednich - command dla buttonów
 *	Dodanie change trackingu po stronie knockout i wysyłanie żądań do API tylko w przypadku edycji jakichkolwiek danych przez użytkownika. Ostrzeganie przed wyjściem z zadania przed zapisaniem danych.
 *	Całkowite wyeliminowanie alertów i dodanie zamiast tego dialogów współpracujących z knockout
 *	Implementacja Event Stormingu i CQRS

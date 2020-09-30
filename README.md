@@ -78,6 +78,7 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 ## Cechy
 
 *   Walidacja po stronie klienta, a także po stronie serwera.
+*   Filtrowanie po stronie klienta
 *   Wykorzystuje wzorzec Repository, UOW, Strategy, Command, Chain of Responsibility, IoC, Factory itd.
 *   API jest wersjonowane, w response raportowana jest wersja. Domyślną wersją jest 1.1. Możliwe jest określenie innej jako query string lub nagłówek.
 *	Obsłużona została edycja równoległa w przyjazny dla użytkownika sposób, np. przy edycji widoczne są wartości jakie ustawił inny użytkownik po pobraniu danych przez danego użytkownika,

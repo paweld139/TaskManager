@@ -4,9 +4,6 @@
 
 **Nie udzialam żadnej licencji**
 
-> The https://github.com/robots.txt file of GitHub allows the indexing of the blobs in the 'master' branch, but restricts all other branches. So if you don't have a 'master' 
-> branch, Google is not supposed to index your pages.
-
 Strona wdrożona na Azure: https://taskmanagerweb20200911175909.azurewebsites.net/
 
 Dane kontrahentów potrzebne przy rejestracji:
@@ -27,6 +24,8 @@ new Contrahent()
     LicenseKey = "12345678911234567891"
 }
 ```
+> The https://github.com/robots.txt file of GitHub allows the indexing of the blobs in the 'master' branch, but restricts all other branches. So if you don't have a 'master' 
+> branch, Google is not supposed to index your pages.
 
 ## Wstęp
 

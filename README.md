@@ -7,6 +7,25 @@
 > The https://github.com/robots.txt file of GitHub allows the indexing of the blobs in the 'master' branch, but restricts all other branches. So if you don't have a 'master' 
 > branch, Google is not supposed to index your pages.
 
+Dane kontrahentów potrzebne przy rejestracji
+
+```csharp
+new Contrahent()
+{
+    Name = "IBM Serwisant",
+    NIP = "1234567890",
+    IsOperator = true,
+    LicenseKey = "12345678901234567890"
+},
+new Contrahent()
+{
+    Name = "Microsoft Klient",
+    NIP = "1234567891",
+    IsOperator = false,
+    LicenseKey = "12345678911234567891"
+}
+```
+
 ## Wstęp
 
 Oprócz wytwarzanie oprogramowania, innym elementem działalności firm informatycznych jest obsługa zgłoszeń serwisowych w których najczęściej zawarte są problemy klientów z oprogramowaniem, prośby o dodanie danych funkcjonalności do oprogramowania czy pytania typowo biznesowe. W toku działalności firmy informatycznej jej zarząd często podejmuje decyzję o usprawnieniu obsługi zgłoszeń poprzez wdrożenie portalu zgłoszeniowego który będzie narzędziem komunikacji klientów, jak i pracowników firmy (programistów, zarządu i osób odpowiedzialnych za obsługę klienta). Celem takiego systemu jest także wspomaganie zarządzania zadaniami pracowników w firmie informatycznej.

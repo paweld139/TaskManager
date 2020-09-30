@@ -4,6 +4,9 @@
 
 **Nie udzialam żadnej licencji**
 
+> The https://github.com/robots.txt file of GitHub allows the indexing of the blobs in the 'master' branch, but restricts all other branches. So if you don't have a 'master' 
+> branch, Google is not supposed to index your pages.
+
 ## Wstęp
 
 Oprócz wytwarzanie oprogramowania, innym elementem działalności firm informatycznych jest obsługa zgłoszeń serwisowych w których najczęściej zawarte są problemy klientów z oprogramowaniem, prośby o dodanie danych funkcjonalności do oprogramowania czy pytania typowo biznesowe. W toku działalności firmy informatycznej jej zarząd często podejmuje decyzję o usprawnieniu obsługi zgłoszeń poprzez wdrożenie portalu zgłoszeniowego który będzie narzędziem komunikacji klientów, jak i pracowników firmy (programistów, zarządu i osób odpowiedzialnych za obsługę klienta). Celem takiego systemu jest także wspomaganie zarządzania zadaniami pracowników w firmie informatycznej.
@@ -23,6 +26,7 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 ## Cechy
 
 *	Wykorzystuje wzorzec Repository, UOW, Strategy, Command, Chain of Responsibility, IoC, Factory itd.
+* API jest wersjonowane, w response raportowana jest wersja. Domyślną wersją jest 1.1. Możliwe jest określenie innej w jako query string lub nagłówek.
 *	Obsłużona została edycja równoległa w przyjazny dla użytkownika sposób, np. przy edycji widoczne są wartości jakie ustawił inny użytkownik po pobraniu danych przez danego użytkownika,
 *	APi posiada liczne funkcjonalności i operacje dostępne tylko dla admina, np. szyfrowanie i aktualizacja konfiguracji, edycja wszystkich danych, pobieranie wielokryterialne danych w różnej formie. Nie ma jednak skrajności typu RPC.
 *	Aplikacja składa się z warstwy biznesowej, dostępu do danych i warstwy webowej
@@ -80,3 +84,5 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 *	Dodanie możliwość tworzenia kontrahentów
 *	Dodanie weryfikacji pracowników przez kontrahentów – sam kod licencyjny i NIP to za mało, by uzyskać dostęp do portalu
 *	Przejść na ASP.NET Core  i Entity Framework Core. Są zalecane dla nowych projektów i prężenie rozwijane. Powstają niemal od podstaw celem łatwiejszego rozwijania kodu, który w przypadku np. poprzednich wersji Entity Framework był bardzo ciężki w utrzymaniu przez twórców. Dodatkowym plusem będzie obsługa innych systemów takich jak Linux czy macOS. MS zdaje się podążać w dobrym kierunku, szkoda jednak że tak późno.
+* Wyeliminować dziwne metody będące połączeniem async i sync. Lepiej stworzyć normalne async i zadbać o configureawait, by nie tworzyć deadlocków i móc je wywoływać synchronicznie w razie potrzeby.
+* Dodać ConfigureAwait w metodach asynchronicznych, gdy nie korzystają z głównego kontekstu

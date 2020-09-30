@@ -9,7 +9,7 @@ Role w systemie:
 * Serwisant
 * Klient
 
-Rola jest nadawana użytkownikowi w zależności od tego do jakiego kontrahenta jest przypisan. Klienci widzą zadanie przypisane jedynie do danego kontrahenta. Serwisanci widzą wszystkie zadania. Klienci i Serwisanci mają różne zakresy statusów do przebijania. Serwisant może wybrać kontrahenta i przedstawiciela przy tworzeniu zgłoszenia, a klient nie może. Serwisant może zmieniać wykonawcę zgłoszenia i ustawiać budżet (którego klient nie widzi), a klient może ustawiać priorytet. Admin może na przykład zmieniać i usuwać wszystko co zechce.
+Rola jest nadawana użytkownikowi w zależności od tego do jakiego kontrahenta jest przypisan. Klienci widzą zadanie przypisane jedynie do danego kontrahenta. Serwisanci widzą wszystkie zadania. Klienci i Serwisanci mają różne zakresy statusów do przebijania. Serwisant może wybrać kontrahenta i przedstawiciela przy tworzeniu zgłoszenia, a klient nie może. Serwisant może zmieniać wykonawcę zgłoszenia i ustawiać budżet (którego klient nie widzi), a klient może ustawiać priorytet. Admin może na przykład zmieniać i usuwać wszystko co zechce. Widoczność przycisków jest zależna od roli i stanu zgłoszenia, na przykład jako "Do odbioru" przebijać może jedynie osoba przypisana jak wykonująca. Oczywiście po stronie API jest walidacja, która nie pozwoli na przebicie na określony status, jeśli użytkownik lub zadanie nie spełniają określonych wymogów.
 
 _Dane kontrahentów potrzebne przy rejestracji_:
 

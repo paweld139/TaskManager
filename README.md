@@ -7,6 +7,7 @@
 > The https://github.com/robots.txt file of GitHub allows the indexing of the blobs in the 'master' branch, but restricts all other branches. So if you don't have a 'master' 
 > branch, Google is not supposed to index your pages.
 
+
 Dane kontrahentów potrzebne przy rejestracji:
 
 ```csharp

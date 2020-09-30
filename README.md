@@ -47,6 +47,7 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 * Wyszukiwanie zadań 
 * Dodawanie komentarzy do zadań
 * Edycja zadań
+* Przebijanie statusóww toku realizacji
 
 ## Cechy
 

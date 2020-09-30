@@ -29,6 +29,30 @@ new Contrahent()
     LicenseKey = "12345678911234567891"
 }
 ```
+
+Na portalu są także założone konta testowe:
+
+```csharp
+  var employee = new Employee
+    {
+        ContrahentId = 2,
+        FirstName = "Paweł",
+        LastName = "Klient",
+    };
+
+    CreateUser(manager, "klient@gmail.com", "hasloos@1Z", "Klient", "Klientów", employee);
+
+
+    employee = new Employee
+    {
+        ContrahentId = 1,
+        FirstName = "Paweł",
+        LastName = "Operator",
+    };
+
+    CreateUser(manager, "serwisant@gmail.com", "hasloos@1Z2", "Serwisant", "Serwisantów", employee);
+```
+
 > The https://github.com/robots.txt file of GitHub allows the indexing of the blobs in the 'master' branch, but restricts all other branches. So if you don't have a 'master' 
 > branch, Google is not supposed to index your pages.
 

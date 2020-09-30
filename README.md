@@ -4,6 +4,13 @@
 
 Strona wdrożona na Azure: https://taskmanagerweb20200911175909.azurewebsites.net/
 
+Role w systemie:
+* Admin
+* Serwisant
+* Klient
+
+Rola jest nadawana użytkownikowi w zależności od tego do jakiego kontrahenta jest przypisan. Klienci widzą zadanie przypisane jedynie do danego kontrahenta. Serwisanci widzą wszystkie zadania. Klienci i Serwisanci mają różne zakresy statusów do przebijania. Serwisant może wybrać kontrahenta i przedstawiciela przy tworzeniu zgłoszenia, a klient nie może. Serwisant może zmieniać wykonawcę zgłoszenia i ustawiać budżet, a klient może ustawiać priorytet.
+
 _Dane kontrahentów potrzebne przy rejestracji_:
 
 ```csharp

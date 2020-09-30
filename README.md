@@ -83,3 +83,5 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 *	Dodanie możliwość tworzenia kontrahentów
 *	Dodanie weryfikacji pracowników przez kontrahentów – sam kod licencyjny i NIP to za mało, by uzyskać dostęp do portalu
 *	Przejść na ASP.NET Core  i Entity Framework Core. Są zalecane dla nowych projektów i prężenie rozwijane. Powstają niemal od podstaw celem łatwiejszego rozwijania kodu, który w przypadku np. poprzednich wersji Entity Framework był bardzo ciężki w utrzymaniu przez twórców. Dodatkowym plusem będzie obsługa innych systemów takich jak Linux czy macOS. MS zdaje się podążać w dobrym kierunku, szkoda jednak że tak późno.
+* Wyeliminować dziwne metody będące połączeniem async i sync. Lepiej stworzyć normalne async i zadbać o configureawait, by nie tworzyć deadlocków i móc je wywoływać synchronicznie w razie potrzeby.
+* Dodać ConfigureAwait w metodach asynchronicznych, gdy nie korzystają z głównego kontekstu

@@ -151,3 +151,4 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 * Dodać ConfigureAwait w metodach asynchronicznych, gdy nie korzystają z głównego kontekstu - aspekt wydajnościowy.
 * Dodać moduł powiadomień o zdarzeniach związanych z ticketami, dodatkowo powiadomienia mailowe.
 * Potworzyć funkcje tabelaryczne na potrzeby raportów i procedury, np. by oznaczyć wszystie powiadomienia jako przeczytane.
+* Komentarz do zadania w dialogu i osobnym formie, by nie zawalać strony i pzy okazji móc wykorzystać obecny model danych wraz z walidację.

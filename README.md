@@ -113,42 +113,42 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 
 ## Planowane zmiany
 
-*	Bardziej modułowa budowa po stronie JS, np. z wykorzystaniem require.js czy modułów z nowej Ecmy. Będą moduły dostępu do danych, router, bootstrapper itd.
-*   Korzystać z Promises, deffered execution, np. by mieć wpływ na kolejność wykonywania operacji asynchroncznych.
-*   Nie pobierać co chwilę lookupów, tylko przechowywać je w jednym, wspólnym dla partiali miejscu. Zapisywać stan strony, filtrów itd. Zrobić użytek z local storage czy Amplifier.js.
-*   Dodać cache po stronie API
-*   Dodać czyszczenie filtrów przy bluru
-*   Uniemożliwić wielokrotne wysyłanie tych samych requestów przed zakończenie poprzednich - command dla buttonów, dezaktywacja do momenu wykonania operacji
-*	Dodanie change trackingu po stronie knockout i wysyłanie żądań do API tylko w przypadku edycji jakichkolwiek danych przez użytkownika. Ostrzeganie przed wyjściem z zadania przed zapisaniem danych.
-*	Całkowite wyeliminowanie alertów i dodanie zamiast tego dialogów współpracujących z knockout i korzystających z jQuery UI. Utworzę custom bindings.
-*	Implementacja Event Stormingu i CQRS
-*	Otworzenie dostępu do API dla innych klientów, a nie tylko aplikacji webowej
-*   Być może wydzielenie serwera autoryzacyjnego i API do osobnych projektów, póli, by były wyizolowane i niezależnie działały.
-*	Zgodnie z punktem poprzednim, dodanie weryfikacji client id, request url, a także danych logowania wysyłanych na url pozwalające na utworzenie tokenu ("/Token").
-*	Dodanie bazy wiedzy i przypisywania wpisów do zadań
-*	Dodanie modułu planowania i harmonogramowania zadań
-*	Dodanie modułu raportów
-*	Utworzenie aplikacji WPF czerpiącej z praktyk programowania asynchronicznego z wykorzystaniem Caliburn.Micro, nowych funkcji takich jak AsyncIEnumerable. Utworzenie aplikacji w Android Studio. Obie aplikacje będą wersjami portalu kolejno okienkowymi i mobilnymi i będą korzystały z utworzonego Web API. Być może zmiast Android Studio pomyśleć nad Xamarin. W końcu Javę ogarniam dość pobieżnie w przeciwieństwie do .NET.
-*	Dodanie pobierania skryptów i stylów z CDN z fallbackiem do serwera celem zmniejszenia wykorzystania zasobów chmury.
-*	Przepisanie aplikacji na Angular. Knockout jest dość przestarzałą, ubogą i już niewspieraną, nierozwijaną biblioteką. Rozważyć dość modne ostatnio Vue.js. Rozważyć też     React, który zdaje się stopniowo wypierać Angulara.
-*	Czerpać ze wzorców programowania reaktywnego
-*	Wdrożyć komunikator, pomyśleć nad wykorzystaniem bazy NoSQL – ORM nadal jako Entity Framework.
-*	Wyeliminować dość niewygodne dla użytkownika odświeżanie UI, przede wszystkim CKEditor. Zbadać flow routingu.
-*	Nieco popracować nad czystością kodu i wdrożyć SRP przede wszystkim jeśli chodzi o przebijanie statusów. W innych miejscach kod jest nawet czysty i wygląda ok.
-*	Pokrycie aplikacji testami jednostkowymi i integracyjnymi. Obecnie ilość testów jest bardzo znikoma. Dość sporo testów jest związanych z biblioteką programistyczną (PDCory), ale z samym TaskManagerem już tak średnio. Przed aplikacja zdaje się być nieprzewidywalna. Dodatkowo utworzyć testy jednostkowe po stronie JavaScript, np. z wykorzystaniem QUnit i MockJson
-*	Wykorzystywać strefy czasowe zamiast timezone offsetów. Dodać możliwość ustawienia strefy czasowej przez użytkownika w szczegółach profilu.
-*	Dodanie obsługi avatarów użytkowników
-*	Dodanie obsługi załączników w komentarzach i ticketach
-*	Dodanie możliwości edycji większej ilości danych w ticketach, np. opisu czy tematu.
-*	Zrobić tak, by był brak możliwości edycji ticketów po ich zakończeniu
-*	Dodać więcej statusów ticketów, np. „Do zatwierdzenia”, „Zatwierdzone”, „Do wypuszczenia”, „Wymagany wpis do bazy wiedzy”, „Wymagane dane techniczne”.
-*	Dodanie do ticketów sekcji z danymi technicznymi do wykorzystania przez serwisantów
-*	Dodanie możliwość tworzenia kontrahentów
-*	Dodanie weryfikacji pracowników przez kontrahentów – sam kod licencyjny i NIP to za mało, by uzyskać dostęp do portalu
-*	Przejść na ASP.NET Core  i Entity Framework Core. Są zalecane przez Microsoft dla nowych projektów i prężenie rozwijane. Powstają niemal od podstaw celem łatwiejszego rozwijania kodu, który w przypadku np. poprzednich wersji Entity Framework był bardzo ciężki w utrzymaniu przez twórców. Dodatkowym plusem będzie obsługa innych systemów takich jak Linux czy macOS. MS zdaje się podążać w dobrym kierunku, szkoda jednak że tak późno.
-* Zakres pobieranych danych w zależności od roli
-* Wyeliminować dziwne metody będące połączeniem async i sync. Lepiej stworzyć normalne async i zadbać o configureawait, by nie tworzyć deadlocków i móc je wywoływać synchronicznie w razie potrzeby.
-* Dodać ConfigureAwait w metodach asynchronicznych, gdy nie korzystają z głównego kontekstu - aspekt wydajnościowy.
-* Dodać moduł powiadomień o zdarzeniach związanych z ticketami, dodatkowo powiadomienia mailowe.
-* Potworzyć funkcje tabelaryczne na potrzeby raportów i procedury, np. by oznaczyć wszystie powiadomienia jako przeczytane.
-* Komentarz do zadania w dialogu i osobnym formie, by nie zawalać strony i pzy okazji móc wykorzystać obecny model danych wraz z walidację.
+- [ ]	Bardziej modułowa budowa po stronie JS, np. z wykorzystaniem require.js czy modułów z nowej Ecmy. Będą moduły dostępu do danych, router, bootstrapper itd.
+- [ ]   Korzystać z Promises, deffered execution, np. by mieć wpływ na kolejność wykonywania operacji asynchroncznych.
+- [ ]   Nie pobierać co chwilę lookupów, tylko przechowywać je w jednym, wspólnym dla partiali miejscu. Zapisywać stan strony, filtrów itd. Zrobić użytek z local storage czy Amplifier.js.
+- [ ]   Dodać cache po stronie API
+- [ ]   Dodać czyszczenie filtrów przy bluru
+- [ ]   Uniemożliwić wielokrotne wysyłanie tych samych requestów przed zakończenie poprzednich - command dla buttonów, dezaktywacja do momenu wykonania operacji
+- [ ]	Dodanie change trackingu po stronie knockout i wysyłanie żądań do API tylko w przypadku edycji jakichkolwiek danych przez użytkownika. Ostrzeganie przed wyjściem z zadania przed zapisaniem danych.
+- [ ]	Całkowite wyeliminowanie alertów i dodanie zamiast tego dialogów współpracujących z knockout i korzystających z jQuery UI. Utworzę custom bindings.
+- [ ]	Implementacja Event Stormingu i CQRS
+- [ ]	Otworzenie dostępu do API dla innych klientów, a nie tylko aplikacji webowej
+- [ ]   Być może wydzielenie serwera autoryzacyjnego i API do osobnych projektów, póli, by były wyizolowane i niezależnie działały.
+- [ ]	Zgodnie z punktem poprzednim, dodanie weryfikacji client id, request url, a także danych logowania wysyłanych na url pozwalające na utworzenie tokenu ("/Token").
+- [ ]	Dodanie bazy wiedzy i przypisywania wpisów do zadań
+- [ ]	Dodanie modułu planowania i harmonogramowania zadań
+- [ ]	Dodanie modułu raportów
+- [ ]	Utworzenie aplikacji WPF czerpiącej z praktyk programowania asynchronicznego z wykorzystaniem Caliburn.Micro, nowych funkcji takich jak AsyncIEnumerable. Utworzenie aplikacji w Android Studio. Obie aplikacje będą wersjami portalu kolejno okienkowymi i mobilnymi i będą korzystały z utworzonego Web API. Być może zmiast Android Studio pomyśleć nad Xamarin. W końcu Javę ogarniam dość pobieżnie w przeciwieństwie do .NET.
+- [ ]	Dodanie pobierania skryptów i stylów z CDN z fallbackiem do serwera celem zmniejszenia wykorzystania zasobów chmury.
+- [ ]	Przepisanie aplikacji na Angular. Knockout jest dość przestarzałą, ubogą i już niewspieraną, nierozwijaną biblioteką. Rozważyć dość modne ostatnio Vue.js. Rozważyć też     React, który zdaje się stopniowo wypierać Angulara.
+- [ ]	Czerpać ze wzorców programowania reaktywnego
+- [ ]	Wdrożyć komunikator, pomyśleć nad wykorzystaniem bazy NoSQL – ORM nadal jako Entity Framework.
+- [ ]	Wyeliminować dość niewygodne dla użytkownika odświeżanie UI, przede wszystkim CKEditor. Zbadać flow routingu.
+- [ ]	Nieco popracować nad czystością kodu i wdrożyć SRP przede wszystkim jeśli chodzi o przebijanie statusów. W innych miejscach kod jest nawet czysty i wygląda ok.
+- [ ]	Pokrycie aplikacji testami jednostkowymi i integracyjnymi. Obecnie ilość testów jest bardzo znikoma. Dość sporo testów jest związanych z biblioteką programistyczną (PDCory), ale z samym TaskManagerem już tak średnio. Przed aplikacja zdaje się być nieprzewidywalna. Dodatkowo utworzyć testy jednostkowe po stronie JavaScript, np. z wykorzystaniem QUnit i MockJson
+- [ ]	Wykorzystywać strefy czasowe zamiast timezone offsetów. Dodać możliwość ustawienia strefy czasowej przez użytkownika w szczegółach profilu.
+- [ ]	Dodanie obsługi avatarów użytkowników
+- [ ]	Dodanie obsługi załączników w komentarzach i ticketach
+- [ ]	Dodanie możliwości edycji większej ilości danych w ticketach, np. opisu czy tematu.
+- [ ]	Zrobić tak, by był brak możliwości edycji ticketów po ich zakończeniu
+- [ ]	Dodać więcej statusów ticketów, np. „Do zatwierdzenia”, „Zatwierdzone”, „Do wypuszczenia”, „Wymagany wpis do bazy wiedzy”, „Wymagane dane techniczne”.
+- [ ]	Dodanie do ticketów sekcji z danymi technicznymi do wykorzystania przez serwisantów
+- [ ]	Dodanie możliwość tworzenia kontrahentów
+- [ ]	Dodanie weryfikacji pracowników przez kontrahentów – sam kod licencyjny i NIP to za mało, by uzyskać dostęp do portalu
+- [ ]	Przejść na ASP.NET Core  i Entity Framework Core. Są zalecane przez Microsoft dla nowych projektów i prężenie rozwijane. Powstają niemal od podstaw celem łatwiejszego rozwijania kodu, który w przypadku np. poprzednich wersji Entity Framework był bardzo ciężki w utrzymaniu przez twórców. Dodatkowym plusem będzie obsługa innych systemów takich jak Linux czy macOS. MS zdaje się podążać w dobrym kierunku, szkoda jednak że tak późno.
+- [ ] Zakres pobieranych danych w zależności od roli
+- [ ] Wyeliminować dziwne metody będące połączeniem async i sync. Lepiej stworzyć normalne async i zadbać o configureawait, by nie tworzyć deadlocków i móc je wywoływać synchronicznie w razie potrzeby.
+- [ ] Dodać ConfigureAwait w metodach asynchronicznych, gdy nie korzystają z głównego kontekstu - aspekt wydajnościowy.
+- [ ] Dodać moduł powiadomień o zdarzeniach związanych z ticketami, dodatkowo powiadomienia mailowe.
+- [ ] Potworzyć funkcje tabelaryczne na potrzeby raportów i procedury, np. by oznaczyć wszystie powiadomienia jako przeczytane.
+- [ ] Komentarz do zadania w dialogu i osobnym formie, by nie zawalać strony i pzy okazji móc wykorzystać obecny model danych wraz z walidację.

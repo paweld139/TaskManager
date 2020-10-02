@@ -64,13 +64,6 @@ namespace TaskManager.Web.Api
 
             if (success)
             {
-                if((Status)ticket.StatusId == Status.Clarify && User.IsInRole("Klient"))
-                {
-                    ticket.StatusId = (int)Status.New;
-
-                    await taskManagerUow.Tickets.SaveUpdatedWithOptimisticConcurrencyAsync(ticket, ModelState.AddModelError);
-                }
-
                 var comment = await taskManagerUow.Comments.FindByIdAsync<CommentDTO>(model.Id);
 
                 return CreatedAtRoute("GetComment", new { id = comment.Id }, comment);

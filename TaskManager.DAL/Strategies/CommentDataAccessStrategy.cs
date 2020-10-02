@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities.Basic;
+using TaskManager.BLL.Enums;
+using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 
 namespace TaskManager.DAL.Strategies
@@ -39,6 +41,15 @@ namespace TaskManager.DAL.Strategies
             {
                 entity.TicketId = ticket.Id;
                 entity.EmployeeId = EmployeeId;
+
+                if ((Status)ticket.StatusId == Status.Clarify && IsCustomer)
+                {
+                    ticket.StatusId = (int)Status.New;
+
+                    //Jeśli ktoś anulował zadanie w międzyczasie, to nie chcemy było oznaczone jako nowe.
+                    //Możliwe jednak, że to nie status został zmieniony. Nie chcemy również, by zadanie tkwiło jako do wyjaśnienia
+                    //i wymagane było dodanie kolejnego komentarza przez klienta. Pozostanie więc client wins.
+                }
             }
         }
 

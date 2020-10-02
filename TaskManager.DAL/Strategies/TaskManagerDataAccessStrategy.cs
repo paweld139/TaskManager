@@ -3,12 +3,13 @@ using PDCore.Strategies;
 using PDCoreNew.Extensions;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace TaskManager.DAL.Strategies
 {
     public abstract class TaskManagerDataAccessStrategy<TEntity> : DataAccessStrategy<TEntity>
     {
-        private readonly IPrincipal principal;
+        protected readonly IPrincipal principal;
 
         protected TaskManagerDataAccessStrategy(IPrincipal principal)
         {
@@ -33,5 +34,10 @@ namespace TaskManager.DAL.Strategies
         public override bool CanUpdateAllProperties(TEntity entity) => NoRestrictions();
 
         public override bool CanDelete(TEntity entity) => NoRestrictions();
+
+        public override Task AfterAdd(params object[] args)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

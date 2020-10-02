@@ -101,7 +101,7 @@ Single Page Application utworzone z wykorzystaniem knockout.js, HTML, CSS, Boots
 *	W bazie danych są przechowywane jedynie daty UTC.
 *	Użytkownik może filtrować zadanie z wykorzystaniem formatu daty odpowiedniego dla jego kultury i strefy czasowej. Po stronie REST API jego data jest odpowiednio dostosowywana do UTC i w ten sposób są pobierane odpowiednie dane.
 *	Automatyczne tworzenie numerów ticketów z wykorzystaniem triggera.
-*	Aplikacja wykorzystuje bibliotekę programistyczną utworzoną w toku mojej programistycznej przygody. Biblioteka jest na bieżącym etapie dość obszerna i stopniowo rozwijana. Panuje w niej lekki chaos, więc warto jakoś go ujarzmić. Biblioteki programistycznej postaowiłem nie udostępniać w formie publicznego repozytorium.
+*	Aplikacja wykorzystuje bibliotekę programistyczną utworzoną w toku mojej programistycznej przygody. Biblioteka jest na bieżącym etapie dość obszerna i stopniowo rozwijana. Panuje w niej lekki chaos, więc z czasem postaram się jakoś go ujarzmić.
 *	Aplikacja korzysta z AutoMappera. Wykorzystuje przede wszystkim projekcję IQueryable, dzięki czemu w prosty sposób tworzone są wydajne zapytania z wielu tabel bez zbędnego i żmudnego kodowania wyrażeń LinQ.
 *	Aplikacja jest wyposażona w klienta email
 *	Aplikacja korzysta z podmodułów (przede wszystkim z poziomu GitHub)

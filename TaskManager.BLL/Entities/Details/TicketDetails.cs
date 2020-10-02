@@ -1,5 +1,7 @@
 ﻿using PDCore.Interfaces;
+using PDCoreNew.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.DTO;
@@ -40,5 +42,8 @@ namespace TaskManager.BLL.Entities.Details
 
         [DataMember(Name = "representativePhoneNumber")]
         public string RepresentativeApplicationUserPhoneNumber { get; set; }
+
+        [NotMapped]
+        public ICollection<FileModel> Files { get; set; }
     }
 }

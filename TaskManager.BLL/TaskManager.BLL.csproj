@@ -65,6 +65,7 @@
     <Compile Include="Entities\DTO\CommentDTO.cs" />
     <Compile Include="Entities\DTO\EmployeeDTO.cs" />
     <Compile Include="Entities\DTO\TicketDTO.cs" />
+    <Compile Include="Enums\FIleType.cs" />
     <Compile Include="Enums\Status.cs" />
     <Compile Include="Factories\SetStatusCommandFactory.cs" />
     <Compile Include="Handlers\TicketStatusHandler.cs" />
@@ -82,6 +83,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Services\TicketService.cs" />
     <Compile Include="Translators\TaskManagerTranslator.cs" />
   </ItemGroup>
   <ItemGroup>

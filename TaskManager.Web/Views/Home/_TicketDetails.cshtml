@@ -28,7 +28,7 @@
 
                     <div class="form-row" data-bind="foreach: $parent.lookups()?.statuses">
                         <div class="col-auto mb-2">
-                            <button type="button" class="btn btn-outline-primary" 
+                            <button type="button" class="btn btn-outline-primary"
                                     data-bind="text: value, click: $parents[1].setStatus"></button>
                         </div>
                     </div>
@@ -205,6 +205,8 @@
                         <textarea data-bind="value: content, validate: { required: { message: '@string.Format(Resources.ErrorMessages.Required, Resources.Common.Content)' } }" id="commentTaskEditor"></textarea>
 
                         <div class="text-danger" data-bind="validationMessage: content"></div>
+
+                        @*<input type="file" multiple class="form-control" data-bind=" event: { change: fileSelect }" />*@
 
                         <button data-bind="click: $parents[1].addComment" class="btn btn-outline-secondary">
                             @Resources.Common.AddComment

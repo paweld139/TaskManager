@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PDCore.Interfaces;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaskManager.BLL.Entities.Briefs
 {
     [DataContract(Name = "comment", Namespace = "")]
-    public class CommentBrief
+    public class CommentBrief : IEntity<int>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

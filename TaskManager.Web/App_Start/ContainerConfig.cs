@@ -36,6 +36,7 @@ using TaskManager.DAL;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 using TaskManager.DAL.Repositories;
+using TaskManager.DAL.Services;
 using TaskManager.DAL.Strategies;
 using CacheService = PDWebCore.Services.Serv.CacheService;
 
@@ -113,6 +114,10 @@ namespace TaskManager.Web.App_Start
                     .As<IDataAccessStrategy<ApplicationUser>>()
                     .InstancePerRequest();
 
+            builder.RegisterType<FileDataAccessStrategy>()
+                    .As<IDataAccessStrategy<File>>()
+                    .SingleInstance();
+
 
             builder.RegisterGeneric(typeof(SqlRepositoryEntityFrameworkDisconnected<>))
                    .As(typeof(ISqlRepositoryEntityFrameworkDisconnected<>))
@@ -155,6 +160,10 @@ namespace TaskManager.Web.App_Start
 
             builder.RegisterType<UserDataService>()
                    .As<IUserDataService>()
+                   .InstancePerRequest();
+
+            builder.RegisterType<FileService>()
+                   .AsSelf()
                    .InstancePerRequest();
 
             builder.RegisterType<TimeService>()

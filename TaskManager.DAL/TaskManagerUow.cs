@@ -1,8 +1,10 @@
 ﻿using PDCore.Repositories.IRepo;
 using PDCoreNew.Context.IContext;
 using PDCoreNew.Factories.Fac.Repository;
+using PDCoreNew.Repositories.IRepo;
 using PDCoreNew.UnitOfWork;
 using PDWebCore.Models;
+using PDWebCore.Repositories.Repo;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 using TaskManager.DAL.Repositories;
@@ -21,5 +23,6 @@ namespace TaskManager.DAL
         public IContrahentRepository Contrahents { get { return GetRepo<ContrahentRepository>(); } }
         public IEmployeeRepository Employees { get { return GetRepo<EmployeeRepository>(); } }
         public ISqlRepositoryEntityFrameworkDisconnected<UserDataModel> UserData { get { return GetStandardRepoDisconnected<UserDataModel>(); } }
+        public IFileRepository Files { get { return GetRepo<FileRepository>(); } }
     }
 }

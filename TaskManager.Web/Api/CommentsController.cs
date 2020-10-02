@@ -1,6 +1,7 @@
 ﻿using PDCore.Interfaces;
 using PDCore.Repositories.IRepo;
 using PDCoreNew.Extensions;
+using PDCoreNew.Models;
 using PDWebCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using TaskManager.BLL.Entities.DTO;
 using TaskManager.BLL.Enums;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
+using TaskManager.DAL.Services;
 
 namespace TaskManager.Web.Api
 {
@@ -19,10 +21,12 @@ namespace TaskManager.Web.Api
     public class CommentsController : ApiController
     {
         private readonly ITaskManagerUow taskManagerUow;
+        private readonly FileService fileService;
 
-        public CommentsController(ITaskManagerUow taskManagerUow)
+        public CommentsController(ITaskManagerUow taskManagerUow, FileService fileService)
         {
             this.taskManagerUow = taskManagerUow;
+            this.fileService = fileService;
         }
 
         [Authorize(Roles = "Admin")]
@@ -64,6 +68,8 @@ namespace TaskManager.Web.Api
 
             if (success)
             {
+                //await fileService.SaveFiles(model.Files, model, ObjType.Child);
+
                 var comment = await taskManagerUow.Comments.FindByIdAsync<CommentDTO>(model.Id);
 
                 return CreatedAtRoute("GetComment", new { id = comment.Id }, comment);

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using PDCore.Interfaces;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
-using TaskManager.BLL.Enums;
 
 namespace TaskManager.BLL.Entities.Briefs
 {
     [DataContract(Name = "ticket", Namespace = "")]
-    public class TicketBrief
+    public class TicketBrief : IEntity<int>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

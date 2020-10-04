@@ -27,6 +27,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 ckeditor/
+/Uploads
 **/Content/PDWebCore/
 **/Scripts/PDWebCore/
 **/Images/PDWebCore/

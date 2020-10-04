@@ -36,7 +36,9 @@
                         <li class="nav-item">
                             <a href="javascript:void(0)" class="nav-link"
                                data-bind="click: $root['navigateTo' + $data], css: { active: $root.view() == $root.Views[$data] }">
-                                <!-- ko text: $data === 'Home' ? '@Resources.Common.List' : '@Resources.Common.Adding' -->
+                                <!-- ko text: $data === 'Home' ? '@Resources.Common.List' : 
+                                              $data === 'Add' ? '@Resources.Common.Adding' :
+                                              '@Resources.Common.Reports' -->
                                 <!-- /ko -->
                                 <!-- ko if: $root.view() == $root.Views[$data] -->
                                 <span class="sr-only">(current)</span>

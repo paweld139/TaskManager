@@ -260,6 +260,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -278,6 +279,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Global.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Home\Reports\Reports.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reports.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Home\Reports\Reports.pl.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reports.pl.resx</DependentUpon>
     </Compile>
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
@@ -2436,6 +2447,7 @@
     <Content Include="Images\PDWebCore\orderedList9.png" />
     <Content Include="Images\PDWebCore\stars.png" />
     <Content Include="Scripts\app\add.viewmodel.js" />
+    <Content Include="Scripts\app\reports.viewmodel.js" />
     <Content Include="Scripts\app\details.viewmodel.js" />
     <Content Include="Scripts\app\_run.js" />
     <Content Include="Scripts\app\app.datamodel.js" />
@@ -3240,11 +3252,12 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\_AddTicket.cshtml" />
     <Content Include="Views\Home\_TicketDetails.cshtml" />
+    <Content Include="Uploads\0" />
+    <Content Include="Views\Home\_Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Services\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -3283,6 +3296,16 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Home\Reports\Reports.pl.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Reports.pl.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources.Home</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Home\Reports\Reports.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Reports.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources.Home</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

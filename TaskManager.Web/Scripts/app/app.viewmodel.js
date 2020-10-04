@@ -19,7 +19,7 @@
     self.dataModel = dataModel;
 
     // UI state
-    self.folders = ['Home', 'Add'];
+    self.folders = ['Home', 'Add', 'Reports'];
 
     self.view = ko.observable(self.Views.Loading);
 

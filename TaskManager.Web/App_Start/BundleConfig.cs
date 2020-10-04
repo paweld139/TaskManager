@@ -50,6 +50,7 @@ namespace TaskManager.Web
                 "~/Scripts/app/home.viewmodel.js",
                 "~/Scripts/app/add.viewmodel.js",
                 "~/Scripts/app/details.viewmodel.js",
+                "~/Scripts/app/reports.viewmodel.js",
                 "~/Scripts/app/_run.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

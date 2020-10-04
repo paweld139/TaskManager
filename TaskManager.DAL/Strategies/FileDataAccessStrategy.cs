@@ -42,13 +42,16 @@ namespace TaskManager.DAL.Strategies
             {
                 string[] fileSegments = file.Source.Split(',');
 
-                file.Data = Convert.FromBase64String(fileSegments[1]);
-
                 file.Source = string.Empty;
 
-                if (string.IsNullOrWhiteSpace(file.MimeType))
+                if (fileSegments.Length > 1)
                 {
-                    file.MimeType = fileSegments[0].Split(';')[0].Split(':')[1];
+                    file.Data = Convert.FromBase64String(fileSegments[1]);
+
+                    if (string.IsNullOrWhiteSpace(file.MimeType))
+                    {
+                        file.MimeType = fileSegments[0].Split(';')[0].Split(':')[1];
+                    }
                 }
 
                 file.Extension = IOUtils.GetSimpleExtension(file.Name);

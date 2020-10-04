@@ -30,11 +30,6 @@ namespace TaskManager.DAL.Configuration
 
             Property(t => t.Number)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
-            HasMany(t => t.Files)
-                 .WithOptional(f => f.Ticket)
-                 .HasForeignKey(f => f.TicketId)
-                 .WillCascadeOnDelete(false);
         }
     }
 }

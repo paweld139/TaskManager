@@ -16,10 +16,8 @@ using System.Web.Http.Controllers;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Briefs;
 using TaskManager.BLL.Factories;
-using TaskManager.BLL.Processors;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
-using TaskManager.DAL.Services;
 using TaskManager.DAL.Strategies;
 using TaskManager.Web.Api;
 
@@ -44,7 +42,7 @@ namespace TaskManager.Web.Tests
             var principal = GetPrincipal();
 
 
-            var ticketsController = new TicketsController(unitOfWork.Object, new TicketService(unitOfWork.Object, new StatusProcessor(new SetStatusCommandFactory()), principal, new SetStatusCommandFactory(), new CommandManager()));
+            var ticketsController = new TicketsController(unitOfWork.Object, new SetStatusCommandFactory(), new CommandManager());
 
             ticketsController.ControllerContext.RequestContext.Principal = principal;
 
@@ -81,12 +79,12 @@ namespace TaskManager.Web.Tests
             var principals = new[]
             {
                 GetPrincipal(employeeId, 1, "Klient"),
-                GetPrincipal(employeeId, 0, "Klient"),  
+                GetPrincipal(employeeId, 0, "Klient"),
                 GetPrincipal(employeeId, 1),
                 GetPrincipal(employeeId, 0),
             };
 
-            var actual = principals.Select(p => new TicketDataAccessStrategy(p, new FileDataAccessStrategy(p)).CanAdd());
+            var actual = principals.Select(p => new TicketDataAccessStrategy(p).CanAdd());
 
             var expected = new[] { true, false, false, false };
 

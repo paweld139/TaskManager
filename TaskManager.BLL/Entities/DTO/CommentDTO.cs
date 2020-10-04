@@ -1,7 +1,4 @@
-﻿using PDCoreNew.Models;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using TaskManager.BLL.Entities.Briefs;
 
 namespace TaskManager.BLL.Entities.DTO
@@ -14,8 +11,5 @@ namespace TaskManager.BLL.Entities.DTO
 
         [DataMember(Name = "employeeLastName")]
         public string EmployeeLastName { get; set; }
-
-        [DataMember(Name = "files")]
-        public ICollection<FileBrief> Files { get; set; }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using TaskManager.BLL.Entities.Briefs;
 using TaskManager.BLL.Entities.DTO;
 using TaskManager.BLL.Models;
+using TaskManager.BLL.Processors;
 using TaskManager.DAL.Contracts;
-using TaskManager.DAL.Services;
+using TaskManager.DAL.Proxies;
 
 namespace TaskManager.Web.Api
 {
@@ -12,12 +14,12 @@ namespace TaskManager.Web.Api
     public class LookupsController : ApiController
     {
         private readonly ITaskManagerUow taskManagerUow;
-        private readonly TicketService ticketService;
+        private readonly StatusProcessor statusProcessor;
 
-        public LookupsController(ITaskManagerUow taskManagerUow, TicketService ticketService)
+        public LookupsController(ITaskManagerUow taskManagerUow, StatusProcessor statusProcessor)
         {
             this.taskManagerUow = taskManagerUow;
-            this.ticketService = ticketService;
+            this.statusProcessor = statusProcessor;
         }
 
 
@@ -36,7 +38,22 @@ namespace TaskManager.Web.Api
         [ActionName("statuses")]
         public IQueryable<DictionaryBrief> GetStatuses(int? ticketId = null)
         {
-            return ticketService.GetAvailableStatuses(ticketId);
+            IQueryable<DictionaryBrief> result;
+
+            if (ticketId == null)
+            {
+                result =  taskManagerUow.Dictionaries.FindBriefs("Status");
+            }
+            else
+            {
+                var ticket = taskManagerUow.Tickets.FindById(ticketId.Value);
+
+                var availableStatuses = statusProcessor.GetAvailableStatuses(ticket, User);
+
+                result = taskManagerUow.Dictionaries.Find<DictionaryBriefProxy>(d => availableStatuses.Contains(d.Id));
+            }
+
+            return result;
         }
 
         [ActionName("contrahents")]

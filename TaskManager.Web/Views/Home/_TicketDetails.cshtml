@@ -102,22 +102,6 @@
 
                             <div>
                                 <div data-bind="html: content" class="form-control resizable-container content"></div>
-
-                                <div data-bind="if: files">
-                                    <div class="files-container" data-bind="foreach: files">
-                                        <div>
-                                            <span data-bind="text: name + '.' + extension"></span><span>
-                                                <a class="fa fa-file" href="#" target="_blank" data-bind="attr: { 'href': '@Url.Action("OpenFile", "File")' + '/' + id }">
-                                                </a>
-                                            </span><span>
-                                                <a class="fa fa-file-download" href="#" target="_blank" data-bind="attr: { 'href': '@Url.Action("DownloadFile", "File")' + '/' + id }">
-                                                </a>
-                                            </span><span data-bind="visible: $parent.employeeId == '@currentUserId'">
-                                                <a class="fa fa-times" data-bind="click: $parents[2].removeFile"></a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -214,26 +198,6 @@
                         </div>
                     }
 
-                    <div data-bind="if: files.length > 0">
-                        <label class="form-control form-group unborder">
-                            @Resources.Common.AttachmentList
-                        </label>
-                        <div data-bind="foreach: files">
-                            <div class="form-group">
-                                <span class="extension-container"><span data-bind="text: extension"></span></span>
-                                <div>
-                                    <a href="#" target="_blank" data-bind="text: name, attr: { 'href': '@Url.Action("OpenFile", "File")/' + id }">
-                                    </a>
-                                </div>
-                                <a href="#" target="_blank" class="btn btn-outline-success" data-bind="attr: { 'href': '@Url.Action("DownloadFile", "File")/' + id }">
-                                    @Resources.Common.Download
-                                </a><a data-bind="visible: userId == '@currentUserId', click: $parents[1].removeFile" class="btn btn-outline-success">
-                                    @Resources.Common.Delete
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-group" data-bind="with: $parent.comment">
                         <label class="form-control unborder element">
                             @Resources.Common.AddComment
@@ -242,7 +206,7 @@
 
                         <div class="text-danger" data-bind="validationMessage: content"></div>
 
-                        <input type="file" multiple class="form-control" data-bind=" event: { change: fileSelect }" />
+                        @*<input type="file" multiple class="form-control" data-bind=" event: { change: fileSelect }" />*@
 
                         <button data-bind="click: $parents[1].addComment" class="btn btn-outline-secondary">
                             @Resources.Common.AddComment

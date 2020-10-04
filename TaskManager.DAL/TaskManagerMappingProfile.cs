@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using PDCore.Utils;
-using PDCoreNew.Models;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Briefs;
-using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Entities.DTO;
-using TaskManager.BLL.Entities.Simple;
 using TaskManager.DAL.Entities;
 using TaskManager.DAL.Proxies;
 
@@ -33,9 +30,6 @@ namespace TaskManager.DAL
             CreateMap<Ticket, TicketBasic>()
                 .ReverseMap();
 
-            CreateMap<Ticket, TicketSimple>()
-              .ReverseMap();
-
             CreateMap<Ticket, TicketDetailsProxy>()
                 .ForMember(d => d.Operator, opt => opt.MapFrom(t => string.Concat(t.Operator.FirstName, " ", t.Operator.LastName)))
                 .ForMember(d => d.Representative, opt => opt.MapFrom(t => string.Concat(t.Representative.FirstName, " ", t.Representative.LastName)))
@@ -46,9 +40,6 @@ namespace TaskManager.DAL
                 .ReverseMap();
 
             CreateMap<Comment, CommentBasic>()
-                .ReverseMap();
-
-            CreateMap<Comment, CommentDetails>()
                 .ReverseMap();
 
 
@@ -62,13 +53,6 @@ namespace TaskManager.DAL
 
             CreateMap<Employee, EmployeeBasic>()
                 .ReverseMap();
-
-            CreateMap<FileModel, FileBrief>()
-                .ReverseMap();
-
-            CreateMap<FileModel, File>()
-                .ReverseMap();
-
 
             //ForAllMaps((typeMap, map) =>
             //{

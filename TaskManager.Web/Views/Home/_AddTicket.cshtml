@@ -36,60 +36,32 @@
         <div class="form-group" data-bind="visible: @isNotCustomer">
             @Html.LabelFor(m => m.ContrahentId)
             @Html.DropDownListFor(m => m.ContrahentId, Enumerable.Empty<SelectListItem>(),
-                                    new
-                                         {
-                                             @class = "form-control",
-                                             data_live_search = true,
-                                             title = Resources.Common.Unselected,
-                                             @id = "ticketContrahent",
-                                        data_bind = $"optionsCaption: '{Resources.Common.Unselected}', options: contrahents, optionsText: 'name', optionsValue: 'id', value: $parent.selectedContrahent, selectPicker: {{}}"
-                                         })
+                                    new { @class = "form-control", data_live_search = true, title = Resources.Common.Unselected, @id = "ticketContrahent",
+                                        data_bind= $"optionsCaption: '{Resources.Common.Unselected}', options: contrahents, optionsText: 'name', optionsValue: 'id', value: $parent.selectedContrahent, selectPicker: {{}}" })
             @Html.ValidationMessageFor(m => m.ContrahentId, "", new { @class = "text-danger" })
         </div>
         <div class="form-group" data-bind="visible: @isNotCustomer">
             @Html.LabelFor(m => m.RepresentativeId)
             @Html.DropDownListFor(m => m.RepresentativeId, Enumerable.Empty<SelectListItem>(),
-                                        new
-                                             {
-                                                 @class = "form-control",
-                                                 data_live_search = true,
-                                                 title = Resources.Common.Unselected,
-                                                 @id = "ticketRepresentative",
-                                            data_bind = $"optionsCaption: '{Resources.Common.Unselected}', options: $parent.representatives, optionsText: 'fullName', optionsValue: 'id', value: $parent.selectedRepresentative, selectPicker: {{}}"
-                                             })
+                                        new { @class = "form-control", data_live_search = true, title = Resources.Common.Unselected, @id = "ticketRepresentative",
+                                            data_bind = $"optionsCaption: '{Resources.Common.Unselected}', options: $parent.representatives, optionsText: 'fullName', optionsValue: 'id', value: $parent.selectedRepresentative, selectPicker: {{}}" })
             @Html.ValidationMessageFor(m => m.RepresentativeId, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.TypeId)
             @Html.DropDownListFor(m => m.TypeId, Enumerable.Empty<SelectListItem>(),
-                                    new
-                                         {
-                                             @class = "form-control",
-                                             data_live_search = true,
-                                             title = Resources.Common.Unselected,
-                                             @id = "ticketType",
-                                          data_bind = $"optionsCaption: '{Resources.Common.Unselected}', options: types, optionsText: 'value', optionsValue: 'id', selectPicker: {{}}"
-                                         })
+                                    new { @class = "form-control", data_live_search = true, title = Resources.Common.Unselected, @id = "ticketType",
+                                          data_bind = $"optionsCaption: '{Resources.Common.Unselected}', options: types, optionsText: 'value', optionsValue: 'id', selectPicker: {{}}" })
             @Html.ValidationMessageFor(m => m.TypeId, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.PriorityId)
             @Html.DropDownListFor(m => m.PriorityId, Enumerable.Empty<SelectListItem>(),
-                                    new
-                                         {
-                                             @class = "form-control",
-                                             data_live_search = true,
-                                             title = Resources.Common.Unselected,
-                                             @id = "ticketPriority",
-                                          data_bind = $"optionsCaption: '{Resources.Common.Unselected}', options: priorities, optionsText: 'value', optionsValue: 'id', selectPicker: {{}}"
-                                         })
+                                    new { @class = "form-control", data_live_search = true, title = Resources.Common.Unselected, @id = "ticketPriority",
+                                          data_bind = $"optionsCaption: '{Resources.Common.Unselected}', options: priorities, optionsText: 'value', optionsValue: 'id', selectPicker: {{}}" })
             @Html.ValidationMessageFor(m => m.PriorityId, "", new { @class = "text-danger" })
         </div>
         <!-- /ko -->
-
-        <div class="form-group">
-            <input multiple type="file" class="form-control" data-bind="event: { change: fileSelect }" />
-        </div>
 
         <input id="saveTicket" type="submit" class="btn btn-outline-secondary" value="@Resources.Common.Create" />
     }

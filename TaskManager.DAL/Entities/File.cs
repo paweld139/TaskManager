@@ -6,6 +6,16 @@ namespace TaskManager.DAL.Entities
     public class File : FileModel
     {
         [ForeignKey("UserId")]
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser User { get; set; }
+
+
+        public int? CommentId { get; set; }
+
+        public Comment Comment { get; set; }
+
+
+        public int? TicketId { get; set; }
+
+        public Ticket Ticket { get; set; }
     }
 }

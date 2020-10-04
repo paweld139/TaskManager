@@ -59,12 +59,14 @@
     <Compile Include="Entities\Briefs\CommentBrief.cs" />
     <Compile Include="Entities\Briefs\ContrahentBrief.cs" />
     <Compile Include="Entities\Briefs\EmployeeBrief.cs" />
+    <Compile Include="Entities\Details\CommentDetails.cs" />
     <Compile Include="Entities\Details\ContrahentDetails.cs" />
     <Compile Include="Entities\Details\TicketDetails.cs" />
     <Compile Include="Entities\Briefs\DictionaryBrief.cs" />
     <Compile Include="Entities\DTO\CommentDTO.cs" />
     <Compile Include="Entities\DTO\EmployeeDTO.cs" />
     <Compile Include="Entities\DTO\TicketDTO.cs" />
+    <Compile Include="Entities\Simple\TicketSimple.cs" />
     <Compile Include="Enums\FIleType.cs" />
     <Compile Include="Enums\Status.cs" />
     <Compile Include="Factories\SetStatusCommandFactory.cs" />
@@ -83,7 +85,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Services\TicketService.cs" />
     <Compile Include="Translators\TaskManagerTranslator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +103,7 @@
   <ItemGroup>
     <Folder Include="Contracts\" />
     <Folder Include="Identity\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Models\Contrahent.pl.resx">

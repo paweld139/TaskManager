@@ -34,6 +34,10 @@
         }
     });
 
+    self.fileSelect = function (_element, event) {
+        window.common.selectFiles(event.target, self.files);
+    }
+
     //#endregion
 
 
@@ -48,7 +52,7 @@
                 if (errors && errors.modelState) {
                     DisplayModelStateErrors(errors.modelState, self.errors);
                 }
-                else if(errors) {
+                else if (errors) {
                     self.errors(errors.message || errors)
                 }
             });
@@ -83,6 +87,8 @@
     self.InitiateElements = function () {
         self.textEditor = new InitializeTextEditor("taskDescriptionEditor");
 
+        self.files = [];
+
         SetHash("addTicketForm", null, "#saveTicket",
             function () {
                 $("#addTicketForm").submit();
@@ -94,7 +100,11 @@
             });
 
         $("#addTicketForm").submit(function () {
-            const data = JSON.stringify($(this).serializeObject());
+            let object = $(this).serializeObject();
+
+            object['files'] = self.files;
+
+            const data = JSON.stringify(object);
 
             self.saveTicket(data);
 

@@ -11,6 +11,11 @@ namespace TaskManager.DAL.Configuration
                 .WithMany(e => e.Comments)
                 .HasForeignKey(c => c.EmployeeId)
                 .WillCascadeOnDelete(false);
+
+            HasMany(c => c.Files)
+                .WithOptional(f => f.Comment)
+                .HasForeignKey(f => f.CommentId)
+                .WillCascadeOnDelete(true);
         }
     }
 }

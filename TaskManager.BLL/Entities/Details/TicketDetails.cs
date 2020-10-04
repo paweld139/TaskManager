@@ -1,11 +1,8 @@
-﻿using PDCore.Interfaces;
-using PDCoreNew.Models;
+﻿using PDCoreNew.Models;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.DTO;
-using TaskManager.BLL.Translators;
 
 namespace TaskManager.BLL.Entities.Details
 {
@@ -35,7 +32,7 @@ namespace TaskManager.BLL.Entities.Details
 
 
         [DataMember(Name = "comments")]
-        public virtual ICollection<CommentDTO> Comments { get; set; }
+        public ICollection<CommentDTO> Comments { get; set; }
 
         [DataMember(Name = "representativeEmail")]
         public string RepresentativeApplicationUserEmail { get; set; }
@@ -43,7 +40,7 @@ namespace TaskManager.BLL.Entities.Details
         [DataMember(Name = "representativePhoneNumber")]
         public string RepresentativeApplicationUserPhoneNumber { get; set; }
 
-        [NotMapped]
-        public ICollection<FileModel> Files { get; set; }
+        [DataMember(Name = "files")]
+        public ICollection<FileBrief> Files { get; set; }
     }
 }

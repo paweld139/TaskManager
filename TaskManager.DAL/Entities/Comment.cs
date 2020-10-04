@@ -1,7 +1,5 @@
 ﻿using PDCore.Interfaces;
-using PDCoreNew.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
@@ -19,11 +17,9 @@ namespace TaskManager.DAL.Entities
         [DataMember(Name = "employee")]
         public virtual Employee Employee { get; set; }
 
-        [ForeignKey("TicketId")]
-        [DataMember(Name = "ticket")]
-        public virtual Ticket Ticket { get; set; }
-
-        public virtual ICollection<File> Files { get; set; }
+        //[ForeignKey("TicketId")]
+        //[DataMember(Name = "ticket")]
+        //public virtual Ticket Ticket { get; set; }
 
         #endregion
 

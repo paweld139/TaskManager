@@ -32,7 +32,7 @@ namespace TaskManager.Web
 
             log4net.Config.XmlConfigurator.Configure();
 
-            LogService.EnableLogInDb<TaskManagerContext, SqlServerWebLogger>();
+            //LogService.EnableLogInDb<TaskManagerContext, SqlServerWebLogger>();
 
             SqlRepository.IsLoggingEnabledByDefault = bool.Parse(WebConfigurationManager.AppSettings["IsLoggingEnabledByDefault"]);
 

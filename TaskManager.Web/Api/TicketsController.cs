@@ -10,13 +10,11 @@ using System.Web.Http.Description;
 using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Entities.DTO;
-using TaskManager.BLL.Entities.Simple;
 using TaskManager.BLL.Enums;
 using TaskManager.BLL.Factories;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 using TaskManager.DAL.Proxies;
-using TaskManager.DAL.Services;
 
 namespace TaskManager.Web.Api
 {
@@ -28,12 +26,15 @@ namespace TaskManager.Web.Api
     public class TicketsController : ApiController
     {
         private readonly ITaskManagerUow taskManagerUow;
-        private readonly TicketService ticketService;
+        private readonly SetStatusCommandFactory setStatusCommandFactory;
+        private readonly CommandManager commandManager;
 
-        public TicketsController(ITaskManagerUow taskManagerUow, TicketService ticketService)
+        public TicketsController(ITaskManagerUow taskManagerUow, SetStatusCommandFactory setStatusCommandFactory,
+            CommandManager commandManager)
         {
             this.taskManagerUow = taskManagerUow;
-            this.ticketService = ticketService;
+            this.setStatusCommandFactory = setStatusCommandFactory;
+            this.commandManager = commandManager;
         }
 
         [Authorize(Roles = "Admin")]
@@ -161,14 +162,12 @@ namespace TaskManager.Web.Api
         [MapToApiVersion("1.1")]
         [ResponseType(typeof(TicketDetails))]
         //[ValidateAntiForgeryToken]
-        public async Task<IHttpActionResult> PostTicket(TicketSimple model)
+        public async Task<IHttpActionResult> PostTicket(TicketBasic model)
         {
             bool success = await taskManagerUow.Tickets.SaveNewAsync(model, User);
 
             if (success)
             {
-                await taskManagerUow.FilesBase.AddFilesLocal(model);
-
                 var ticket = await taskManagerUow.Tickets.FindByIdAsync<TicketDetailsProxy>(model.Id);
 
                 return CreatedAtRoute("GetTicket", new { id = ticket.Id }, ticket);
@@ -254,7 +253,14 @@ namespace TaskManager.Web.Api
                 return NotFound();
             }
 
-            ticketService.SetStatus(ticket, statusId);
+            var command = setStatusCommandFactory.CreateFactoryFor(ticket, User, statusId);
+
+            if(command == null)
+            {
+                return this.Forbid();
+            }
+
+            commandManager.Invoke(command);
 
             bool success = await taskManagerUow.Tickets.SaveUpdatedWithOptimisticConcurrencyAsync(ticket, ModelState.AddModelError);
 

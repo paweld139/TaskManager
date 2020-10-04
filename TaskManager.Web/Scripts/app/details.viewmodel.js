@@ -125,8 +125,6 @@
         );
     }
 
-    self.removeFile = dataModel.removeFile(function () { self.getTicket(); });
-
     //#endregion
 
 
@@ -153,7 +151,7 @@
     }
 
     self.OnLoad = new OnLoad(function () {
-
+       
     }); //Wywołuje się tylko raz
 
     self.InitializeElements = function () { //Jest poza danymi ticketa, więc jest wywoływane po wejściu w widok

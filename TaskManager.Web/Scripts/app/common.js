@@ -44,15 +44,66 @@
         setTimezoneCookie();
     }
 
-    function Files(name, source, mimeType, fileId, extension, refId, refGid, refSubId) {
-        this.FileId = fileId;
-        this.Name = name;
-        this.Extension = extension;
-        this.RefId = refId;
-        this.RefGid = refGid;
-        this.RefSubId = refSubId;
-        this.MimeType = mimeType;
-        this.Source = source;
+    function File(name, source, mimeType) {
+        this.name = name;
+        this.mimeType = mimeType;
+        this.source = source;
+    }
+
+    function filesTooLarge(target) {
+        let filesSize = 0;
+
+        let result = false;
+
+        let files = target.files;
+
+        for (var i = 0; i < files.length; i++) {
+            filesSize += files[i].size;
+        }
+
+        filesSize /= 1024;
+
+        if (filesSize > 4096) {
+            alert("Maksymalny rozmiar plików to 4MB");
+
+            target.value = '';
+
+            result = true;
+        }
+
+        return result;
+    }
+
+    common.selectFiles = function (target, output) {
+        let result = true;
+
+        if (filesTooLarge(target)) {
+            result = false;
+        }
+        else {
+            var cFiles = target.files; // FileList object
+
+            output.length = 0;
+
+            // Loop through the FileList and render image files as thumbnails.
+            for (var i = 0; i < cFiles.length; i++) {
+                let ff = cFiles[i]
+
+                var read = new FileReader();
+
+                // Closure to capture the file information.
+                read.onload = (function (theReference) {
+                    return function (e) {
+                        output.push(new File(theReference.name, e.target.result, theReference.type));
+                    };
+                })(ff);
+
+                // Read in the image file as a data URL.
+                read.readAsDataURL(ff);
+            }
+        }
+
+        return result;
     }
 
     common.Comment = function (ticketId) {
@@ -75,28 +126,10 @@
             return self.content.isValid();
         }
 
-        self.Files = [];
+        self.files = [];
 
         self.fileSelect = function (_element, event) {
-            var cFiles = event.target.files; // FileList object
-
-            self.Files.length = 0;
-
-            // Loop through the FileList and render image files as thumbnails.
-            for (var i = 0, ff = cFiles[i]; i < cFiles.length; i++) {
-
-                var read = new FileReader();
-
-                // Closure to capture the file information.
-                read.onload = (function (theReference) {
-                    return function (e) {
-                        self.Files.push(new Files(theReference.name, e.target.result, theReference.type));
-                    };
-                })(ff);
-
-                // Read in the image file as a data URL.
-                read.readAsDataURL(ff);
-            }
+            common.selectFiles(event.target, self.files);
         }
     }
 

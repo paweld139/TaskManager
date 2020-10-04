@@ -1,18 +1,12 @@
-﻿using PDCore.Interfaces;
-using PDCore.Repositories.IRepo;
-using PDCoreNew.Extensions;
-using PDCoreNew.Models;
+﻿using PDCore.Extensions;
 using PDWebCore;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using TaskManager.BLL.Entities.Basic;
+using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Entities.DTO;
-using TaskManager.BLL.Enums;
 using TaskManager.DAL.Contracts;
-using TaskManager.DAL.Entities;
-using TaskManager.DAL.Services;
 
 namespace TaskManager.Web.Api
 {
@@ -21,12 +15,10 @@ namespace TaskManager.Web.Api
     public class CommentsController : ApiController
     {
         private readonly ITaskManagerUow taskManagerUow;
-        private readonly FileService fileService;
 
-        public CommentsController(ITaskManagerUow taskManagerUow, FileService fileService)
+        public CommentsController(ITaskManagerUow taskManagerUow)
         {
             this.taskManagerUow = taskManagerUow;
-            this.fileService = fileService;
         }
 
         [Authorize(Roles = "Admin")]
@@ -55,7 +47,7 @@ namespace TaskManager.Web.Api
 
         [Route]
         [ResponseType(typeof(CommentDTO))]
-        public async Task<IHttpActionResult> Post(int ticketId, [FromBody] CommentBasic model)
+        public async Task<IHttpActionResult> Post(int ticketId, [FromBody] CommentDetails model)
         {
             var ticket = await taskManagerUow.Tickets.FindByIdAsync(ticketId, false, false);
 
@@ -68,7 +60,7 @@ namespace TaskManager.Web.Api
 
             if (success)
             {
-                //await fileService.SaveFiles(model.Files, model, ObjType.Child);
+                await taskManagerUow.FilesBase.AddFilesLocal(model);
 
                 var comment = await taskManagerUow.Comments.FindByIdAsync<CommentDTO>(model.Id);
 
@@ -81,17 +73,21 @@ namespace TaskManager.Web.Api
         [Route("{id:int}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            var comment = await taskManagerUow.Comments.FindByIdAsync(id);
+            var comment = await taskManagerUow.Comments.FindByIdAsync(id, true);
 
             if (comment == null)
             {
                 return NotFound();
             }
 
+            var fileIds = comment.Files.ToArray(f => f.Id);
+
             bool success = await taskManagerUow.Comments.DeleteAndCommitWithOptimisticConcurrencyAsync(comment, User, ModelState.AddModelError);
 
             if (success)
             {
+                await taskManagerUow.FilesBase.RemoveFilesLocal(fileIds);
+
                 return this.NoContent();
             }
 

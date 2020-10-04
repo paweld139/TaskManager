@@ -13,7 +13,7 @@ namespace TaskManager.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202010021959546_File"; }
+            get { return "202010040234354_File"; }
         }
         
         string IMigrationMetadata.Source

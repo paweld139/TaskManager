@@ -9,6 +9,7 @@
     self.deleteCommentUrl = "api/tickets/";
     self.addCommentUrl = "api/tickets/";
     self.setTicketStatusUrl = "api/tickets/";
+    self.deleteFileUrl = "api/files/";
 
     self.siteUrl = "/";
 
@@ -17,6 +18,15 @@
     // Other private operations
 
     // Operations
+
+    self.removeFile = function (onSuccess, onError) {
+        return function (data) {
+            SendRequest(requestType.DELETE, self.deleteFileUrl + data.id, null,
+                function () {
+                    return confirm("Czy na pewno chcesz usunąć plik?");
+                }, null, onSuccess, onError);
+        };
+    };
 
     // Data
     self.returnUrl = self.siteUrl;

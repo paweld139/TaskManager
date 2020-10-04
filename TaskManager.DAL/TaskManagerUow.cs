@@ -19,10 +19,12 @@ namespace TaskManager.DAL
 
         public IDictionaryRepository Dictionaries { get { return GetRepo<DictionaryRepository>(); } }
         public ITicketRepository Tickets { get { return GetRepo<TicketRepository>(); } }
-        public ISqlRepositoryEntityFrameworkDisconnected<Comment> Comments { get { return GetStandardRepoDisconnected<Comment>(); } }
+        public ICommentRepository Comments { get { return GetRepo<CommentRepository>(); } }
         public IContrahentRepository Contrahents { get { return GetRepo<ContrahentRepository>(); } }
         public IEmployeeRepository Employees { get { return GetRepo<EmployeeRepository>(); } }
         public ISqlRepositoryEntityFrameworkDisconnected<UserDataModel> UserData { get { return GetStandardRepoDisconnected<UserDataModel>(); } }
-        public IFileRepository Files { get { return GetRepo<FileRepository>(); } }
+        public IFileRepository FilesBase { get { return GetRepo<FileRepository>(); } }
+
+        public ISqlRepositoryEntityFrameworkDisconnected<File> Files { get { return GetStandardRepoDisconnected<File>(); } }
     }
 }

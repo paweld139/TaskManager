@@ -16,7 +16,6 @@ using PDCoreNew.Context.IContext;
 using PDCoreNew.Factories.Fac.Repository;
 using PDCoreNew.Helpers;
 using PDCoreNew.Loggers;
-using PDCoreNew.Models;
 using PDCoreNew.Repositories.Repo;
 using PDCoreNew.Services.Serv;
 using PDWebCore.Context.IContext;
@@ -150,7 +149,7 @@ namespace TaskManager.Web.App_Start
                    .SingleInstance();
 
 
-            builder.RegisterType<TraceLogger>()
+            builder.RegisterType<FileLogger>()
                    .As<ILogger>()
                    .SingleInstance();
 
@@ -163,9 +162,9 @@ namespace TaskManager.Web.App_Start
                    .As<IUserDataService>()
                    .InstancePerRequest();
 
-            builder.RegisterType<TicketService>()
-                 .AsSelf()
-                 .InstancePerRequest();
+            builder.RegisterType<FileService>()
+                   .AsSelf()
+                   .InstancePerRequest();
 
             builder.RegisterType<TimeService>()
                    .As<ITimeService>();

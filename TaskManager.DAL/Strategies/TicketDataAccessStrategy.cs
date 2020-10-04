@@ -1,12 +1,8 @@
-﻿using PDCore.Extensions;
-using PDCore.Interfaces;
-using PDCoreNew.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using TaskManager.BLL.Entities.Basic;
-using TaskManager.BLL.Entities.Simple;
 using TaskManager.BLL.Enums;
 using TaskManager.DAL.Entities;
 
@@ -14,11 +10,8 @@ namespace TaskManager.DAL.Strategies
 {
     public class TicketDataAccessStrategy : TaskManagerDataAccessStrategy<Ticket>
     {
-        private readonly IDataAccessStrategy<File> fileDataAccessStrategy;
-
-        public TicketDataAccessStrategy(IPrincipal principal, IDataAccessStrategy<File> fileDataAccessStrategy) : base(principal)
+        public TicketDataAccessStrategy(IPrincipal principal) : base(principal)
         {
-            this.fileDataAccessStrategy = fileDataAccessStrategy;
         }
 
         public override bool CanUpdate(Ticket entity)
@@ -58,18 +51,12 @@ namespace TaskManager.DAL.Strategies
 
         public override void PrepareForAdd(params object[] args)
         {
-            if (args[0] is TicketSimple ticket)
+            if (args[0] is TicketBasic ticket)
             {
                 if (IsCustomer) //Serwisanci mogą tworzyć zadanie dla wybranego kontrahenta i przedstawiciela
                 {
                     ticket.ContrahentId = ContrahentId;
                     ticket.RepresentativeId = EmployeeId;
-                }
-
-                if (!ticket.Files.IsEmpty())
-                {
-                    ticket.Files.Where(f => fileDataAccessStrategy.CanAdd(ticket, ObjType.Parent, f).Result)
-                          .ForEach(f => fileDataAccessStrategy.PrepareForAdd(ticket, ObjType.Parent, f));
                 }
 
                 ticket.StatusId = (int)Status.New;

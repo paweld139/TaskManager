@@ -7,13 +7,13 @@ namespace TaskManager.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class File1 : IMigrationMetadata
+    public sealed partial class FileExtension : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(File1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FileExtension));
         
         string IMigrationMetadata.Id
         {
-            get { return "202010040245534_File1"; }
+            get { return "202010022004119_FileExtension"; }
         }
         
         string IMigrationMetadata.Source

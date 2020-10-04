@@ -1,4 +1,5 @@
 ﻿using PDCore.Interfaces;
+using PDCoreNew.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
@@ -52,6 +53,8 @@ namespace TaskManager.DAL.Entities
 
         [DataMember(Name = "comments")]
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public virtual ICollection<File> Files { get; set; }
 
         #endregion
 

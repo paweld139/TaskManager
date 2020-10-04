@@ -3,9 +3,9 @@ using PDCore.Utils;
 using PDCoreNew.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
-using TaskManager.BLL.Enums;
 using TaskManager.DAL.Entities;
 
 namespace TaskManager.DAL.Strategies
@@ -46,7 +46,7 @@ namespace TaskManager.DAL.Strategies
 
                 file.Source = string.Empty;
 
-                if (file.MimeType == null)
+                if (string.IsNullOrWhiteSpace(file.MimeType))
                 {
                     file.MimeType = fileSegments[0].Split(';')[0].Split(':')[1];
                 }
@@ -61,6 +61,17 @@ namespace TaskManager.DAL.Strategies
 
                 file.UserId = EmployeeId;
             }
+        }
+
+        public override IQueryable<File> PrepareQuery(IQueryable<File> entities)
+        {
+            if(IsCustomer)
+            {
+                entities = entities.Where(f => (f.TicketId != null && f.Ticket.ContrahentId == ContrahentId) ||
+                                               (f.CommentId != null && f.Comment.Ticket.ContrahentId == ContrahentId));
+            }
+
+            return entities;
         }
     }
 }

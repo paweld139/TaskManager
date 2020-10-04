@@ -1,18 +1,24 @@
-﻿using System;
+﻿using PDCore.Extensions;
+using PDCore.Interfaces;
+using PDCoreNew.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
-using TaskManager.BLL.Entities.Basic;
+using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Enums;
-using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 
 namespace TaskManager.DAL.Strategies
 {
     public class CommentDataAccessStrategy : TaskManagerDataAccessStrategy<Comment>
     {
-        public CommentDataAccessStrategy(IPrincipal principal) : base(principal)
+        private readonly IDataAccessStrategy<File> fileDataAccessStrategy;
+
+        public CommentDataAccessStrategy(IPrincipal principal, IDataAccessStrategy<File> fileDataAccessStrategy) : base(principal)
         {
+            this.fileDataAccessStrategy = fileDataAccessStrategy;
         }
 
         public override bool CanDelete(Comment entity)
@@ -36,11 +42,17 @@ namespace TaskManager.DAL.Strategies
 
         public override void PrepareForAdd(params object[] args)
         {
-            if (args[1] is CommentBasic entity
+            if (args[1] is CommentDetails entity
                 && args[0] is Ticket ticket)
             {
                 entity.TicketId = ticket.Id;
                 entity.EmployeeId = EmployeeId;
+
+                if(!entity.Files.IsEmpty())
+                {
+                    entity.Files.Where(f => fileDataAccessStrategy.CanAdd(entity, ObjType.Child, f).Result)
+                          .ForEach(f => fileDataAccessStrategy.PrepareForAdd(entity, ObjType.Child, f));
+                }
 
                 if ((Status)ticket.StatusId == Status.Clarify && IsCustomer)
                 {

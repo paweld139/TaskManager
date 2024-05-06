@@ -1,5 +1,4 @@
 ﻿using Microsoft.Web.Http;
-using PDCore.Commands;
 using PDWebCore;
 using System;
 using System.Collections.Generic;
@@ -11,8 +10,6 @@ using TaskManager.BLL.Entities.Basic;
 using TaskManager.BLL.Entities.Details;
 using TaskManager.BLL.Entities.DTO;
 using TaskManager.BLL.Entities.Simple;
-using TaskManager.BLL.Enums;
-using TaskManager.BLL.Factories;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Entities;
 using TaskManager.DAL.Proxies;

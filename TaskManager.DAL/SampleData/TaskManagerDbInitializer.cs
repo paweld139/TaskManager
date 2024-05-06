@@ -3,9 +3,9 @@
 namespace TaskManager.DAL.SampleData
 {
     public class TaskManagerDbInitializer :
-        //CreateDatabaseIfNotExists<TaskManagerContext>      // when model is stable
-        //
-        DropCreateDatabaseIfModelChanges<TaskManagerContext> // when iterating
+        CreateDatabaseIfNotExists<TaskManagerContext>      // when model is stable
+                                                           //
+                                                           //DropCreateDatabaseIfModelChanges<TaskManagerContext> // when iterating
     {
         protected override void Seed(TaskManagerContext context)
         {

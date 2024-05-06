@@ -12,11 +12,11 @@ namespace TaskManager.DAL
     {
         public TaskManagerContext() : base("TaskManagerContext")
         {
-//#if DEBUG
-            Database.SetInitializer(new NullDatabaseInitializer<TaskManagerContext>()); //Na produkcji też
-//#else
-//            Database.SetInitializer(new TaskManagerDbInitializer());
-//#endif
+            //#if DEBUG
+            //Database.SetInitializer(new NullDatabaseInitializer<TaskManagerContext>()); //Na produkcji też
+            //#else
+            Database.SetInitializer(new TaskManagerDbInitializer());
+            //#endif
 
             //this.ConfigureForDateTimeKind(DateTimeKind.Utc);
         }

@@ -3252,12 +3252,12 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\_AddTicket.cshtml" />
     <Content Include="Views\Home\_TicketDetails.cshtml" />
-    <Content Include="Uploads\0" />
     <Content Include="Views\Home\_Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Services\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
